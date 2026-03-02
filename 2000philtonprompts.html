@@ -342,9 +342,17 @@
 
   <script>
     /* ============================================================
+       CHARACTER REFERENCE PREFIX
+       Prepended to every prompt at display/copy time.
+       Change this one line to update all prompts at once.
+    ============================================================ */
+
+    const CHARACTER_REF = "Use the attached photo as a character reference. ";
+
+    /* ============================================================
        PROMPT DATA
        Each category is an array of objects with:
-         - text:      the full AI image prompt string
+         - text:      the full AI image prompt string (no prefix needed)
          - breakdown: key/value pairs for the Style Breakdown panel
        To add more prompts, just push a new object into any array.
     ============================================================ */
@@ -505,8 +513,9 @@
     function generate() {
       const pool = getPromptPool();
       const item = pool[Math.floor(Math.random() * pool.length)];
-      currentPromptText = item.text;
-      renderPromptCard(item.text);
+      // Prepend the character reference prefix to every prompt
+      currentPromptText = CHARACTER_REF + item.text;
+      renderPromptCard(currentPromptText);
       renderBreakdown(item.breakdown);
       resetCopyButton();
     }
