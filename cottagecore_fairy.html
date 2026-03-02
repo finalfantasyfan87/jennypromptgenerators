@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cottagecore & Fairycore Prompt Generator</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IM+Fell+English:ital@0;1&family=Lato:wght@300;400&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* ─────────────────────────────────────────
+       Design Tokens
+    ───────────────────────────────────────── */
+    :root {
+      --colour-bg:         #f7f3ec;
+      --colour-bg-deep:    #eee7d8;
+      --colour-surface:    #ffffff;
+      --colour-border:     #d6cbb8;
+      --colour-text:       #2e2416;
+      --colour-text-soft:  #7a6a55;
+      --colour-moss:       #5a7a4a;
+      --colour-sage:       #8aab78;
+      --colour-lilac:      #b49fc5;
+
+      --font-serif:  'Playfair Display', Georgia, serif;
+      --font-italic: 'IM Fell English', Georgia, serif;
+      --font-sans:   'Lato', system-ui, sans-serif;
+
+      --radius:      8px;
+      --radius-pill: 40px;
+      --shadow:      0 2px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    /* ─────────────────────────────────────────
+       Reset & Base
+    ───────────────────────────────────────── */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--colour-bg);
+      color: var(--colour-text);
+      font-family: var(--font-sans);
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 20px 80px;
+    }
+
+    /* ─────────────────────────────────────────
+       Header
+    ───────────────────────────────────────── */
+    .page-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .page-header__eyebrow {
+      font-family: var(--font-italic);
+      font-style: italic;
+      font-size: 13px;
+      letter-spacing: 2px;
+      color: var(--colour-moss);
+      margin-bottom: 10px;
+      opacity: 0.8;
+    }
+
+    .page-header__title {
+      font-family: var(--font-serif);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: var(--colour-text);
+    }
+
+    .page-header__title em     { color: #c9788a; font-style: italic; }
+    .page-header__title strong { color: var(--colour-moss); font-weight: 700; }
+
+    .page-header__subtitle {
+      margin-top: 8px;
+      font-family: var(--font-italic);
+      font-style: italic;
+      font-size: 13px;
+      color: var(--colour-text-soft);
+    }
+
+    .page-header::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(to right, var(--colour-sage), var(--colour-lilac));
+      border-radius: 2px;
+      margin: 18px auto 0;
+    }
+
+    /* ─────────────────────────────────────────
+       Generate Button
+    ───────────────────────────────────────── */
+    .generate-button {
+      display: block;
+      margin: 0 auto 36px;
+      padding: 14px 44px;
+      background: var(--colour-moss);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-serif);
+      font-size: 17px;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(90, 122, 74, 0.3);
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+
+    .generate-button:hover {
+      background: var(--colour-sage);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(90, 122, 74, 0.35);
+    }
+
+    .generate-button:active { transform: scale(0.97); }
+
+    /* ─────────────────────────────────────────
+       Prompt Panel
+    ───────────────────────────────────────── */
+    .prompt-panel {
+      width: 100%;
+      max-width: 640px;
+      background: var(--colour-bg-deep);
+      border: 1px solid var(--colour-border);
+      border-top: 3px solid var(--colour-lilac);
+      border-radius: var(--radius);
+      padding: 24px 26px;
+      box-shadow: var(--shadow);
+      display: none;
+      animation: fadeUp 0.35s ease both;
+    }
+
+    .prompt-panel.is-visible { display: block; }
+
+    .prompt-panel__heading {
+      font-family: var(--font-italic);
+      font-style: italic;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--colour-lilac);
+      margin-bottom: 12px;
+    }
+
+    .copy-button {
+      margin-top: 16px;
+      padding: 9px 28px;
+      background: transparent;
+      border: 1px solid var(--colour-lilac);
+      border-radius: var(--radius-pill);
+      color: #7a5f90;
+      font-family: var(--font-italic);
+      font-style: italic;
+      font-size: 13px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .copy-button:hover {
+      background: var(--colour-lilac);
+      color: #fff;
+    }
+
+    .prompt-panel__text {
+      font-family: var(--font-sans);
+      font-size: 13.5px;
+      line-height: 1.9;
+      color: var(--colour-text-soft);
+      white-space: pre-wrap;
+      word-break: break-word;
+      cursor: text;
+      user-select: all;
+    }
+
+    /* ─────────────────────────────────────────
+       Footer
+    ───────────────────────────────────────── */
+    .page-footer {
+      margin-top: 44px;
+      font-family: var(--font-italic);
+      font-style: italic;
+      font-size: 12px;
+      letter-spacing: 1px;
+      color: var(--colour-text-soft);
+      opacity: 0.5;
+      text-align: center;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="page-header">
+    <p class="page-header__eyebrow">✦ among the ferns &amp; foxglove ✦</p>
+    <h1 class="page-header__title">
+      <strong>Cottagecore</strong> &amp; <em>Fairycore</em>
+    </h1>
+    <p class="page-header__subtitle">Prompt Generator · Soft Light · Film Photography · Misty Meadows</p>
+  </header>
+
+  <button class="generate-button" id="generate-button">🌸 Generate a Look</button>
+
+  <div class="prompt-panel" id="prompt-panel">
+    <p class="prompt-panel__heading">✦ Image Prompt — click to select all</p>
+    <pre class="prompt-panel__text" id="prompt-text"></pre>
+    <button class="copy-button" id="copy-button">✦ Copy Prompt</button>
+  </div>
+
+  <footer class="page-footer">
+    ✦ wander barefoot · gather wildflowers · let the moss grow ✦
+  </footer>
+
+
+  <script>
+    /* ═══════════════════════════════════════════════════════
+       DATA
+    ═══════════════════════════════════════════════════════ */
+
+    const HAIR_OPTIONS = [
+      { color: "warm honey blonde with sun-kissed highlights",  style: "loosely braided with small wildflowers tucked in" },
+      { color: "deep auburn with copper undertones",            style: "long and wavy, flowing freely in the breeze" },
+      { color: "soft ash brown with faint golden ends",         style: "messy bun with loose tendrils framing the face" },
+      { color: "pale platinum blonde, almost silver",           style: "two soft braids joined at the back" },
+      { color: "rich chestnut brown",                           style: "half-up crown braid adorned with dried herbs" },
+      { color: "warm strawberry blonde",                        style: "undone updo with curling wisps escaping" },
+    ];
+
+    const EYE_MAKEUP_OPTIONS = [
+      "no makeup, natural freckles, brushed brows",
+      "soft terracotta eyeshadow, barely-there liner",
+      "subtle shimmer lid with a faint golden highlight",
+      "pressed flower motif near the outer corner",
+      "mossy green liner smudged softly on the lower lash",
+      "delicate butterfly liner in lavender ink",
+    ];
+
+    const LIP_OPTIONS = [
+      "bare with just a hint of balm",
+      "soft pink bitten-lip tint",
+      "peachy nude with a slight sheen",
+      "dusty rose satin finish",
+      "berry-stained, as if she ate mulberries",
+      "pale mauve gloss",
+    ];
+
+    const WHIMSICAL_DETAIL_OPTIONS = [
+      "tiny painted daisies on the cheekbones",
+      "faint iridescent freckles dusted across the nose",
+      "dried flower petals pressed lightly to the temple",
+      "a thin vine of ivy hand-painted along the collarbone",
+      null,
+    ];
+
+    const GARMENT_OPTIONS = [
+      "white linen smock dress with eyelet trim",
+      "sage green prairie dress with puffed sleeves",
+      "cream crochet top with a floral midi skirt",
+      "dusty lilac floral dress, slightly wrinkled",
+      "ivory lace blouse tucked loosely into a skirt",
+      "patchwork quilt-style dress in soft earth tones",
+    ];
+
+    const LAYER_OPTIONS = [
+      "chunky knit cardigan draped over the shoulders",
+      "forest green cloak, slightly too large",
+      "a linen shawl wrapped loosely",
+      "worn denim jacket with wildflower embroidery",
+      "cream crochet vest layered over a dress",
+      "a soft wool blanket shawl in oatmeal tones",
+    ];
+
+    const FOOTWEAR_OPTIONS = [
+      "barefoot in damp grass",
+      "worn brown leather Mary Janes",
+      "mud-stained ankle boots with brass buckles",
+      "simple leather sandals",
+      "cream knit socks with leather mules",
+      "barefoot among wildflowers",
+    ];
+
+    const ACCESSORY_OPTIONS = [
+      "woven basket of wildflowers", "pressed flower locket",       "braided grass crown",
+      "clay mushroom pendant",       "ribbon tied at the wrist",     "small leather journal",
+      "jar of foraged berries",      "moss-covered lantern",         "acorn charm bracelet",
+      "dried lavender bundle",       "copper ring with a moonstone", "embroidered handkerchief",
+    ];
+
+    const SETTING_OPTIONS = [
+      "overgrown English cottage garden at golden hour — roses climbing stone walls, soft lens flare",
+      "misty forest clearing at dawn, dappled light filtering through ancient oaks, ferns carpeting the floor",
+      "wildflower meadow at dusk, blurred purple and yellow in every direction, the air full of pollen",
+      "mossy stone bridge over a babbling brook in cool morning light, water catching scattered reflections",
+      "abandoned greenhouse filled with climbing vines, cracked glass filtering warm amber light, terra cotta pots",
+    ];
+
+    const MOOD_OPTIONS = [
+      "kneeling to examine a small mushroom, entirely absorbed, unaware of the camera",
+      "sitting on a mossy log reading a small leather book in soft, dappled light",
+      "spinning slowly in a meadow, eyes closed, a half-smile on her face",
+      "standing at the stream's edge barefoot, skirt hitched, gaze fixed on the water below",
+      "leaning against a tree with eyes closed, face tilted up toward light filtering through the canopy",
+    ];
+
+    const ACCESSORY_COUNT = 3;
+
+
+    /* ═══════════════════════════════════════════════════════
+       UTILITIES
+    ═══════════════════════════════════════════════════════ */
+
+    /** Returns one random element from an array. */
+    function pickRandom(array) {
+      return array[Math.floor(Math.random() * array.length)];
+    }
+
+    /** Returns `count` unique random elements from an array without mutating it. */
+    function pickRandomUnique(array, count) {
+      const pool = [...array];
+      const selections = [];
+      while (selections.length < count && pool.length > 0) {
+        const randomIndex = Math.floor(Math.random() * pool.length);
+        selections.push(pool.splice(randomIndex, 1)[0]);
+      }
+      return selections;
+    }
+
+
+    /* ═══════════════════════════════════════════════════════
+       PROMPT BUILDER
+    ═══════════════════════════════════════════════════════ */
+
+    function buildPrompt(look) {
+      const whimsicalLine = look.whimsicalDetail ? `, ${look.whimsicalDetail}` : '';
+
+      return `Hyper-realistic photograph, shot on 35mm film, ultra-detailed, photorealistic, natural light, shallow depth of field, slight grain, warm earthy tones. No artificial filters or modern editing. Cottagecore / fairycore — whimsical, gentle, rooted in nature.
+
+A young woman with ${look.hair.color} hair, styled ${look.hair.style}. Makeup: ${look.eyeMakeup}, ${look.lips} lips${whimsicalLine}. She is wearing ${look.garment}, layered with ${look.layer}, and ${look.footwear}. She carries or wears: ${look.accessories.join(', ')}.
+
+She is ${look.mood}.
+
+Setting: ${look.setting}.
+
+Inspired by: quiet English countryside, fairy tales without the artifice, the smell of rain on old books, foraging at dawn. Think Midsommar softness, Studio Ghibli stillness, pre-Raphaelite warmth.`;
+    }
+
+
+    /* ═══════════════════════════════════════════════════════
+       GENERATE
+    ═══════════════════════════════════════════════════════ */
+
+    function generate() {
+      const look = {
+        hair:            pickRandom(HAIR_OPTIONS),
+        eyeMakeup:       pickRandom(EYE_MAKEUP_OPTIONS),
+        lips:            pickRandom(LIP_OPTIONS),
+        whimsicalDetail: pickRandom(WHIMSICAL_DETAIL_OPTIONS),
+        garment:         pickRandom(GARMENT_OPTIONS),
+        layer:           pickRandom(LAYER_OPTIONS),
+        footwear:        pickRandom(FOOTWEAR_OPTIONS),
+        accessories:     pickRandomUnique(ACCESSORY_OPTIONS, ACCESSORY_COUNT),
+        setting:         pickRandom(SETTING_OPTIONS),
+        mood:            pickRandom(MOOD_OPTIONS),
+      };
+
+      document.getElementById('prompt-text').textContent = buildPrompt(look);
+
+      const promptPanel = document.getElementById('prompt-panel');
+      promptPanel.classList.add('is-visible');
+      promptPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+
+    /* ═══════════════════════════════════════════════════════
+       EVENT LISTENERS
+    ═══════════════════════════════════════════════════════ */
+
+    document.getElementById('generate-button').addEventListener('click', generate);
+
+    document.getElementById('copy-button').addEventListener('click', () => {
+      const promptText = document.getElementById('prompt-text').textContent;
+      if (!promptText) return;
+      navigator.clipboard.writeText(promptText).then(() => {
+        const copyButton = document.getElementById('copy-button');
+        const originalLabel = copyButton.textContent;
+        copyButton.textContent = '✦ Copied!';
+        setTimeout(() => { copyButton.textContent = originalLabel; }, 2000);
+      });
+    });
+  </script>
+
+</body>
+</html>
