@@ -342,17 +342,17 @@
 
   <script>
     /* ============================================================
-       CHARACTER REFERENCE PREFIX
-       Prepended to every prompt at display/copy time.
+       FACE LOCK SUFFIX
+       Appended to every prompt at generation time.
        Change this one line to update all prompts at once.
     ============================================================ */
 
-    const CHARACTER_REF = "Use the attached photo as a character reference. ";
+    const FACE_LOCK = " DO NOT CHANGE FACE or facial expression.";
 
     /* ============================================================
        PROMPT DATA
        Each category is an array of objects with:
-         - text:      the full AI image prompt string (no prefix needed)
+         - text:      the full AI image prompt string (no suffix needed)
          - breakdown: key/value pairs for the Style Breakdown panel
        To add more prompts, just push a new object into any array.
     ============================================================ */
@@ -361,113 +361,113 @@
 
       pink: [
         {
-          text: "Generate a photorealistic image of a glamorous woman submerged to the waist in a bathtub filled with pink rose petals. She is wearing a hot pink satin corset and diamond drop earrings, with glossy pink lips and platinum blonde hair falling in loose curls over one shoulder. Steam rises gently around her as warm candlelight casts a soft, intimate glow across the scene. Shoot this as a close-up portrait with a shallow depth of field, creating a dreamy, luxurious boudoir atmosphere.",
+          text: "Generate an image of a glamorous woman submerged to the waist in a bathtub filled with pink rose petals. She is wearing a hot pink satin corset and diamond drop earrings, with glossy pink lips and platinum blonde hair falling in loose curls over one shoulder. Steam rises gently around her as warm candlelight casts a soft, intimate glow across the scene. Shoot this as a close-up portrait with a shallow depth of field, creating a dreamy, luxurious boudoir atmosphere.",
           breakdown: { Style: "Pink boudoir portrait", Outfit: "Hot pink satin corset", Setting: "Petal-filled bathtub", Lighting: "Warm candlelight", Mood: "Intimate, dreamy" }
         },
         {
-          text: "Generate a photorealistic image of a woman standing in a mirrored penthouse suite completely filled with floor-to-ceiling pink balloons. She is wearing a bubblegum pink micro mini dress with a feathered hem and strappy silver heels, holding a pink cocktail with a lit sparkler. Confetti rains down around her and her expression is ecstatic. Capture this with a wide-angle lens to show the full extravagance of the room, lit by warm flash photography in the style of an early 2000s celebrity birthday party.",
+          text: "Generate an image of a woman standing in a mirrored penthouse suite completely filled with floor-to-ceiling pink balloons. She is wearing a bubblegum pink micro mini dress with a feathered hem and strappy silver heels, holding a pink cocktail with a lit sparkler. Confetti rains down around her and her expression is ecstatic. Capture this with a wide-angle lens to show the full extravagance of the room, lit by warm flash photography in the style of an early 2000s celebrity birthday party.",
           breakdown: { Style: "Pink party queen", Outfit: "Bubblegum pink feather mini", Setting: "Mirrored penthouse", Props: "Pink cocktail, balloons, confetti", Mood: "Celebratory, iconic" }
         },
         {
-          text: "Generate a photorealistic image of a woman posing confidently beside a custom matte pink Bentley convertible parked on Rodeo Drive. She is dressed head-to-toe in a baby pink co-ord set with rhinestone trim, wearing oversized pink-tinted sunglasses and carrying a pink Hermès Kelly bag. Beverly Hills palm trees line the background and warm golden afternoon sunlight bathes the scene. Shoot from a slightly low angle to give the composition a powerful, aspirational feel.",
+          text: "Generate an image of a woman posing confidently beside a custom matte pink Bentley convertible parked on Rodeo Drive. She is dressed head-to-toe in a baby pink co-ord set with rhinestone trim, wearing oversized pink-tinted sunglasses and carrying a pink Hermès Kelly bag. Beverly Hills palm trees line the background and warm golden afternoon sunlight bathes the scene. Shoot from a slightly low angle to give the composition a powerful, aspirational feel.",
           breakdown: { Style: "Beverly Hills pink lifestyle", Outfit: "Baby pink rhinestone co-ord", Props: "Pink Bentley, Hermès Kelly bag", Setting: "Rodeo Drive", Lighting: "Golden afternoon sun" }
         },
         {
-          text: "Generate a photorealistic image of a woman reclining luxuriously on a pink velvet chaise longue surrounded by several white Persian cats wearing tiny pink satin bows. She is wearing a floor-length hot pink silk robe trimmed with ostrich feathers and pink diamond rings on every finger, with her platinum hair pinned up with jewelled clips. The room is bathed in warm, cinematic Hollywood boudoir lighting. Frame this as a wide portrait shot in the spirit of a Slim Aarons lifestyle photograph.",
+          text: "Generate an image of a woman reclining luxuriously on a pink velvet chaise longue surrounded by several white Persian cats wearing tiny pink satin bows. She is wearing a floor-length hot pink silk robe trimmed with ostrich feathers and pink diamond rings on every finger, with her platinum hair pinned up with jewelled clips. The room is bathed in warm, cinematic Hollywood boudoir lighting. Frame this as a wide portrait shot in the spirit of a Slim Aarons lifestyle photograph.",
           breakdown: { Style: "Hollywood maximalist boudoir", Outfit: "Hot pink feather-trim silk robe", Props: "White Persian cats, pink diamonds", Lighting: "Warm Hollywood glow", Aesthetic: "Slim Aarons luxury" }
         },
         {
-          text: "Generate a photorealistic image of a woman walking a tiny chihuahua wearing a pink bow down a rain-slicked Sunset Strip sidewalk at night. She is wearing a sheer pink sequin trench coat over a rhinestone bodysuit with pink stiletto heels. Paparazzi flashbulbs reflect in the wet pavement while neon signs glow in the background. Capture this in a candid documentary style using a 35mm lens with slight film grain, evoking the feeling of an early 2000s celebrity tabloid photograph.",
+          text: "Generate an image of a woman walking a tiny chihuahua wearing a pink bow down a rain-slicked Sunset Strip sidewalk at night. She is wearing a sheer pink sequin trench coat over a rhinestone bodysuit with pink stiletto heels. Paparazzi flashbulbs reflect in the wet pavement while neon signs glow in the background. Capture this in a candid documentary style using a 35mm lens with slight film grain, evoking the feeling of an early 2000s celebrity tabloid photograph.",
           breakdown: { Style: "Celebrity candid, tabloid", Outfit: "Pink sequin trench + rhinestone bodysuit", Props: "Chihuahua with bow", Setting: "Sunset Strip at night", Lighting: "Neon glow + paparazzi flash" }
         },
         {
-          text: "Generate a photorealistic image of a woman sitting inside a private jet cabin where everything — the leather seats, the roses in crystal vases, even the champagne — is in shades of pink. She is wearing a soft blush pink cashmere loungewear set with a large pink diamond pendant necklace, her platinum hair in a sleek low bun. Warm golden hour light streams through the oval windows. Shoot this as a composed lifestyle portrait that conveys effortless, understated opulence.",
+          text: "Generate an image of a woman sitting inside a private jet cabin where everything — the leather seats, the roses in crystal vases, even the champagne — is in shades of pink. She is wearing a soft blush pink cashmere loungewear set with a large pink diamond pendant necklace, her platinum hair in a sleek low bun. Warm golden hour light streams through the oval windows. Shoot this as a composed lifestyle portrait that conveys effortless, understated opulence.",
           breakdown: { Style: "Pink jet-set quiet luxury", Outfit: "Blush cashmere loungewear", Setting: "All-pink private jet", Props: "Pink champagne, pink roses", Mood: "Opulent and serene" }
         },
         {
-          text: "Generate a photorealistic image of a woman stepping out of a pink Rolls Royce Ghost onto a Hollywood red carpet. She is wearing an architectural hot pink strapless ball gown with a dramatically sculptural skirt, a diamond choker, and wrist-length white gloves. A wall of paparazzi flashes lights her from every direction. Shoot this from a slightly low, wide angle to capture both the scale of the gown and the energy of the premiere moment.",
+          text: "Generate an image of a woman stepping out of a pink Rolls Royce Ghost onto a Hollywood red carpet. She is wearing an architectural hot pink strapless ball gown with a dramatically sculptural skirt, a diamond choker, and wrist-length white gloves. A wall of paparazzi flashes lights her from every direction. Shoot this from a slightly low, wide angle to capture both the scale of the gown and the energy of the premiere moment.",
           breakdown: { Style: "Hollywood red carpet premiere", Outfit: "Hot pink sculptural ball gown", Props: "Pink Rolls Royce", Lighting: "Paparazzi flash wall", Mood: "Iconic Hollywood moment" }
         },
         {
-          text: "Generate a photorealistic image of a woman lying across a king-size bed completely covered in pink rose petals. She is wearing a delicate pink lace slip dress with loose platinum waves fanning out around her head like a halo. Soft, diffused natural light filters through sheer curtains, illuminating the pink satin sheets and scattered pearl jewellery around her. Shoot this from directly overhead as an intimate, ethereal boudoir portrait.",
+          text: "Generate an image of a woman lying across a king-size bed completely covered in pink rose petals. She is wearing a delicate pink lace slip dress with loose platinum waves fanning out around her head like a halo. Soft, diffused natural light filters through sheer curtains, illuminating the pink satin sheets and scattered pearl jewellery around her. Shoot this from directly overhead as an intimate, ethereal boudoir portrait.",
           breakdown: { Style: "Luxury rose petal boudoir", Outfit: "Pink lace slip dress", Setting: "Rose petal hotel suite", Lighting: "Soft diffused window light", Mood: "Ethereal and romantic" }
         },
         {
-          text: "Generate a photorealistic image of a woman DJing at a glamorous outdoor pool party in Malibu. She is wearing a neon pink bikini top with a matching cargo micro skirt and oversized pink headphones, standing behind a rhinestone-studded DJ booth. A crowd of glittering party guests fills the background beneath golden magic hour light. Shoot this with a wide-angle lens to capture the full scale of the scene, with a warm cinematic color grade.",
+          text: "Generate an image of a woman DJing at a glamorous outdoor pool party in Malibu. She is wearing a neon pink bikini top with a matching cargo micro skirt and oversized pink headphones, standing behind a rhinestone-studded DJ booth. A crowd of glittering party guests fills the background beneath golden magic hour light. Shoot this with a wide-angle lens to capture the full scale of the scene, with a warm cinematic color grade.",
           breakdown: { Style: "Malibu Y2K pool party DJ", Outfit: "Neon pink bikini + cargo micro skirt", Setting: "Outdoor Malibu pool party", Props: "Pink headphones, rhinestone DJ booth", Lighting: "Golden magic hour" }
         },
         {
-          text: "Generate a photorealistic image of a woman striding confidently down Fifth Avenue in New York City, her arms loaded with pink shopping bags from designer boutiques. She is wearing a structured bubblegum pink blazer dress with gold buttons, matching pink patent leather pumps, and oversized gold sunglasses, with platinum hair in a high ponytail. Capture this in a candid paparazzi style using a telephoto lens, with the busy Manhattan street slightly blurred behind her.",
+          text: "Generate an image of a woman striding confidently down Fifth Avenue in New York City, her arms loaded with pink shopping bags from designer boutiques. She is wearing a structured bubblegum pink blazer dress with gold buttons, matching pink patent leather pumps, and oversized gold sunglasses, with platinum hair in a high ponytail. Capture this in a candid paparazzi style using a telephoto lens, with the busy Manhattan street slightly blurred behind her.",
           breakdown: { Style: "NYC designer shopping candid", Outfit: "Bubblegum pink blazer dress", Setting: "Fifth Avenue, New York City", Props: "Pink designer shopping bags", Mood: "Confident and iconic" }
         }
       ],
 
       glam: [
         {
-          text: "Generate a photorealistic image of a glamorous woman seated on a throne-like gilded chair, wearing a strapless pink ball gown encrusted with crystals that catch the light. Her platinum blonde hair falls in voluminous waves and her makeup features smoky eyes with a glossy pink lip. The scene is lit with warm, dramatic Hollywood studio lighting that casts a golden glow across her skin. Shoot this as a formal portrait using a classic 85mm lens with a soft, blurred background.",
+          text: "Generate an image of a glamorous woman seated on a throne-like gilded chair, wearing a strapless pink ball gown encrusted with crystals that catch the light. Her platinum blonde hair falls in voluminous waves and her makeup features smoky eyes with a glossy pink lip. The scene is lit with warm, dramatic Hollywood studio lighting that casts a golden glow across her skin. Shoot this as a formal portrait using a classic 85mm lens with a soft, blurred background.",
           breakdown: { Style: "Hollywood glamour portrait", Outfit: "Crystal-encrusted pink ball gown", Lighting: "Warm Hollywood studio light", Hair: "Voluminous platinum waves", Makeup: "Smoky eyes + glossy pink lip" }
         },
         {
-          text: "Generate a photorealistic image of a woman standing in a grand Baroque interior, wearing a white fur stole draped over a jewelled bodysuit with long white gloves and a diamond tiara. Cascading pink roses surround her and a soft bokeh background keeps the focus on her commanding presence. Light the scene in the style of a Vogue editorial shoot — precise, flattering, and slightly dramatic — to create an image of timeless luxury fashion photography.",
+          text: "Generate an image of a woman standing in a grand Baroque interior, wearing a white fur stole draped over a jewelled bodysuit with long white gloves and a diamond tiara. Cascading pink roses surround her and a soft bokeh background keeps the focus on her commanding presence. Light the scene in the style of a Vogue editorial shoot — precise, flattering, and slightly dramatic — to create an image of timeless luxury fashion photography.",
           breakdown: { Style: "Vogue Baroque editorial", Outfit: "White fur stole + jewelled bodysuit", Setting: "Grand Baroque interior", Props: "Pink roses, diamond tiara", Lighting: "Editorial Vogue lighting" }
         },
         {
-          text: "Generate a photorealistic image of a woman dressed as modern royalty wearing a sculptural couture gown in champagne and gold, with a Cartier diamond necklace resting at her collarbone. Her hair is swept into an elegant updo with soft face-framing tendrils. Behind her, a celestial backdrop of golden stars and a glowing moon creates an ethereal, otherworldly atmosphere lit by a soft rim light. Shoot this as an editorial portrait that feels both timeless and opulent.",
+          text: "Generate an image of a woman dressed as modern royalty wearing a sculptural couture gown in champagne and gold, with a Cartier diamond necklace resting at her collarbone. Her hair is swept into an elegant updo with soft face-framing tendrils. Behind her, a celestial backdrop of golden stars and a glowing moon creates an ethereal, otherworldly atmosphere lit by a soft rim light. Shoot this as an editorial portrait that feels both timeless and opulent.",
           breakdown: { Style: "Modern royalty editorial", Outfit: "Champagne and gold couture gown", Backdrop: "Celestial gold stars and moon", Lighting: "Ethereal soft rim light", Aesthetic: "Timeless opulence" }
         }
       ],
 
       party: [
         {
-          text: "Generate a photorealistic image of a woman dancing joyfully inside a lavish 2000s nightclub. She is wearing a tiny pink sequin mini dress and holding a champagne bottle with a lit sparkler as confetti falls around her. The club is lit by colourful disco lights and surrounded by paparazzi flashbulbs. Capture this with a slight motion blur on the background to convey energy and movement, in the style of a documentary flash photograph from a celebrity night out.",
+          text: "Generate an image of a woman dancing joyfully inside a lavish 2000s nightclub. She is wearing a tiny pink sequin mini dress and holding a champagne bottle with a lit sparkler as confetti falls around her. The club is lit by colourful disco lights and surrounded by paparazzi flashbulbs. Capture this with a slight motion blur on the background to convey energy and movement, in the style of a documentary flash photograph from a celebrity night out.",
           breakdown: { Style: "2000s nightclub party", Outfit: "Pink sequin mini dress", Setting: "Lavish 2000s nightclub", Lighting: "Disco lights + paparazzi flash", Mood: "Electric and ecstatic" }
         },
         {
-          text: "Generate a photorealistic image of a woman hosting a glamorous rooftop pool party in Los Angeles. She is wearing a pink rhinestone bikini and oversized designer sunglasses, holding a tiny chihuahua in her arms while surrounded by tropical flowers and cabana furniture. The scene is bathed in warm golden afternoon light with a hazy LA skyline stretching out behind her. Shoot this in a lifestyle photography style with gentle film grain.",
+          text: "Generate an image of a woman hosting a glamorous rooftop pool party in Los Angeles. She is wearing a pink rhinestone bikini and oversized designer sunglasses, holding a tiny chihuahua in her arms while surrounded by tropical flowers and cabana furniture. The scene is bathed in warm golden afternoon light with a hazy LA skyline stretching out behind her. Shoot this in a lifestyle photography style with gentle film grain.",
           breakdown: { Style: "LA rooftop pool party", Outfit: "Pink rhinestone bikini", Setting: "Rooftop pool, Los Angeles", Lighting: "Golden afternoon sun", Props: "Chihuahua, tropical flowers" }
         }
       ],
 
       fashion: [
         {
-          text: "Generate a photorealistic image of a woman in a high-fashion campaign shoot, wearing avant-garde pink couture with an exaggerated sculptural silhouette. She stands against a stark white seamless studio backdrop, her expression severe and commanding, wearing strappy stiletto heels. Light the scene with a large beauty dish to create precise, flattering shadows that highlight the drama of the garment. The overall feel should be razor-sharp and editorial, like a double-page spread in a fashion magazine.",
+          text: "Generate an image of a woman in a high-fashion campaign shoot, wearing avant-garde pink couture with an exaggerated sculptural silhouette. She stands against a stark white seamless studio backdrop, her expression severe and commanding, wearing strappy stiletto heels. Light the scene with a large beauty dish to create precise, flattering shadows that highlight the drama of the garment. The overall feel should be razor-sharp and editorial, like a double-page spread in a fashion magazine.",
           breakdown: { Style: "High fashion campaign", Outfit: "Avant-garde pink couture", Setting: "White seamless studio", Lighting: "Beauty dish", Mood: "Severe and commanding" }
         },
         {
-          text: "Generate a photorealistic image of a woman captured mid-stride on a downtown Manhattan street during fashion week. She is wearing a monochromatic all-white look consisting of an oversized structured blazer, wide-leg trousers, and platform boots. The overcast sky creates flat, diffused natural light. Shoot this in a candid paparazzi street style using a 50mm lens with a shallow depth of field, giving the image an effortlessly chic, spontaneous energy.",
+          text: "Generate an image of a woman captured mid-stride on a downtown Manhattan street during fashion week. She is wearing a monochromatic all-white look consisting of an oversized structured blazer, wide-leg trousers, and platform boots. The overcast sky creates flat, diffused natural light. Shoot this in a candid paparazzi street style using a 50mm lens with a shallow depth of field, giving the image an effortlessly chic, spontaneous energy.",
           breakdown: { Style: "Fashion week street style", Outfit: "All-white structured blazer + wide-leg trousers", Setting: "Downtown Manhattan", Lighting: "Overcast natural light", Vibe: "Candid and effortless" }
         }
       ],
 
       y2k: [
         {
-          text: "Generate a photorealistic image recreating the Y2K celebrity aesthetic of the early 2000s. A woman stands in Beverly Hills wearing a velour baby pink tracksuit, rhinestone accessories, and a Von Dutch trucker hat, holding an oversized logo bag and a flip phone. The image should have the look and colour grading of an early 2000s point-and-shoot digital camera — slightly overexposed, warm-toned, and nostalgic — as if it was just found on someone's old Myspace page.",
+          text: "Generate an image recreating the Y2K celebrity aesthetic of the early 2000s. A woman stands in Beverly Hills wearing a velour baby pink tracksuit, rhinestone accessories, and a Von Dutch trucker hat, holding an oversized logo bag and a flip phone. The image should have the look and colour grading of an early 2000s point-and-shoot digital camera — slightly overexposed, warm-toned, and nostalgic — as if it was just found on someone's old Myspace page.",
           breakdown: { Style: "Y2K nostalgia", Outfit: "Pink velour tracksuit + Von Dutch hat", Accessories: "Logo bag, flip phone, rhinestones", Setting: "Beverly Hills", Look: "Early 2000s digital camera aesthetic" }
         },
         {
-          text: "Generate a photorealistic image in the style of a 2003 celebrity tabloid photograph. A woman stands outside a Hollywood nightclub wearing low-rise jeans with a rhinestone belt, a belly-baring halter top, and Ugg boots, with chunky highlighted hair. The photo should look like it was taken with a grainy tabloid camera — slightly blurred, warm colour grading, and authentic flash photography — capturing the energy of an iconic early 2000s celebrity moment.",
+          text: "Generate an image in the style of a 2003 celebrity tabloid photograph. A woman stands outside a Hollywood nightclub wearing low-rise jeans with a rhinestone belt, a belly-baring halter top, and Ugg boots, with chunky highlighted hair. The photo should look like it was taken with a grainy tabloid camera — slightly blurred, warm colour grading, and authentic flash photography — capturing the energy of an iconic early 2000s celebrity moment.",
           breakdown: { Style: "2003 celebrity tabloid", Outfit: "Low-rise jeans + halter top + Ugg boots", Hair: "Chunky highlights", Look: "Grainy tabloid flash photography", Era: "Early 2000s Hollywood" }
         }
       ],
 
       editorial: [
         {
-          text: "Generate a photorealistic image for a conceptual fashion editorial that reimagines a Baroque oil painting as a living, breathing photograph. A woman stands in the candlelit Hall of Mirrors at Versailles wearing a gold brocade corset and a full dramatic skirt, adorned in velvet and pearls. The lighting is deeply chiaroscuro — rich shadows and warm candlelight. As an anachronistic detail, she holds a diamond-encrusted smartphone. Compose this as a museum-quality wide portrait in the spirit of a W Magazine editorial.",
+          text: "Generate an image for a conceptual fashion editorial that reimagines a Baroque oil painting as a living, breathing photograph. A woman stands in the candlelit Hall of Mirrors at Versailles wearing a gold brocade corset and a full dramatic skirt, adorned in velvet and pearls. The lighting is deeply chiaroscuro — rich shadows and warm candlelight. As an anachronistic detail, she holds a diamond-encrusted smartphone. Compose this as a museum-quality wide portrait in the spirit of a W Magazine editorial.",
           breakdown: { Style: "Baroque conceptual editorial", Outfit: "Gold brocade corset + full skirt", Setting: "Candlelit Versailles", Lighting: "Dramatic chiaroscuro", Concept: "Baroque meets modern luxury" }
         },
         {
-          text: "Generate a photorealistic image for a dark glamour fashion editorial. A woman stands in a subterranean stone castle chamber wearing black latex opera gloves and a dramatic sculptural gown, surrounded by scattered black roses. A single harsh overhead spotlight illuminates her from above, casting long dramatic shadows around her. Shoot this in high-contrast black and white, with only her deep red lip rendered in colour. The final image should feel like it belongs in AnOther Magazine.",
+          text: "Generate an image for a dark glamour fashion editorial. A woman stands in a subterranean stone castle chamber wearing black latex opera gloves and a dramatic sculptural gown, surrounded by scattered black roses. A single harsh overhead spotlight illuminates her from above, casting long dramatic shadows around her. Shoot this in high-contrast black and white, with only her deep red lip rendered in colour. The final image should feel like it belongs in AnOther Magazine.",
           breakdown: { Style: "Dark glamour editorial", Outfit: "Black latex gloves + sculptural gown", Setting: "Stone castle chamber", Lighting: "Single overhead spotlight", Look: "High contrast B&W with red lip" }
         }
       ],
 
       luxury: [
         {
-          text: "Generate a photorealistic image of a woman sitting inside a private jet wearing a pale pink silk slip dress, with a crocodile leather Hermès Birkin bag resting beside her and a champagne flute in her hand. The cream leather interior and crystal glassware reflect warm golden hour light streaming through the oval window. Shoot this as a composed, unhurried lifestyle portrait in the spirit of Slim Aarons — effortlessly wealthy, quietly aspirational.",
+          text: "Generate an image of a woman sitting inside a private jet wearing a pale pink silk slip dress, with a crocodile leather Hermès Birkin bag resting beside her and a champagne flute in her hand. The cream leather interior and crystal glassware reflect warm golden hour light streaming through the oval window. Shoot this as a composed, unhurried lifestyle portrait in the spirit of Slim Aarons — effortlessly wealthy, quietly aspirational.",
           breakdown: { Style: "Private jet quiet luxury", Outfit: "Pale pink silk slip dress", Props: "Hermès Birkin, champagne flute", Setting: "Private jet interior", Aesthetic: "Slim Aarons old money" }
         },
         {
-          text: "Generate a photorealistic image of a woman standing on a sun-drenched street in Monaco, wearing a white linen blazer, wide-leg trousers, and Cartier jewellery, with a row of gleaming supercars stretching behind her along the harbour. Warm golden hour light creates a soft lens flare in the frame. Shoot this with a Leica-style documentary lens — sharp, clean, and quietly confident — in the mood of a European luxury vacation editorial.",
+          text: "Generate an image of a woman standing on a sun-drenched street in Monaco, wearing a white linen blazer, wide-leg trousers, and Cartier jewellery, with a row of gleaming supercars stretching behind her along the harbour. Warm golden hour light creates a soft lens flare in the frame. Shoot this with a Leica-style documentary lens — sharp, clean, and quietly confident — in the mood of a European luxury vacation editorial.",
           breakdown: { Style: "Monaco luxury lifestyle", Outfit: "White linen blazer + wide-leg trousers", Props: "Cartier jewellery", Setting: "Monaco harbour, supercars", Lighting: "Golden hour with lens flare" }
         }
       ]
@@ -513,8 +513,8 @@
     function generate() {
       const pool = getPromptPool();
       const item = pool[Math.floor(Math.random() * pool.length)];
-      // Prepend the character reference prefix to every prompt
-      currentPromptText = CHARACTER_REF + item.text;
+      // Append the face lock suffix to every prompt
+      currentPromptText = item.text + FACE_LOCK;
       renderPromptCard(currentPromptText);
       renderBreakdown(item.breakdown);
       resetCopyButton();
