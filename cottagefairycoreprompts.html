@@ -18,15 +18,17 @@
        Design Tokens
     ───────────────────────────────────────── */
     :root {
-      --colour-bg:         #f7f3ec;
-      --colour-bg-deep:    #eee7d8;
-      --colour-surface:    #ffffff;
-      --colour-border:     #d6cbb8;
-      --colour-text:       #2e2416;
-      --colour-text-soft:  #7a6a55;
-      --colour-moss:       #5a7a4a;
-      --colour-sage:       #8aab78;
-      --colour-lilac:      #b49fc5;
+      --colour-bg:          #f7f3ec;
+      --colour-bg-deep:     #eee7d8;
+      --colour-surface:     #ffffff;
+      --colour-border:      #d6cbb8;
+      --colour-text:        #2e2416;
+      --colour-text-soft:   #7a6a55;
+      --colour-moss:        #5a7a4a;
+      --colour-sage:        #8aab78;
+      --colour-lilac:       #b49fc5;
+      --colour-lilac-dark:  #7a5f90;
+      --colour-dusty-rose:  #c9788a;
 
       --font-serif:  'Playfair Display', Georgia, serif;
       --font-italic: 'IM Fell English', Georgia, serif;
@@ -84,7 +86,7 @@
       color: var(--colour-text);
     }
 
-    .page-header__title em     { color: #c9788a; font-style: italic; }
+    .page-header__title em     { color: var(--colour-dusty-rose); font-style: italic; }
     .page-header__title strong { color: var(--colour-moss); font-weight: 700; }
 
     .page-header__subtitle {
@@ -160,13 +162,24 @@
       margin-bottom: 12px;
     }
 
+    .prompt-panel__text {
+      font-family: var(--font-sans);
+      font-size: 13.5px;
+      line-height: 1.9;
+      color: var(--colour-text-soft);
+      white-space: pre-wrap;
+      word-break: break-word;
+      cursor: text;
+      user-select: all;
+    }
+
     .copy-button {
       margin-top: 16px;
       padding: 9px 28px;
       background: transparent;
       border: 1px solid var(--colour-lilac);
       border-radius: var(--radius-pill);
-      color: #7a5f90;
+      color: var(--colour-lilac-dark);
       font-family: var(--font-italic);
       font-style: italic;
       font-size: 13px;
@@ -178,17 +191,6 @@
     .copy-button:hover {
       background: var(--colour-lilac);
       color: #fff;
-    }
-
-    .prompt-panel__text {
-      font-family: var(--font-sans);
-      font-size: 13.5px;
-      line-height: 1.9;
-      color: var(--colour-text-soft);
-      white-space: pre-wrap;
-      word-break: break-word;
-      cursor: text;
-      user-select: all;
     }
 
     /* ─────────────────────────────────────────
@@ -236,7 +238,21 @@
 
   <script>
     /* ═══════════════════════════════════════════════════════
+       CONSTANTS
+    ═══════════════════════════════════════════════════════ */
+
+    // How many accessories to include per generated look
+    const ACCESSORIES_PER_LOOK = 3;
+
+    // Appended to every prompt to prevent AI image tools from
+    // altering the subject's face between generations
+    const PROMPT_SUFFIX = "DO NOT CHANGE FACE OR FACIAL EXPRESSION.";
+
+
+    /* ═══════════════════════════════════════════════════════
        DATA
+       All randomisable attributes are defined here as arrays.
+       To add or remove options, edit only this section.
     ═══════════════════════════════════════════════════════ */
 
     const HAIR_OPTIONS = [
@@ -266,6 +282,7 @@
       "pale mauve gloss",
     ];
 
+    // null means no whimsical detail is applied for that generation
     const WHIMSICAL_DETAIL_OPTIONS = [
       "tiny painted daisies on the cheekbones",
       "faint iridescent freckles dusted across the nose",
@@ -322,9 +339,17 @@
       "spinning slowly in a meadow, eyes closed, a half-smile on her face",
       "standing at the stream's edge barefoot, skirt hitched, gaze fixed on the water below",
       "leaning against a tree with eyes closed, face tilted up toward light filtering through the canopy",
+      "crouching beside a glowing cluster of bioluminescent mushrooms at dusk, expression full of wonder",
+      "mid-twirl in a clearing, skirt fanning out, hair caught in the breeze, laughing softly",
+      "lying in a bed of clover, staring up at a canopy of silver birch leaves, completely still",
+      "holding a single lit candle in cupped hands, face softly illuminated, expression serene",
+      "perched on a mossy stone wall, bare feet dangling, watching fireflies blink in the blue dusk",
+      "pressing her palm gently to the bark of a very old oak tree, eyes closed",
+      "wading slowly through knee-high morning mist in a meadow, arms outstretched",
+      "sitting cross-legged inside a hollow tree, reading a small book by filtered green light",
+      "lying on her stomach in tall grass, chin resting on her hands, watching a beetle pass",
+      "standing in shallow water, skirt soaked at the hem, catching her reflection in the still surface",
     ];
-
-    const ACCESSORY_COUNT = 3;
 
 
     /* ═══════════════════════════════════════════════════════
@@ -336,23 +361,51 @@
       return array[Math.floor(Math.random() * array.length)];
     }
 
-    /** Returns `count` unique random elements from an array without mutating it. */
+    /**
+     * Returns `count` unique random elements from an array.
+     * Does not mutate the original array.
+     */
     function pickRandomUnique(array, count) {
       const pool = [...array];
       const selections = [];
+
       while (selections.length < count && pool.length > 0) {
         const randomIndex = Math.floor(Math.random() * pool.length);
         selections.push(pool.splice(randomIndex, 1)[0]);
       }
+
       return selections;
     }
 
 
     /* ═══════════════════════════════════════════════════════
-       PROMPT BUILDER
+       LOOK BUILDER
+       Randomly selects one value from each category and
+       returns them together as a single look object.
     ═══════════════════════════════════════════════════════ */
 
-    function buildPrompt(look) {
+    function buildRandomLook() {
+      return {
+        hair:            pickRandom(HAIR_OPTIONS),
+        eyeMakeup:       pickRandom(EYE_MAKEUP_OPTIONS),
+        lips:            pickRandom(LIP_OPTIONS),
+        whimsicalDetail: pickRandom(WHIMSICAL_DETAIL_OPTIONS),
+        garment:         pickRandom(GARMENT_OPTIONS),
+        layer:           pickRandom(LAYER_OPTIONS),
+        footwear:        pickRandom(FOOTWEAR_OPTIONS),
+        accessories:     pickRandomUnique(ACCESSORY_OPTIONS, ACCESSORIES_PER_LOOK),
+        setting:         pickRandom(SETTING_OPTIONS),
+        mood:            pickRandom(MOOD_OPTIONS),
+      };
+    }
+
+
+    /* ═══════════════════════════════════════════════════════
+       PROMPT BUILDER
+       Formats a look object into a full image generation prompt.
+    ═══════════════════════════════════════════════════════ */
+
+    function buildPromptFromLook(look) {
       const whimsicalLine = look.whimsicalDetail ? `, ${look.whimsicalDetail}` : '';
 
       return `Hyper-realistic photograph, shot on 35mm film, ultra-detailed, photorealistic, natural light, shallow depth of field, slight grain, warm earthy tones. No artificial filters or modern editing. Cottagecore / fairycore — whimsical, gentle, rooted in nature.
@@ -363,33 +416,53 @@ She is ${look.mood}.
 
 Setting: ${look.setting}.
 
-Inspired by: quiet English countryside, fairy tales without the artifice, the smell of rain on old books, foraging at dawn. Think Midsommar softness, Studio Ghibli stillness, pre-Raphaelite warmth.`;
+Inspired by: quiet English countryside, fairy tales without the artifice, the smell of rain on old books, foraging at dawn. Think Midsommar softness, Studio Ghibli stillness, pre-Raphaelite warmth.
+
+${PROMPT_SUFFIX}`;
     }
 
 
     /* ═══════════════════════════════════════════════════════
-       GENERATE
+       DOM UPDATER
+       Handles all direct interaction with the page.
+       Kept separate from data logic above.
     ═══════════════════════════════════════════════════════ */
 
-    function generate() {
-      const look = {
-        hair:            pickRandom(HAIR_OPTIONS),
-        eyeMakeup:       pickRandom(EYE_MAKEUP_OPTIONS),
-        lips:            pickRandom(LIP_OPTIONS),
-        whimsicalDetail: pickRandom(WHIMSICAL_DETAIL_OPTIONS),
-        garment:         pickRandom(GARMENT_OPTIONS),
-        layer:           pickRandom(LAYER_OPTIONS),
-        footwear:        pickRandom(FOOTWEAR_OPTIONS),
-        accessories:     pickRandomUnique(ACCESSORY_OPTIONS, ACCESSORY_COUNT),
-        setting:         pickRandom(SETTING_OPTIONS),
-        mood:            pickRandom(MOOD_OPTIONS),
-      };
-
-      document.getElementById('prompt-text').textContent = buildPrompt(look);
+    function displayPrompt(promptText) {
+      document.getElementById('prompt-text').textContent = promptText;
 
       const promptPanel = document.getElementById('prompt-panel');
       promptPanel.classList.add('is-visible');
       promptPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function resetCopyButton(copyButton, originalLabel) {
+      copyButton.textContent = originalLabel;
+    }
+
+    function handleCopyButtonClick() {
+      const promptText = document.getElementById('prompt-text').textContent;
+      if (!promptText) return;
+
+      navigator.clipboard.writeText(promptText).then(() => {
+        const copyButton = document.getElementById('copy-button');
+        const originalLabel = copyButton.textContent;
+        copyButton.textContent = '✦ Copied!';
+        setTimeout(() => resetCopyButton(copyButton, originalLabel), 2000);
+      });
+    }
+
+
+    /* ═══════════════════════════════════════════════════════
+       ENTRY POINT
+       Called when the generate button is clicked.
+       Orchestrates look selection, prompt building, and display.
+    ═══════════════════════════════════════════════════════ */
+
+    function handleGenerateClick() {
+      const selectedLook = buildRandomLook();
+      const generatedPrompt = buildPromptFromLook(selectedLook);
+      displayPrompt(generatedPrompt);
     }
 
 
@@ -397,18 +470,8 @@ Inspired by: quiet English countryside, fairy tales without the artifice, the sm
        EVENT LISTENERS
     ═══════════════════════════════════════════════════════ */
 
-    document.getElementById('generate-button').addEventListener('click', generate);
-
-    document.getElementById('copy-button').addEventListener('click', () => {
-      const promptText = document.getElementById('prompt-text').textContent;
-      if (!promptText) return;
-      navigator.clipboard.writeText(promptText).then(() => {
-        const copyButton = document.getElementById('copy-button');
-        const originalLabel = copyButton.textContent;
-        copyButton.textContent = '✦ Copied!';
-        setTimeout(() => { copyButton.textContent = originalLabel; }, 2000);
-      });
-    });
+    document.getElementById('generate-button').addEventListener('click', handleGenerateClick);
+    document.getElementById('copy-button').addEventListener('click', handleCopyButtonClick);
   </script>
 
 </body>

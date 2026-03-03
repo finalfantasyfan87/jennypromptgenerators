@@ -1,0 +1,566 @@
+<!-- © 2026 Jennifer Haywood. All rights reserved.
+     Unauthorized reproduction or distribution of this work,
+     in whole or in part, is strictly prohibited. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✦ Kuromi × MyMelody · Prompt Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Dots&family=Nunito:ital,wght@0,400;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* ── Kuromi palette (deep purples) ── */
+  --kuromi-deep:   #4A0E6B;  /* darkest purple — buttons, borders */
+  --kuromi-mid:    #7B2FBE;  /* mid purple — accents, glows */
+  --kuromi-light:  #B15FE8;  /* light purple — text highlights */
+
+  /* ── My Melody palette (pinks) ── */
+  --melody-hot:    #FF4FA0;  /* vivid pink — primary melody accent */
+  --melody-soft:   #FF8FC8;  /* pastel pink — text, secondary accents */
+  --melody-blush:  #FFD6ED;  /* near-white pink — subtle tints */
+
+  /* ── Page background ── */
+  --page-bg:       #0E0118;  /* very dark purple-black */
+
+  /* ── Card backgrounds ── */
+  --card-bg-faint:    rgba(255, 255, 255, 0.04);  /* barely-there tint for cards */
+  --card-bg-readable: rgba(15, 5, 30, 0.88);      /* dark opaque — makes prompt text legible */
+
+  /* ── Prompt text (tuned for readability on dark cards) ── */
+  --text-prompt-main:  #EAE0FF;  /* soft lavender-white — main prompt body */
+  --text-prompt-dim:   #C0A8E8;  /* muted lavender — face-lock / secondary lines */
+  --text-card-number:  rgba(255, 255, 255, 0.22);  /* faint numbering */
+
+  /* ── Glow effects ── */
+  --glow-kuromi: 0 0 30px rgba(123, 47, 190, 0.5);
+  --glow-melody: 0 0 30px rgba(255, 79, 160, 0.5);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--page-bg);
+  color: var(--text-prompt-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Animated radial gradient mesh — gives the page depth and atmosphere ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 15% 30%, rgba(123,47,190,0.25) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 50% at 85% 70%, rgba(255,79,160,0.2) 0%, transparent 70%),
+    radial-gradient(ellipse 80% 30% at 50% 100%, rgba(74,14,107,0.4) 0%, transparent 60%);
+  animation: meshPulse 8s ease-in-out infinite alternate;
+}
+@keyframes meshPulse {
+  0%   { opacity: .8; transform: scale(1); }
+  100% { opacity: 1;  transform: scale(1.04); }
+}
+
+/* ── Scanlines ── */
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background: repeating-linear-gradient(0deg, transparent 0px, transparent 3px, rgba(0,0,0,0.05) 3px, rgba(0,0,0,0.05) 4px);
+  pointer-events: none;
+}
+
+/* ── Floating sparks ── */
+.spark {
+  position: fixed; pointer-events: none; z-index: 0;
+  opacity: 0; animation: sparkFloat linear infinite;
+}
+@keyframes sparkFloat {
+  0%   { opacity: 0; transform: translateY(100vh) rotate(0deg) scale(.5); }
+  10%  { opacity: .2; }
+  90%  { opacity: .12; }
+  100% { opacity: 0; transform: translateY(-10vh) rotate(540deg) scale(1.2); }
+}
+
+
+/* ── Layout ── */
+.wrap {
+  position: relative; z-index: 1;
+  max-width: 860px; margin: 0 auto;
+  padding: 40px 22px 100px;
+}
+
+/* ── Header ── */
+.header { text-align: center; margin-bottom: 40px; }
+
+
+.logo-row { display:flex; align-items:center; justify-content:center; gap:14px; margin-bottom:12px; }
+.badge {
+  display:inline-flex; align-items:center; gap:5px;
+  padding:4px 14px; border-radius:50px;
+  font-size:.68rem; font-weight:900; letter-spacing:2px; text-transform:uppercase;
+  animation: bPop .6s cubic-bezier(.34,1.56,.64,1) backwards;
+}
+.badge.k { background:rgba(123,47,190,.3); border:1.5px solid var(--kuromi-mid); color:var(--kuromi-light); box-shadow:var(--glow-kuromi); animation-delay:.1s; }
+.badge.m { background:rgba(255,79,160,.2); border:1.5px solid var(--melody-hot); color:var(--melody-soft); box-shadow:var(--glow-melody); animation-delay:.2s; }
+@keyframes bPop { from{transform:scale(0) rotate(-15deg);opacity:0} to{transform:scale(1);opacity:1} }
+
+h1 {
+  font-family: 'Zen Dots', sans-serif;
+  font-size: clamp(1.6rem, 5vw, 2.5rem);
+  line-height: 1.1;
+  /* Gradient sweeps from Kuromi purple → white → Melody pink */
+  background: linear-gradient(135deg, var(--kuromi-light) 0%, #fff 40%, var(--melody-soft) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  filter: drop-shadow(0 0 20px rgba(177,95,232,.4));
+  animation: tIn .8s cubic-bezier(.34,1.56,.64,1) .3s backwards;
+}
+.sub {
+  font-size:.78rem; font-weight:700; letter-spacing:3px; text-transform:uppercase;
+  color:rgba(255,255,255,.3); margin-top:8px;
+  animation: tIn .8s ease .5s backwards;
+}
+@keyframes tIn { from{opacity:0;transform:translateY(18px) scale(.95)} to{opacity:1;transform:none} }
+
+/* ── Face constant reminder pill — always visible at top ── */
+.face-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,79,160,.1);
+  border: 1px solid rgba(255,79,160,.28);
+  border-radius: 50px;
+  padding: 7px 18px;
+  margin: 0 auto 34px;
+  font-size: .75rem; font-weight: 800; letter-spacing: .5px;
+  color: var(--melody-soft);
+  animation: tIn .7s ease .6s backwards;
+}
+.face-pill .lock { font-size: 1rem; }
+.face-pill code { font-family: monospace; color: var(--melody-blush); letter-spacing: .3px; }
+
+
+/* ── Controls ── */
+.controls {
+  display:flex; gap:10px; flex-wrap:wrap; justify-content:center;
+  margin-bottom:30px;
+  animation: tIn .7s ease .7s backwards;
+}
+.pill-btn {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:10px 22px; border-radius:50px; border:none;
+  font-family:'Zen Dots',sans-serif; font-size:.76rem; letter-spacing:.5px;
+  cursor:pointer; transition:all .18s; position:relative; overflow:hidden;
+}
+.pill-btn::after { content:''; position:absolute; inset:0; background:rgba(255,255,255,0); transition:background .2s; }
+.pill-btn:hover::after { background:rgba(255,255,255,.1); }
+.pill-btn:active { transform:scale(.96); }
+
+.pill-btn.kuromi { background:linear-gradient(135deg, var(--kuromi-deep) 0%, var(--kuromi-mid) 100%); color:#fff; box-shadow:0 4px 16px rgba(123,47,190,.5); }
+.pill-btn.melody { background:linear-gradient(135deg, var(--melody-hot) 0%, var(--melody-soft) 100%); color:#fff; box-shadow:0 4px 16px rgba(255,79,160,.45); }
+.pill-btn.both   { background:linear-gradient(135deg, var(--kuromi-mid) 0%, var(--melody-hot) 100%); color:#fff; box-shadow:0 4px 16px rgba(177,95,232,.5); }
+.pill-btn.ghost  { background:rgba(255,255,255,.06); color:rgba(255,255,255,.5); border:1.5px solid rgba(255,255,255,.12); }
+.pill-btn.ghost:hover { color:#fff; border-color:rgba(255,255,255,.3); }
+
+/* ── Single prompt display area ── */
+.prompt-display {
+  margin-bottom: 20px;
+}
+
+/* ── Prompt card (single) ── */
+
+.prompt-card {
+  /* Dark, near-opaque background so prompt text is easy to read */
+  background: var(--card-bg-readable);
+  border: 1.5px solid rgba(177,95,232,.2);
+  border-radius: 20px;
+  padding: 28px 32px;
+  position: relative; overflow: hidden;
+  opacity: 0; transform: translateY(10px);
+  animation: cardIn .35s cubic-bezier(.34,1.2,.64,1) forwards;
+  margin-bottom: 20px;
+}
+@keyframes cardIn { to { opacity:1; transform:none; } }
+
+/* Colored left border stripe — indicates the theme */
+.prompt-card::before {
+  content:''; position:absolute; left:0; top:0; bottom:0; width:4px; border-radius:20px 0 0 20px;
+}
+.theme-kuromi::before { background: var(--kuromi-mid); }
+.theme-melody::before  { background: var(--melody-hot); }
+.theme-both::before    { background: linear-gradient(180deg, var(--kuromi-mid), var(--melody-hot)); }
+
+/* Theme tag pill — small label above the prompt text */
+.card-theme-tag {
+  display:inline-flex; align-items:center; gap:4px;
+  font-size:.62rem; font-weight:900; letter-spacing:1.5px; text-transform:uppercase;
+  padding:2px 9px; border-radius:50px; margin-bottom:7px;
+}
+.theme-kuromi .card-theme-tag { background:rgba(123,47,190,.3); color:var(--kuromi-light); border:1px solid rgba(177,95,232,.35); }
+.theme-melody .card-theme-tag  { background:rgba(255,79,160,.25); color:var(--melody-soft);  border:1px solid rgba(255,143,200,.35); }
+.theme-both .card-theme-tag    { background:rgba(177,95,232,.2);  color:#e4c0ff;             border:1px solid rgba(177,95,232,.35); }
+.card-theme-tag svg { width:14px; height:14px; }
+
+/* Main prompt text — high contrast lavender-white on dark card */
+.card-text {
+  font-size: .85rem;
+  font-weight: 700;
+  line-height: 1.7;
+  color: var(--text-prompt-main);
+  letter-spacing: .1px;
+}
+
+/* Face lock line — slightly dimmer so it reads as a suffix, not the main content */
+.face-tag {
+  display: inline-block;
+  margin-top: 7px;
+  font-size: .73rem;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--text-prompt-dim);
+  background: rgba(255,79,160,.08);
+  border: 1px solid rgba(255,79,160,.18);
+  border-radius: 6px;
+  padding: 2px 9px;
+}
+
+
+
+
+/* ── Copy prompt button — appears below the card after generation ── */
+.copy-prompt-btn {
+  margin-top: 4px;
+  padding: 12px 36px;
+  font-size: .85rem;
+}
+.empty-state { text-align:center; padding:60px 20px; color:rgba(255,255,255,.2); }
+.empty-state .big { font-size:3.5rem; margin-bottom:14px; display:block; }
+.empty-state p { font-size:.85rem; line-height:1.7; }
+
+
+
+
+/* ── Toast notification — briefly appears on copy actions ── */
+.toast {
+  position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(16px);
+  background:rgba(20,5,40,.95); border:1.5px solid var(--melody-hot); border-radius:12px;
+  padding:9px 22px; font-size:.8rem; font-weight:800; color:var(--melody-soft);
+  box-shadow:var(--glow-melody); z-index:999; opacity:0; transition:all .3s; white-space:nowrap;
+}
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:var(--page-bg); }
+::-webkit-scrollbar-thumb { background:var(--kuromi-mid); border-radius:3px; }
+
+@media(max-width:600px) {
+  .prompt-card { grid-template-columns:24px 1fr auto; gap:10px; }
+  .action-bar  { flex-direction:column; align-items:center; }
+}
+</style>
+</head>
+<body>
+
+<script>
+  // Floating sparkles
+  ['✿','★','♡','✦','☆','✮','♪','❋'].forEach((c,i)=>{
+    const s=document.createElement('div');
+    s.className='spark'; s.textContent=c;
+    s.style.cssText=`left:${Math.random()*100}%;font-size:${.7+Math.random()*1.1}rem;animation-duration:${13+Math.random()*18}s;animation-delay:-${Math.random()*25}s`;
+    document.body.appendChild(s);
+  });
+</script>
+
+<div class="wrap">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo-row">
+      <span class="badge k">🖤 Kuromi</span>
+      <span class="badge m">🌸 My Melody</span>
+    </div>
+    <h1>Prompt Studio</h1>
+    <p class="sub">Kuromi × My Melody · 20 Prompts</p>
+  </header>
+
+  <!-- Face constant info -->
+  <div style="text-align:center">
+    <div class="face-pill">
+      <span class="lock">🔒</span>
+      Appended to every prompt: <code>do not change face or facial expression</code>
+    </div>
+  </div>
+
+  <!-- Mascot divider replaced with simple styled line -->
+  <div style="display:flex;align-items:center;gap:12px;margin:0 0 22px;">
+    <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(177,95,232,.3),transparent)"></div>
+    <span style="font-size:.7rem;letter-spacing:3px;color:rgba(255,255,255,.2)">✦ ♡ ✦</span>
+    <div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(177,95,232,.3),transparent)"></div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <button class="pill-btn kuromi" onclick="generate('kuromi')">🖤 Kuromi</button>
+    <button class="pill-btn melody" onclick="generate('melody')">🌸 My Melody</button>
+    <button class="pill-btn both"   onclick="generate('both')">✦ Mix Both</button>
+  </div>
+
+  <!-- Single prompt display -->
+  <div class="prompt-display" id="promptDisplay">
+    <div class="empty-state">
+      <span class="big">✦</span>
+      <p>Pick a theme above to generate a prompt.<br>It will include <em>"do not change face or facial expression"</em></p>
+    </div>
+  </div>
+
+  <!-- Copy button — only shown once a prompt exists -->
+  <div style="text-align:center">
+    <button class="pill-btn copy-prompt-btn" id="copyBtn" onclick="copyPrompt()" style="display:none; margin:0 auto;">
+      📋 Copy Prompt
+    </button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─────────────────────────────────────────────────────────────────────────────
+// FACE LOCK CONSTANT
+// This string is concatenated to the end of every generated prompt.
+// It instructs AI image generators to preserve the subject's face.
+// ─────────────────────────────────────────────────────────────────────────────
+const FACE_LOCK = "do not change face or facial expression";
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PROMPT DATA
+// Each theme (kuromi / melody) has four arrays:
+//   subject  — who / what the person is wearing or cosplaying
+//   setting  — where the scene takes place
+//   style    — photography style, camera, lighting
+//   mood     — emotional tone / vibe of the scene
+// buildPrompt() picks one from each array and assembles the final prompt.
+// ─────────────────────────────────────────────────────────────────────────────
+const PROMPT_DATA = {
+  kuromi: {
+    subject: [
+      "a person in Kuromi's iconic black jester outfit with purple pom-poms",
+      "a person dressed in Kuromi's dark lolita dress with skull accessories",
+      "a person wearing a gothic punk hoodie inspired by Kuromi",
+      "a person in Kuromi-inspired Victorian mourning fashion",
+      "a person styled as Kuromi at a moonlit midnight festival",
+      "a person in a dark magical girl outfit inspired by Kuromi",
+      "a person wearing a Kuromi-themed punk concert look",
+      "a person dressed in Kuromi's Halloween queen costume",
+      "a person in a Kuromi-style dark kimono with black rose details",
+      "a person wearing a Kuromi-inspired noir detective coat",
+    ],
+    setting: [
+      "in a glowing purple enchanted forest at midnight",
+      "inside a gothic castle ballroom lit by black candles",
+      "in a dark sakura garden where petals fall like snow",
+      "floating on a crescent moon above a starry cityscape",
+      "in a haunted Victorian greenhouse full of dark roses",
+      "at a twilight carnival with dark purple ferris wheel lights",
+      "inside a crystal cave of amethyst and moonstone",
+      "in a misty graveyard decorated with cute chibi ghosts",
+      "on a black sand beach under a violet stormy sky",
+      "in a gothic library with floating candles and cobwebs",
+    ],
+    style: [
+      "photorealistic, shot on Sony A7R V, 85mm f/1.4 lens, cinematic lighting",
+      "hyperrealistic photography, dramatic moody lighting, shallow depth of field",
+      "photorealistic portrait, editorial fashion photography, studio lighting",
+      "ultra realistic photo, shot on Canon EOS R5, cinematic color grade",
+      "photorealistic, high-end fashion shoot, Rembrandt lighting, 8K",
+      "realistic photography, atmospheric fog, neon purple rim lighting, bokeh background",
+    ],
+    mood: [
+      "mysterious and mischievously charming",
+      "brooding yet secretly tender",
+      "rebelliously fierce with a kawaii edge",
+      "dramatically melancholic but adorable",
+      "coolly confident with an edgy gothic grace",
+    ],
+  },
+
+  melody: {
+    subject: [
+      "a person in My Melody's pink hood and matching dress",
+      "a person dressed as My Melody at a cherry blossom picnic",
+      "a person in a soft pastel My Melody-inspired magical girl outfit",
+      "a person wearing My Melody's cozy cottagecore pink ensemble",
+      "a person styled as My Melody baking in a dreamy pastel kitchen",
+      "a person in a fluffy My Melody themed winter coat with bunny ears",
+      "a person dressed as My Melody at a golden-hour flower field",
+      "a person in a My Melody inspired ballet recital dress",
+      "a person wearing a My Melody-style pastel bridal gown",
+      "a person in a My Melody-inspired vintage floral tea dress",
+    ],
+    setting: [
+      "inside an oversized strawberry shortcake in a candy landscape",
+      "in a dreamy cloud palace with rainbow bridges and soft light",
+      "in a blooming cherry blossom garden with floating petals",
+      "inside a giant snow globe with sparkles and warmth",
+      "at a magical garden tea party with woodland friends",
+      "in a cotton candy sky at sunrise with pastel hot air balloons",
+      "inside a cozy mushroom cottage with glowing lanterns",
+      "in an enchanted greenhouse full of roses and butterflies",
+      "on a soft pastel carousel surrounded by plush animals",
+      "in a magical moonlit meadow full of glowing flowers",
+    ],
+    style: [
+      "photorealistic, golden hour photography, soft bokeh, shot on Fujifilm GFX100S",
+      "hyperrealistic portrait, dreamy pastel color grade, 85mm f/1.2, shallow depth of field",
+      "photorealistic fashion photography, natural soft light, airy editorial style",
+      "ultra realistic photo, shot on Canon EOS R5, warm pastel tones, perfect skin detail",
+      "photorealistic, lifestyle photography, soft diffused window light, 8K resolution",
+      "realistic photography, magical sparkle practical effects, pink toned cinematic grade",
+    ],
+    mood: [
+      "warmly joyful and tenderly sweet",
+      "peacefully blissful and dreamily serene",
+      "innocently curious and softly radiant",
+      "gently loving with a glowing inner warmth",
+      "whimsically cheerful and delicately magical",
+    ],
+  }
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// APP STATE — just one prompt at a time now
+// ─────────────────────────────────────────────────────────────────────────────
+let currentPrompt = null;  // { text, theme }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// UTILITY — pick a random item from an array
+// ─────────────────────────────────────────────────────────────────────────────
+function pickRandom(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// BUILD PROMPT
+// Picks one item from each array and assembles the final prompt string.
+// FACE_LOCK is always appended at the end.
+// ─────────────────────────────────────────────────────────────────────────────
+function buildPrompt(theme) {
+  // Merge both pools if "both" theme is selected
+  const pool = theme === 'both'
+    ? {
+        subject: [...PROMPT_DATA.kuromi.subject, ...PROMPT_DATA.melody.subject],
+        setting: [...PROMPT_DATA.kuromi.setting, ...PROMPT_DATA.melody.setting],
+        style:   [...PROMPT_DATA.kuromi.style,   ...PROMPT_DATA.melody.style],
+        mood:    [...PROMPT_DATA.kuromi.mood,     ...PROMPT_DATA.melody.mood],
+      }
+    : PROMPT_DATA[theme];
+
+  // Quality tokens reinforce photorealism to the AI model
+  const qualityTokens = pickRandom([
+    "RAW photo, photorealistic, 8K UHD, hyper detailed skin, sharp focus",
+    "photorealistic, DSLR, professional photography, 50mm lens, high resolution",
+    "ultra photorealistic, real life photo, natural skin texture, 8K, sharp",
+    "RAW photograph, highly detailed, realistic lighting, shot on Sony A7 IV",
+  ]);
+
+  // Final prompt: subject + setting + mood + style + quality + face lock
+  return `${pickRandom(pool.subject)} ${pickRandom(pool.setting)}, ${pickRandom(pool.mood)}, ${pickRandom(pool.style)}, ${qualityTokens}, ${FACE_LOCK}`;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GENERATE — builds one prompt and renders it
+// ─────────────────────────────────────────────────────────────────────────────
+function generate(theme) {
+  currentPrompt = { text: buildPrompt(theme), theme };
+  renderPrompt();
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// RENDER — displays the single prompt card
+// ─────────────────────────────────────────────────────────────────────────────
+function renderPrompt() {
+  const display = document.getElementById('promptDisplay');
+  const copyBtn = document.getElementById('copyBtn');
+  const { text, theme } = currentPrompt;
+
+  // Strip the face lock from the main body — it's shown separately as a tag
+  const mainText = text.replace(', ' + FACE_LOCK, '');
+
+  const themeLabel = theme === 'kuromi' ? '🖤 Kuromi'
+                   : theme === 'melody' ? '🌸 My Melody'
+                   : '🖤🌸 Mixed';
+
+  display.innerHTML = `
+    <div class="prompt-card theme-${theme}" style="animation-delay:0s">
+      <div class="card-body" style="grid-column:1/-1">
+        <span class="card-theme-tag">${themeLabel}</span>
+        <p class="card-text">${mainText}<br><span class="face-tag">🔒 ${FACE_LOCK}</span></p>
+      </div>
+    </div>
+  `;
+
+  // Show the copy button
+  copyBtn.style.display = 'inline-flex';
+  copyBtn.textContent = '📋 Copy Prompt';
+  copyBtn.className = `pill-btn copy-prompt-btn ${theme === 'kuromi' ? 'kuromi' : theme === 'melody' ? 'melody' : 'both'}`;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// COPY — copies the full prompt (including face lock) to clipboard
+// Explicitly reconstructs the full string so the face lock is guaranteed.
+// Falls back to execCommand for browsers that block navigator.clipboard.
+// ─────────────────────────────────────────────────────────────────────────────
+function copyPrompt() {
+  if (!currentPrompt) return;
+
+  // Rebuild the full text explicitly — strip any existing face lock first
+  // then re-append it, so it's always present exactly once
+  const baseText = currentPrompt.text.replace(', ' + FACE_LOCK, '').replace(FACE_LOCK, '').trimEnd().replace(/,$/, '').trimEnd();
+  const fullText = baseText + ', ' + FACE_LOCK;
+
+  const btn = document.getElementById('copyBtn');
+
+  // Try modern clipboard API first
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(fullText).then(() => {
+      btn.textContent = '✓ Copied!';
+      setTimeout(() => { btn.textContent = '📋 Copy Prompt'; }, 1800);
+      showToast('Full prompt copied! ✦');
+    }).catch(() => fallbackCopy(fullText, btn));
+  } else {
+    fallbackCopy(fullText, btn);
+  }
+}
+
+// Fallback using a temporary textarea + execCommand (works in all contexts)
+function fallbackCopy(text, btn) {
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.style.cssText = 'position:fixed;left:-9999px;top:-9999px;opacity:0';
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+  try {
+    document.execCommand('copy');
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => { btn.textContent = '📋 Copy Prompt'; }, 1800);
+    showToast('Full prompt copied! ✦');
+  } catch (err) {
+    btn.textContent = '⚠ Copy failed';
+    setTimeout(() => { btn.textContent = '📋 Copy Prompt'; }, 2000);
+  }
+  document.body.removeChild(textarea);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TOAST — brief notification
+// ─────────────────────────────────────────────────────────────────────────────
+function showToast(message) {
+  const toastEl = document.getElementById('toast');
+  toastEl.textContent = message;
+  toastEl.classList.add('show');
+  clearTimeout(toastEl._hideTimer);
+  toastEl._hideTimer = setTimeout(() => toastEl.classList.remove('show'), 2200);
+}
+</script>
+</body>
+</html>
