@@ -139,6 +139,62 @@ h1 {
 .face-pill code { font-family: monospace; color: var(--melody-blush); letter-spacing: .3px; }
 
 
+/* ── Mode toggle — clean vs spicy ── */
+.mode-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 24px;
+  background: rgba(255,255,255,.05);
+  border: 1.5px solid rgba(255,255,255,.1);
+  border-radius: 50px;
+  padding: 4px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+.mode-btn {
+  padding: 7px 22px;
+  border-radius: 50px;
+  border: none;
+  font-family: 'Zen Dots', sans-serif;
+  font-size: .7rem;
+  letter-spacing: .5px;
+  cursor: pointer;
+  transition: all .22s;
+  background: transparent;
+  color: rgba(255,255,255,.35);
+}
+/* Active clean mode — soft lavender */
+.mode-btn.active-clean {
+  background: linear-gradient(135deg, var(--kuromi-mid), var(--melody-hot));
+  color: #fff;
+  box-shadow: 0 2px 14px rgba(177,95,232,.45);
+}
+/* Active spicy mode — deep red-rose gradient */
+.mode-btn.active-spicy {
+  background: linear-gradient(135deg, #8B0000, #C2185B, #FF4FA0);
+  color: #fff;
+  box-shadow: 0 2px 14px rgba(180,0,60,.55);
+}
+/* Spicy mode body tint — shifts bg gradient warmer */
+body.spicy-mode::before {
+  background:
+    radial-gradient(ellipse 60% 40% at 15% 30%, rgba(139,0,60,0.3) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 50% at 85% 70%, rgba(180,0,80,0.25) 0%, transparent 70%),
+    radial-gradient(ellipse 80% 30% at 50% 100%, rgba(80,0,30,0.5) 0%, transparent 60%);
+}
+/* Spicy card border & stripe */
+.spicy-mode .theme-kuromi::before { background: linear-gradient(180deg, #8B0000, #C2185B); }
+.spicy-mode .theme-melody::before  { background: linear-gradient(180deg, #C2185B, #FF4FA0); }
+.spicy-mode .theme-both::before    { background: linear-gradient(180deg, #8B0000, #FF4FA0); }
+.spicy-mode .prompt-card { border-color: rgba(194,24,91,.3); }
+/* Spicy theme tag overrides */
+.spicy-mode .theme-kuromi .card-theme-tag { background:rgba(139,0,0,.3); color:#ff9ab0; border-color:rgba(194,24,91,.4); }
+.spicy-mode .theme-melody .card-theme-tag  { background:rgba(194,24,91,.25); color:#ffb0c8; border-color:rgba(255,79,160,.4); }
+.spicy-mode .theme-both .card-theme-tag    { background:rgba(139,0,60,.2); color:#ffc0d0; border-color:rgba(194,24,91,.4); }
+
 /* ── Controls ── */
 .controls {
   display:flex; gap:10px; flex-wrap:wrap; justify-content:center;
@@ -280,7 +336,7 @@ h1 {
       <span class="badge m">🌸 My Melody</span>
     </div>
     <h1>Prompt Studio</h1>
-    <p class="sub">Kuromi × My Melody · 20 Prompts</p>
+    <p class="sub">Kuromi × My Melody · Gemini Ready</p>
   </header>
 
   <!-- Face constant info -->
@@ -289,6 +345,12 @@ h1 {
       <span class="lock">🔒</span>
       Appended to every prompt: <code>do not change face or facial expression</code>
     </div>
+  </div>
+
+  <!-- Mode toggle -->
+  <div class="mode-toggle">
+    <button class="mode-btn active-clean" id="btnClean" onclick="setMode('clean')">✿ Clean</button>
+    <button class="mode-btn" id="btnSpicy" onclick="setMode('spicy')">🔥 Spicy</button>
   </div>
 
   <!-- Mascot divider replaced with simple styled line -->
@@ -332,13 +394,8 @@ h1 {
 const FACE_LOCK = "do not change face or facial expression";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// PROMPT DATA
-// Each theme (kuromi / melody) has four arrays:
-//   subject  — who / what the person is wearing or cosplaying
-//   setting  — where the scene takes place
-//   style    — photography style, camera, lighting
-//   mood     — emotional tone / vibe of the scene
-// buildPrompt() picks one from each array and assembles the final prompt.
+// PROMPT DATA — CLEAN MODE
+// Cute, kawaii, fashion-forward. Safe for all contexts.
 // ─────────────────────────────────────────────────────────────────────────────
 const PROMPT_DATA = {
   kuromi: {
@@ -382,7 +439,6 @@ const PROMPT_DATA = {
       "coolly confident with an edgy gothic grace",
     ],
   },
-
   melody: {
     subject: [
       "a person in My Melody's pink hood and matching dress",
@@ -427,9 +483,117 @@ const PROMPT_DATA = {
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
-// APP STATE — just one prompt at a time now
+// PROMPT DATA — SPICY MODE
+// Dark, sultry, mature. Designed for Gemini image gen.
+// Keeps the Kuromi / Melody aesthetic but cranks up the drama and sensuality.
 // ─────────────────────────────────────────────────────────────────────────────
-let currentPrompt = null;  // { text, theme }
+const SPICY_DATA = {
+  kuromi: {
+    subject: [
+      "a woman in a form-fitting black latex bodysuit with Kuromi skull details and thigh-high boots",
+      "a woman in a sheer dark lace corset and black mini skirt, Kuromi hair bow and skull accessories",
+      "a woman wearing an off-shoulder gothic lolita dress with deep neckline, Kuromi dark makeup",
+      "a woman in a sleek black vinyl bodycon dress with purple Kuromi pom-pom trim and mesh gloves",
+      "a woman in a daring dark fantasy armour-inspired outfit with Kuromi skull motifs and cutouts",
+      "a woman in a black satin slip dress and dark Kuromi-style thigh-high stockings, edgy glam makeup",
+      "a woman in a strappy gothic lingerie set layered under a sheer black robe, Kuromi aesthetic",
+      "a woman in a Kuromi-inspired dark schoolgirl micro-skirt and cropped blazer, dramatic eyeliner",
+      "a woman in a deep-v black velvet gown with slit to the thigh, Kuromi skull jewellery, dark lips",
+      "a woman in a cutout black bodysuit with Kuromi jester hat, fishnet tights, platform heels",
+    ],
+    setting: [
+      "draped across a velvet chaise longue in a candlelit gothic boudoir",
+      "leaning against a mossy stone wall in a moonlit midnight cemetery, dark roses at her feet",
+      "lying on black satin sheets with scattered rose petals and dim purple candlelight",
+      "posed in a dark enchanted mirror room reflecting infinite purple-lit silhouettes",
+      "sitting at a vanity table in a gothic lace-curtained bedroom, surrounded by black candles",
+      "standing in a rain-soaked alley under a neon purple sign, wet hair, dramatic shadows",
+      "reclining in a dark velvet throne surrounded by skulls and crimson roses",
+      "backlit by a full moon on a rooftop, sheer robe flowing in the wind, city lights below",
+      "lying in a field of black roses under a violet night sky, eyes half-closed",
+      "curled on a windowsill in a dark Victorian manor, storm light, curtains billowing",
+    ],
+    style: [
+      "ultra-realistic boudoir photography, deep shadow, low-key lighting, 85mm f/1.4",
+      "hyperrealistic dark glamour photography, dramatic chiaroscuro, cinematic color grade",
+      "photorealistic editorial fashion, bold contrast, rim lighting, shot on Leica Q3",
+      "realistic fine art photography, moody noir aesthetic, grain texture, medium format",
+      "ultra detailed RAW photo, dark fantasy editorial, deep blacks, neon accent lighting",
+      "photorealistic high-fashion shoot, wet look, specular highlights, black background",
+    ],
+    mood: [
+      "intensely seductive and darkly magnetic",
+      "hauntingly beautiful with a dangerous edge",
+      "smouldering and unapologetically confident",
+      "brooding sensuality with gothic elegance",
+      "powerfully alluring with a villainous aura",
+    ],
+  },
+  melody: {
+    subject: [
+      "a woman in a sheer pink babydoll top and high-waist satin shorts, My Melody bow in her hair",
+      "a woman in a blush pink lace bodysuit with bunny ears, soft glam makeup, dewy skin",
+      "a woman in a silk slip dress the colour of cherry blossoms, delicate bow choker, bare shoulders",
+      "a woman in a soft pink corset with ruffle trim and matching thigh-highs, My Melody aesthetic",
+      "a woman in a sheer floral robe over a rose-pink lingerie set, soft curls, natural glam",
+      "a woman wearing a cropped My Melody hoodie and high-cut bikini bottoms, sun-kissed skin",
+      "a woman in a deep-v pastel pink mini dress with ruched sides and a heart bow, glossy lips",
+      "a woman in a satin cami and matching shorts in blush pink, lying in soft light",
+      "a woman in a white off-shoulder top and pink micro skirt, My Melody accessories, bright eyes",
+      "a woman in a form-fitting dusty rose catsuit with My Melody bunny ear hood, seductive glance",
+    ],
+    setting: [
+      "lying on a bed of pink rose petals with white satin sheets and soft morning window light",
+      "in a sunlit pastel boudoir with sheer curtains, champagne glass on the nightstand",
+      "lounging in a claw-foot bathtub filled with pink rose petals, soft diffused glow",
+      "on a plush pink velvet couch, surrounded by stuffed bunnies and golden hour light",
+      "in a pink neon-lit room with mirrored walls and scattered flower confetti",
+      "lying in a blooming sakura garden, petals falling on bare shoulders, spring light",
+      "on a balcony at sunset, sheer robe catching the golden light, city softly blurred behind",
+      "in a dreamy pink photography studio with pastel balloons and a silk sheet",
+      "curled in a window seat with sheer pink curtains, soft natural light, book in hand",
+      "posed in a luxurious hotel suite with white sheets and soft backlighting through curtains",
+    ],
+    style: [
+      "photorealistic intimate editorial, soft diffused light, 85mm, warm pastel grade",
+      "hyperrealistic boudoir photography, natural skin texture, golden hour, airy atmosphere",
+      "ultra-realistic lifestyle photography, dewy skin, bokeh background, Fujifilm look",
+      "RAW photo, soft glamour photography, warm tones, catchlights, shot on Canon 5D",
+      "photorealistic fine art nude-adjacent fashion, tasteful, pastel tones, soft shadows",
+      "realistic high-key photography, bright airy studio, pink gel lighting, flawless detail",
+    ],
+    mood: [
+      "softly seductive and effortlessly alluring",
+      "dreamily sensual with an innocent sweetness",
+      "playfully flirtatious and radiantly confident",
+      "tenderly intimate and warmly inviting",
+      "delicately provocative with a pink-tinted glow",
+    ],
+  }
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// APP STATE
+// ─────────────────────────────────────────────────────────────────────────────
+let currentPrompt = null;   // { text, theme }
+let currentMode   = 'clean'; // 'clean' | 'spicy'
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MODE TOGGLE — switches between clean and spicy data sets
+// ─────────────────────────────────────────────────────────────────────────────
+function setMode(mode) {
+  currentMode = mode;
+
+  // Swap body class for background tint
+  document.body.classList.toggle('spicy-mode', mode === 'spicy');
+
+  // Swap active styles on toggle buttons
+  document.getElementById('btnClean').className = 'mode-btn' + (mode === 'clean' ? ' active-clean' : '');
+  document.getElementById('btnSpicy').className = 'mode-btn' + (mode === 'spicy' ? ' active-spicy' : '');
+
+  // Regenerate current prompt in new mode if one exists
+  if (currentPrompt) generate(currentPrompt.theme);
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // UTILITY — pick a random item from an array
@@ -440,19 +604,22 @@ function pickRandom(arr) {
 
 // ─────────────────────────────────────────────────────────────────────────────
 // BUILD PROMPT
-// Picks one item from each array and assembles the final prompt string.
+// Picks from clean or spicy data depending on currentMode.
 // FACE_LOCK is always appended at the end.
 // ─────────────────────────────────────────────────────────────────────────────
 function buildPrompt(theme) {
+  // Select the right data set based on current mode
+  const data = currentMode === 'spicy' ? SPICY_DATA : PROMPT_DATA;
+
   // Merge both pools if "both" theme is selected
   const pool = theme === 'both'
     ? {
-        subject: [...PROMPT_DATA.kuromi.subject, ...PROMPT_DATA.melody.subject],
-        setting: [...PROMPT_DATA.kuromi.setting, ...PROMPT_DATA.melody.setting],
-        style:   [...PROMPT_DATA.kuromi.style,   ...PROMPT_DATA.melody.style],
-        mood:    [...PROMPT_DATA.kuromi.mood,     ...PROMPT_DATA.melody.mood],
+        subject: [...data.kuromi.subject, ...data.melody.subject],
+        setting: [...data.kuromi.setting, ...data.melody.setting],
+        style:   [...data.kuromi.style,   ...data.melody.style],
+        mood:    [...data.kuromi.mood,     ...data.melody.mood],
       }
-    : PROMPT_DATA[theme];
+    : data[theme];
 
   // Quality tokens reinforce photorealism to the AI model
   const qualityTokens = pickRandom([
@@ -482,12 +649,14 @@ function renderPrompt() {
   const copyBtn = document.getElementById('copyBtn');
   const { text, theme } = currentPrompt;
 
-  // Strip the face lock from the main body — it's shown separately as a tag
+  // Strip the face lock from the main body — shown separately as a tag
   const mainText = text.replace(', ' + FACE_LOCK, '');
 
-  const themeLabel = theme === 'kuromi' ? '🖤 Kuromi'
-                   : theme === 'melody' ? '🌸 My Melody'
-                   : '🖤🌸 Mixed';
+  // Theme label — add 🔥 in spicy mode
+  const modePrefix = currentMode === 'spicy' ? '🔥 ' : '';
+  const themeLabel = theme === 'kuromi' ? `${modePrefix}🖤 Kuromi`
+                   : theme === 'melody' ? `${modePrefix}🌸 My Melody`
+                   : `${modePrefix}🖤🌸 Mixed`;
 
   display.innerHTML = `
     <div class="prompt-card theme-${theme}" style="animation-delay:0s">
@@ -498,10 +667,20 @@ function renderPrompt() {
     </div>
   `;
 
-  // Show the copy button
+  // Style copy button to match current mode
+  const btnTheme = theme === 'kuromi' ? 'kuromi' : theme === 'melody' ? 'melody' : 'both';
   copyBtn.style.display = 'inline-flex';
   copyBtn.textContent = '📋 Copy Prompt';
-  copyBtn.className = `pill-btn copy-prompt-btn ${theme === 'kuromi' ? 'kuromi' : theme === 'melody' ? 'melody' : 'both'}`;
+  copyBtn.className = `pill-btn copy-prompt-btn ${currentMode === 'spicy' ? 'ghost' : btnTheme}`;
+  if (currentMode === 'spicy') {
+    copyBtn.style.background = 'linear-gradient(135deg, #8B0000, #C2185B)';
+    copyBtn.style.color = '#fff';
+    copyBtn.style.border = 'none';
+  } else {
+    copyBtn.style.background = '';
+    copyBtn.style.color = '';
+    copyBtn.style.border = '';
+  }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
