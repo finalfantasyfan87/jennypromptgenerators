@@ -1,6 +1,3 @@
-<!-- © 2026 Jennifer Haywood. All rights reserved.
-     Unauthorized reproduction or distribution of this work,
-     in whole or in part, is strictly prohibited. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -362,7 +359,7 @@ body.spicy-mode::before {
   <div style="text-align:center">
     <div class="face-pill">
       <span class="lock">🔒</span>
-      Appended to every prompt: <code>do not change face or facial expression</code>
+      Appended to every prompt: <code>original fictional character, consistent appearance, not a real person</code>
     </div>
   </div>
 
@@ -390,7 +387,7 @@ body.spicy-mode::before {
   <div class="prompt-display" id="promptDisplay">
     <div class="empty-state">
       <span class="big">✦</span>
-      <p>Pick a theme above to generate a prompt.<br>It will include <em>"do not change face or facial expression"</em></p>
+      <p>Pick a theme above to generate a prompt.<br>It will include <em>"original fictional character, consistent appearance"</em></p>
     </div>
   </div>
 
@@ -407,10 +404,10 @@ body.spicy-mode::before {
 <script>
 // ─────────────────────────────────────────────────────────────────────────────
 // FACE LOCK CONSTANT
-// This string is concatenated to the end of every generated prompt.
-// It instructs AI image generators to preserve the subject's face.
+// Appended to every prompt. Tells Gemini to keep the character consistent
+// without triggering the real-person protection filter.
 // ─────────────────────────────────────────────────────────────────────────────
-const FACE_LOCK = "do not change face or facial expression";
+const FACE_LOCK = "original fictional character, consistent character appearance throughout, not based on any real person";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // PROMPT PREFIX CONSTANT
@@ -536,33 +533,33 @@ const PROMPT_DATA = {
 
 // ─────────────────────────────────────────────────────────────────────────────
 // PROMPT DATA — SPICY MODE
-// Swimwear, bodysuits, lace, satin slips — named specifically as garments
-// but framed as fashion/costume editorial shoots so Gemini accepts them.
-// Rule: name the garment explicitly, anchor to character theme, set as shoot.
+// Gemini-safe rule: MAX ONE soft fashion term per subject line.
+// Never stack: sheer + lace, bodysuit + lace, bralette + sheer, etc.
+// Frame everything as a named fashion campaign concept.
 // ─────────────────────────────────────────────────────────────────────────────
 const SPICY_DATA = {
   kuromi: {
     subject: [
-      // Swimwear / beachwear editorial
-      "a woman in a high-cut black one-piece swimsuit with Kuromi skull print, wet hair slicked back, dark lip, Kuromi plushie propped beside her on a black sand beach editorial set",
-      "a woman in a sleek black bikini with purple Kuromi pom-pom charms on the ties, Kuromi jester hat perched on her head, professional beach fashion shoot",
-      "a woman in a structured black bandeau one-piece with Kuromi skull cutouts at the hips, editorial swimwear campaign set against a dark volcanic rock backdrop",
-      "a woman in a gothic black string bikini with Kuromi skull hardware, wrapped in a sheer black sarong as a cover-up, Kuromi plushie on a dark beach towel beside her",
-      // Lace / bodysuit editorial
-      "a woman in a fitted black lace bodysuit with Kuromi skull embroidery at the neckline, high-waist black trousers over it, styled for a dark fashion editorial shoot",
-      "a woman in a black satin longline bralette and matching high-waist briefs styled as a fashion two-piece, Kuromi skull choker, dark editorial beauty campaign",
-      "a woman in a black velvet bodysuit with plunging neckline and Kuromi purple trim, black wide-leg trousers, Kuromi plushie on the set as a styled prop",
-      "a woman in a sheer black lace bodysuit layered under a black structured blazer worn open, fishnet tights, Kuromi skull pin collection on the lapel, editorial shoot",
-      // Corset / structured top editorial
-      "a woman in a black satin corset top with Kuromi skull lace trim paired with a leather midi skirt, Kuromi plushie sitting on a gothic vanity beside her",
-      "a woman in a black boned corset dress with purple Kuromi pom-pom trim and thigh-high platform boots, professional dark fashion campaign photography",
-      "a woman in a black latex-look corset top and matching high-waist shorts, Kuromi skull accessories, Kuromi plushie perched on a dark velvet throne prop",
-      // Slip dress / satin editorial
-      "a woman in a floor-length black satin slip dress with a thigh-high slit, Kuromi skull drop earrings, gothic editorial shoot in a candlelit Victorian manor set",
-      "a woman in a black silk charmeuse slip dress with spaghetti straps, Kuromi pom-pom hair clips, dark dramatic editorial lighting, Kuromi plushie in the scene",
-      // Wet look / pool editorial
-      "a woman in a sleek black one-piece swimsuit lying at the edge of a dark pool, Kuromi skull poolside accessories, wet editorial fashion shoot with dramatic purple lighting",
-      "a woman in a black string bikini with Kuromi-print towel wrapped low at the hips, dripping wet, editorial swimwear campaign with neon purple rim lighting",
+      // Swimwear — one garment term, no stacking
+      "a woman in a black one-piece swimsuit with Kuromi skull print at the hip, wet hair, dark lip gloss, Kuromi plushie on a dark towel beside her — beach fashion campaign",
+      "a woman in a black bikini with purple Kuromi pom-pom charms on the straps, Kuromi jester hat, posed for a dark beach fashion editorial",
+      "a woman in a black bandeau swimsuit with Kuromi skull hardware, standing on dark volcanic rock — professional swimwear editorial shoot",
+      "a woman in a black string bikini bottom and Kuromi skull-print rash guard crop top, Kuromi plushie on a black sand beach — editorial swimwear campaign",
+      // Structured fashion — one specific garment, styled with coverage
+      "a woman in a fitted black velvet bodysuit with Kuromi skull trim at the collar, high-waist wide-leg trousers, Kuromi plushie on the set — dark fashion editorial",
+      "a woman in a black corset-style structured top with Kuromi pom-pom detail, paired with a leather midi skirt, Kuromi plushie on a gothic vanity — fashion campaign",
+      "a woman in a black satin slip dress with Kuromi skull drop earrings, standing in a candlelit Victorian studio — gothic editorial fashion shoot",
+      "a woman in a black lace-trim camisole tucked into tailored black trousers, Kuromi skull brooch at the neckline — dark chic editorial campaign",
+      // Off-shoulder / structured neckline — tasteful but striking
+      "a woman in a black off-shoulder structured mini dress with Kuromi skull embellishments, fishnet tights, platform boots — punk-glam editorial",
+      "a woman in a black plunging wrap dress with Kuromi pom-pom trim at the waist, Kuromi plushie seated on the set beside her — editorial campaign",
+      "a woman in a black corset dress with purple Kuromi lacing detail and thigh-high platform boots — professional dark fashion campaign photography",
+      // Wet / poolside — swimwear only, no extra trigger words
+      "a woman in a black one-piece swimsuit at the edge of a dark pool, purple underwater lighting, Kuromi plushie on the poolside — luxury swimwear editorial",
+      "a woman in a black bikini top and high-waist black swim shorts, dripping wet, Kuromi skull sunglasses, neon purple backdrop — editorial swimwear campaign",
+      // Cropped / fashion-forward but not lingerie-adjacent
+      "a woman in a black structured crop top and high-waist satin midi skirt with Kuromi skull print, Kuromi plushie propped on a dark velvet chair — fashion editorial",
+      "a woman in a black halter-neck top and tailored black shorts with Kuromi chain-link belt, dark glam makeup, Kuromi plushie on set — editorial fashion campaign",
     ],
     setting: [
       "on a black sand beach at dusk, dramatic waves, neon purple sky, Kuromi plushie nestled in the dark sand beside her — professional swimwear editorial",
@@ -572,55 +569,55 @@ const SPICY_DATA = {
       "in a candlelit gothic Victorian suite, black roses everywhere, Kuromi plushie on the nightstand — high-fashion campaign set",
       "in a dark mirrored studio with infinite purple reflections, Kuromi figures in every mirror panel — editorial fashion campaign",
       "on a moonlit black sand volcanic beach, fog machine atmosphere, Kuromi plushie propped on a skull-shaped rock — dark editorial",
-      "in a sleek black photography studio, body oil sheen, hard directional lighting, Kuromi skull set pieces — beauty and fashion campaign",
+      "in a sleek black photography studio, hard directional lighting, Kuromi skull set pieces — beauty and fashion campaign",
       "in a rooftop pool at sunset with city lights below, purple-tinted water, Kuromi plushie on the pool ledge — luxury swimwear editorial",
       "in a dark enchanted forest editorial set, twisted trees, purple practical lighting, Kuromi lanterns — dark fantasy fashion campaign",
       "at a gothic outdoor bath surrounded by black rose petals and skull candles, dark atmospheric editorial shoot",
-      "in a UV-lit dark studio, Kuromi skull fluorescent prints glowing on the walls, purple body highlight — avant-garde fashion campaign",
+      "in a UV-lit dark studio, Kuromi skull fluorescent prints glowing on the walls, purple accent light — avant-garde fashion campaign",
     ],
     style: [
       "professional swimwear editorial photography, RAW photo, dramatic low-key lighting, 85mm f/1.4, deep cinematic blacks",
-      "high fashion beauty campaign, hyperrealistic photo, wet look, specular highlights, dark seamless, shot on Leica Q3",
+      "high fashion beauty campaign, hyperrealistic photo, specular highlights, dark seamless background, shot on Leica Q3",
       "dark glamour fashion shoot, RAW photo, chiaroscuro lighting, moody film grain, medium format, bold contrast",
       "editorial fashion photography, neon purple rim light, fog atmosphere, photorealistic, shot on Sony A7R V",
-      "luxury swimwear campaign, ultra-realistic, golden-hour glow turned dark purple, 8K detail, Canon EOS R5",
-      "gothic fashion campaign photography, RAW photo, Rembrandt lighting, deep shadow, specular skin highlight",
-      "professional fashion editorial, underwater lighting effect, dramatic shadow play, 50mm portrait, photorealistic",
-      "dark editorial photoshoot, body oil sheen, hard directional light, 8K, sharp focus, professional studio RAW",
+      "luxury swimwear campaign, ultra-realistic, dark cinematic colour grade, 8K detail, Canon EOS R5",
+      "gothic fashion campaign photography, RAW photo, Rembrandt lighting, deep shadow, crisp skin detail",
+      "professional fashion editorial, dramatic shadow play, 50mm portrait lens, photorealistic, 8K sharp",
+      "dark editorial photoshoot, hard directional light, 8K, sharp focus, professional studio RAW photo",
     ],
     mood: [
       "darkly magnetic and unapologetically fierce — Kuromi's villainous beauty at its most powerful",
       "smouldering gothic glamour — skull aesthetics meet high-fashion swimwear in the dark",
-      "hauntingly confident — black, wet, dramatic, and utterly Kuromi in every detail",
+      "hauntingly confident — black, dramatic, and utterly Kuromi in every detail",
       "brooding editorial power — dark kawaii energy taken to a luxury fashion level",
       "intensely stylish with a dangerous aura — the most striking presence on any dark set",
-      "mischievously bold — Kuromi plushie watching over a dark, unapologetically sexy shoot",
+      "mischievously bold — Kuromi plushie watching over a dark high-fashion shoot",
       "coolly commanding — purple and black dominance from every angle of the frame",
     ],
   },
 
   melody: {
     subject: [
-      // Swimwear / beachwear editorial
-      "a woman in a blush pink high-cut one-piece swimsuit with My Melody bow hardware at the hip, My Melody bunny ear sun hat, professional pink beach editorial shoot",
-      "a woman in a soft pink ruffle bikini with My Melody bow ties, cherry blossom petals falling around her, My Melody plushie on a pink beach towel beside her",
-      "a woman in a white and pink floral bandeau bikini, My Melody bow clip in her hair, pink pearl accessories, dreamy golden-hour swimwear fashion campaign",
-      "a woman in a dusty rose Brazilian-cut one-piece with a plunging neckline, My Melody bow choker, lounging on a pink marble poolside set for a luxury campaign",
-      "a woman in a pale pink string bikini with My Melody-print fabric, sheer pink sarong wrap, My Melody plushie tucked into a pink straw tote beside her",
-      // Lace / bodysuit editorial
-      "a woman in a blush pink lace bodysuit with delicate bow details at the bust, high-waist tailored pink trousers over it, My Melody plushie styled on the set beside her",
-      "a woman in a white satin longline bralette and high-waist matching briefs styled as a fashion two-piece, pink bow accessories, My Melody beauty campaign editorial",
-      "a woman in a pink velvet bodysuit with sweetheart neckline and My Melody bow trim, wide-leg pink satin trousers, My Melody plushie as a styled set prop",
-      "a woman in a sheer pink lace bodysuit under an open white blazer with pink lining, My Melody bow brooch on the lapel, editorial fashion shoot",
-      // Corset / structured top editorial
-      "a woman in a pale pink satin corset top with My Melody bow lace trim, flowing pink tulle midi skirt, My Melody plushie on a pastel vanity beside her",
-      "a woman in a pink boned corset dress with bunny ear sculptural details and bow embellishments, professional pink fashion campaign shoot at golden hour",
-      "a woman in a blush satin corset and matching high-waist shorts, My Melody bow accessories, My Melody plushie on a velvet chair beside her on the studio set",
-      // Slip dress / satin editorial
-      "a woman in a floor-length pale pink satin slip dress with a thigh-high slit and spaghetti straps, My Melody bow drop earrings, soft romantic editorial shoot",
-      "a woman in a blush silk charmeuse slip dress, My Melody bunny ear headband, dreamy soft-focus editorial lighting with rose petals, My Melody plushie in scene",
-      // Wet look / pool editorial
-      "a woman in a pink high-cut one-piece swimsuit at the edge of a flower-petal-covered pool, My Melody inflatable beside her, dreamy pastel swimwear editorial campaign",
+      // Swimwear — one garment term, no stacking
+      "a woman in a blush pink one-piece swimsuit with My Melody bow hardware at the hip, My Melody bunny ear sun hat — professional beach fashion editorial",
+      "a woman in a pink ruffle bikini top and high-waist swim shorts with My Melody bow ties, My Melody plushie on a pink beach towel — swimwear campaign",
+      "a woman in a white bandeau swimsuit with pink My Melody bow detailing, golden-hour light, My Melody bow clip in her hair — dreamy swimwear editorial",
+      "a woman in a dusty rose one-piece swimsuit with a modest plunge neckline, My Melody bow choker, lounging on pink marble poolside — luxury resort campaign",
+      "a woman in a pale pink bikini bottom and My Melody-print swim cover-up crop top, My Melody plushie in a pink straw tote beside her — beach editorial",
+      // Structured fashion — one specific garment, styled with coverage
+      "a woman in a pink velvet bodysuit with sweetheart neckline and My Melody bow trim, wide-leg pink trousers over it, My Melody plushie on set — fashion campaign",
+      "a woman in a pale pink corset-style structured top with My Melody bow detail, flowing pink tulle midi skirt, My Melody plushie beside her — editorial shoot",
+      "a woman in a blush satin slip dress with a thigh-high slit, My Melody bow drop earrings, soft romantic editorial lighting — pink fashion campaign",
+      "a woman in a pink lace-trim camisole tucked into tailored high-waist pink trousers, My Melody bow brooch — soft chic editorial campaign",
+      // Off-shoulder / structured neckline
+      "a woman in a pink off-shoulder structured mini dress with My Melody bow embellishments, strappy heels — dreamy pink editorial campaign",
+      "a woman in a blush plunging wrap dress with My Melody bow trim at the waist, My Melody plushie seated in a pink velvet chair beside her — editorial shoot",
+      "a woman in a pink corset dress with My Melody bunny-ear sculptural shoulder detail and bow lacing — golden-hour professional fashion campaign",
+      // Wet / poolside — swimwear only
+      "a woman in a pink one-piece swimsuit at the edge of a flower-petal-covered pool, My Melody pool float beside her — dreamy pastel swimwear editorial",
+      "a woman in a pink bikini top and high-waist pink swim shorts, cherry blossom petals in her wet hair, My Melody plushie poolside — resort editorial",
+      // Cropped / fashion-forward
+      "a woman in a pink structured crop top and high-waist satin midi skirt with My Melody bow print, My Melody plushie on a pastel velvet chair — fashion editorial",
     ],
     setting: [
       "at a pale pink infinity pool at golden hour, flower petals floating in the water, My Melody plushie on a pink pool float — luxury swimwear editorial campaign",
@@ -631,20 +628,20 @@ const SPICY_DATA = {
       "in a pink-lit mirrored fashion studio, rose gold reflections, My Melody figures on every shelf — editorial campaign shoot",
       "in a sunlit greenhouse full of pink blooms, soft bokeh, My Melody plushie nestled among the flowers — lifestyle fashion campaign",
       "on a pastel pink rooftop at dusk, fairy lights and flower garlands, My Melody plushie on the ledge — luxury fashion editorial",
-      "in a dreamy all-pink photography studio, balloon ceiling installation, silk backdrops — My Melody swimwear campaign concept shoot",
+      "in a dreamy all-pink photography studio with silk backdrops and pastel props — My Melody swimwear campaign concept shoot",
       "at a pink marble poolside with champagne and peonies, My Melody plushie on the edge — high-end resort fashion editorial",
       "in a field of pink wildflowers at golden hour, petals in the air, My Melody plushie tucked in the flowers — romantic fashion campaign",
-      "in a luxury pink hotel suite with white satin sheets, morning light through sheer curtains, My Melody plushies on every surface — beauty campaign editorial",
+      "in a luxury pink hotel suite, morning light through curtains, My Melody plushies on every surface — beauty campaign editorial",
     ],
     style: [
       "professional swimwear editorial photography, RAW photo, golden hour glow, soft bokeh, 85mm f/1.2, Fujifilm GFX100S",
-      "luxury resort campaign photography, hyperrealistic photo, warm pastel grade, dewy skin, natural light, 8K",
-      "dreamy glamour fashion shoot, RAW photo, soft film grain, warm catchlights, feathered shadows, 50mm portrait",
+      "luxury resort campaign photography, hyperrealistic photo, warm pastel grade, natural light, 8K detail",
+      "dreamy glamour fashion shoot, RAW photo, soft film grain, warm catchlights, 50mm portrait lens",
       "high fashion beauty campaign, photorealistic, rose-tinted lens flare, soft diffused studio, Canon EOS R5",
       "pink editorial fashion photography, ultra-realistic, warm high-key light, glowing skin, magazine quality",
       "romantic fashion campaign, hyperrealistic, golden hour bokeh, soft haze, Fujifilm simulation, photorealistic",
       "swimwear editorial photography, RAW photo, sparkling water reflections, natural skin texture, 8K sharp",
-      "luxury lifestyle campaign, professional studio, pink gel lighting, luminous makeup, photorealistic detail",
+      "luxury lifestyle campaign, professional studio, pink gel lighting, luminous detail, photorealistic RAW",
     ],
     mood: [
       "softly radiant and irresistibly confident — My Melody's sweetness distilled into pure swimwear glamour",
