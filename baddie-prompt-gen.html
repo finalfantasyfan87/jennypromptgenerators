@@ -1,0 +1,799 @@
+<!-- © 2026 Jennifer Haywood. All rights reserved.
+     Unauthorized reproduction or distribution of this work,
+     in whole or in part, is strictly prohibited. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BADDIE AI Prompt Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --hot-pink: #ff2d8a;
+    --bubblegum: #ff85c2;
+    --blush: #ffd6eb;
+    --dusty-rose: #f0a8c8;
+    --nude: #f7e8f0;
+    --velvet: #2a0a1a;
+    --deep: #1a0510;
+    --glass: rgba(255,255,255,0.07);
+    --glass-border: rgba(255,150,200,0.2);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--deep);
+    font-family: 'DM Sans', sans-serif;
+    color: white;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(255,45,138,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 80%, rgba(255,133,194,0.12) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 40% at 50% 50%, rgba(240,168,200,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Floating closet emojis background */
+  .bg-closet {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .bg-closet span {
+    position: absolute;
+    font-size: 1.5rem;
+    opacity: 0.06;
+    animation: floatUp linear infinite;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.06; }
+    90% { opacity: 0.06; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  }
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  .crown {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 10px;
+    animation: bounce 2s ease-in-out infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 3.4rem);
+    font-weight: 700;
+    background: linear-gradient(135deg, #fff 0%, var(--bubblegum) 40%, var(--hot-pink) 80%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .header .sub {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--dusty-rose);
+    font-size: 1rem;
+    margin-top: 10px;
+    letter-spacing: 0.08em;
+  }
+
+  .divider {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--hot-pink), transparent);
+    margin: 18px auto;
+  }
+
+  /* Main CTA */
+  .btn-generate {
+    display: block;
+    width: 100%;
+    background: linear-gradient(135deg, var(--hot-pink), #c2005e);
+    border: none;
+    padding: 18px 30px;
+    border-radius: 14px;
+    color: white;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.15s, box-shadow 0.3s;
+    box-shadow: 0 8px 40px rgba(255,45,138,0.25);
+  }
+
+  .btn-generate::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .btn-generate:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 50px rgba(255,45,138,0.4);
+  }
+
+  .btn-generate:hover::after { opacity: 1; }
+  .btn-generate:active { transform: translateY(0); }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    padding: 11px 22px;
+    border-radius: 10px;
+    color: var(--dusty-rose);
+    font-size: 0.85rem;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--bubblegum);
+    color: white;
+    background: rgba(255,133,194,0.1);
+  }
+
+  /* Result card */
+  #promptCard {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+  }
+
+  #promptCard.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+  }
+
+  .result-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 32px 28px;
+    backdrop-filter: blur(8px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .result-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--hot-pink), var(--bubblegum), var(--dusty-rose));
+  }
+
+  .result-label {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--bubblegum);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .result-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--glass-border);
+  }
+
+  .scene-tag, .outfit-tag, .pose-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 14px;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    margin: 3px;
+  }
+
+  .scene-tag { background: rgba(255,45,138,0.18); border: 1px solid rgba(255,45,138,0.3); color: #ffb3d6; }
+  .outfit-tag { background: rgba(255,133,194,0.15); border: 1px solid rgba(255,133,194,0.3); color: var(--blush); }
+  .pose-tag { background: rgba(240,168,200,0.12); border: 1px solid rgba(240,168,200,0.3); color: var(--dusty-rose); }
+
+  .tags-row {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .prompt-textarea {
+    width: 100%;
+    height: 280px;
+    background: rgba(0,0,0,0.3);
+    color: rgba(255,255,255,0.9);
+    border: 1px solid rgba(255,150,200,0.12);
+    border-radius: 12px;
+    padding: 16px 18px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    resize: none;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .prompt-textarea:focus {
+    border-color: rgba(255,45,138,0.4);
+  }
+
+  .card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-copy {
+    flex: 1;
+    min-width: 140px;
+    background: linear-gradient(135deg, rgba(255,45,138,0.25), rgba(255,45,138,0.12));
+    border: 1px solid rgba(255,45,138,0.4);
+    color: var(--blush);
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    font-weight: 500;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .btn-copy:hover {
+    background: rgba(255,45,138,0.35);
+    border-color: var(--hot-pink);
+    color: white;
+  }
+
+  .btn-copy.copied {
+    background: rgba(100,255,150,0.15);
+    border-color: rgba(100,255,150,0.4);
+    color: #90ffb4;
+  }
+
+  .btn-regen {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    color: var(--dusty-rose);
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    font-weight: 500;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .btn-regen:hover {
+    border-color: var(--bubblegum);
+    color: white;
+  }
+
+  /* Footer stats */
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 50px;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--hot-pink);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.72rem;
+    color: var(--dusty-rose);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* Spinning icon on generate */
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  .spinning { display: inline-block; animation: spin 0.6s linear; }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: linear-gradient(135deg, #ff2d8a, #c2005e);
+    color: white;
+    padding: 12px 28px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    z-index: 100;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+    box-shadow: 0 8px 30px rgba(255,45,138,0.4);
+  }
+
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating background items -->
+<div class="bg-closet" id="bgCloset"></div>
+
+<div class="wrapper">
+
+  <!-- Header -->
+  <div class="header">
+    <span class="crown">👑</span>
+    <h1>Baddie Prompt<br>Generator</h1>
+    <p class="sub">AI-powered · Fashion Editorial · Slay every shot</p>
+    <div class="divider"></div>
+  </div>
+
+  <!-- Generate -->
+  <button class="btn-generate" onclick="generate()">
+    ✦ &nbsp; Generate My Prompt &nbsp; ✦
+  </button>
+
+  <div style="display:flex; justify-content:center; margin-bottom:32px;">
+    <button class="btn-secondary" onclick="exportJSON()">⬇ Export JSON</button>
+  </div>
+
+  <!-- Result -->
+  <div id="promptCard">
+    <div class="result-card">
+      <div class="result-label">✦ your prompt</div>
+      <div class="tags-row" id="tagsRow"></div>
+      <textarea class="prompt-textarea" id="promptText" readonly></textarea>
+      <div class="card-actions">
+        <button class="btn-copy" id="copyBtn" onclick="copyPrompt()">
+          <span>📋</span> Copy Prompt
+        </button>
+        <button class="btn-regen" onclick="generate()">
+          🔄 New Prompt
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat">
+      <span class="stat-num">41</span>
+      <span class="stat-label">Luxury Scenes</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">14</span>
+      <span class="stat-label">Baddie Outfits</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">10</span>
+      <span class="stat-label">Power Poses</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">✓ Copied to clipboard!</div>
+
+<script>
+
+  /* ============================================================
+     CONSTANTS — Prompt data pools
+     Add or remove entries here to expand/shrink variety.
+  ============================================================ */
+
+  const SCENES = [
+    "luxury rooftop infinity pool in Los Angeles",
+    "private jet cabin lifestyle photoshoot",
+    "pink neon penthouse overlooking city skyline",
+    "yacht deck in Monaco at sunset",
+    "high fashion editorial studio with glossy floor",
+    "luxury marble bathroom mirror selfie",
+    "designer closet surrounded by Hermès handbags",
+    "sunset beach club cabana",
+    "Barbiecore pink bedroom aesthetic",
+    "luxury hotel balcony with skyline view",
+    "Miami rooftop pool party",
+    "tropical resort infinity pool",
+    "luxury sports car photoshoot",
+    "yacht champagne party at golden hour",
+    "fashion runway backstage moment",
+    "luxury mall shopping photoshoot",
+    "pink convertible on palm lined street",
+    "Hollywood Hills mansion pool",
+    "luxury spa resort aesthetic",
+    "modern glass penthouse suite",
+    "Malibu beach sunset photoshoot",
+    "private island villa",
+    "Paris fashion week street style",
+    "Tokyo neon cyberpunk street",
+    "luxury nightclub VIP section",
+    "balcony overlooking Dubai skyline",
+    "editorial shoot in luxury hotel suite",
+    "designer boutique interior",
+    "luxury elevator mirror selfie",
+    "private pool villa in Bali",
+    "fashion campaign studio with soft pink lighting",
+    "luxury yacht marina at dusk",
+    "sunlit Beverly Hills mansion",
+    "luxury airport hangar jet photoshoot",
+    "fashion editorial on marble staircase",
+    "pink Y2K bedroom aesthetic",
+    "luxury casino interior",
+    "resort beach sunset editorial",
+    "rooftop lounge with fire pits",
+    "high-end fashion showroom",
+    "luxury Paris balcony photoshoot"
+  ];
+
+  const OUTFITS = [
+    "pink rhinestone bikini with stilettos",
+    "designer bodycon dress with gold accessories",
+    "silk slip dress with barely-there heels",
+    "Y2K rhinestone crop top and low rise jeans",
+    "luxury athleisure matching set",
+    "glam evening gown with plunging neckline",
+    "oversized streetwear crop hoodie and bike shorts",
+    "lingerie-inspired fashion set with blazer",
+    "velvet mini dress with thigh high boots",
+    "gold jewelry bikini set with sarong",
+    "oversized hoodie, no pants, thigh high boots",
+    "fashion runway structured corset outfit",
+    "designer one-piece swimsuit with heels",
+    "pink Barbiecore mini dress with matching bag"
+  ];
+
+  const POSES = [
+    "standing confidently, direct eye contact with camera",
+    "sitting on the edge of a pool, legs crossed",
+    "walking forward like a runway model, mid-stride",
+    "holding sunglasses while looking over shoulder",
+    "sitting on luxury couch with relaxed confident posture",
+    "leaning against balcony railing, gazing at the view",
+    "looking back toward camera mid-walk",
+    "holding a designer handbag while posing confidently",
+    "legs elegantly crossed while seated",
+    "soft smirk, natural relaxed pose"
+  ];
+
+  /* ============================================================
+     CONSTANT — Identity lock block
+     Reused verbatim in every generated prompt.
+     Edit here to update the identity instructions globally.
+  ============================================================ */
+
+  const IDENTITY_LOCK = `IDENTITY LOCK
+
+Use the subject's reference image to anchor all identity details.
+
+Face Lock:
+Preserve identical facial structure, eye shape, nose shape, lips,
+cheekbones, jawline, and skin tone. Zero facial drift allowed.
+
+Body Lock:
+Preserve the same body proportions and natural anatomy.
+Do not modify or alter body shape in any way.
+
+Skin:
+Photorealistic skin texture with natural pores, soft highlights,
+and dimensional depth.`;
+
+  /* ============================================================
+     CONSTANT — Style & theme block
+     Shared technical camera / aesthetic instructions for every prompt.
+  ============================================================ */
+
+  const STYLE_BLOCK = `STYLE
+Luxury fashion editorial photography
+Baddie Instagram influencer aesthetic
+Canon EOS R5 · 85mm portrait lens
+Cinematic lighting · ultra photorealistic
+8K detail · magazine quality
+Warm skin tones · rich shadows
+
+THEME
+High fashion baddie lifestyle — confidence, luxury, and effortless cool`;
+
+  /* ============================================================
+     CONSTANT — Background closet emojis
+     The floating decorative icons behind the UI.
+  ============================================================ */
+
+  const BG_EMOJIS = ['👗','👠','💄','💅','👛','💎','🌸','✨','🪞','💋','👒','🩰','💍','🎀'];
+
+  /* ============================================================
+     CONSTANT — Copy button states
+     Centralises button label/state strings to avoid duplication.
+  ============================================================ */
+
+  const COPY_BTN = {
+    default: '<span>📋</span> Copy Prompt',
+    success: '<span>✓</span> Copied!',
+    resetDelay: 2500   // ms before button resets to default
+  };
+
+  /* ============================================================
+     CONSTANT — Toast display duration in milliseconds
+  ============================================================ */
+
+  const TOAST_DURATION = 2200;
+
+  /* ============================================================
+     STATE — Tracks the most recently generated prompt + parts.
+     Used by copyPrompt() and exportJSON().
+  ============================================================ */
+
+  let state = {
+    prompt: '',
+    scene:  '',
+    outfit: '',
+    pose:   ''
+  };
+
+  /* ============================================================
+     UTILITY — Returns a random element from an array.
+  ============================================================ */
+
+  function randomFrom(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  /* ============================================================
+     UTILITY — Builds the full prompt string from its parts.
+     Assembles IDENTITY_LOCK + dynamic vars + STYLE_BLOCK.
+  ============================================================ */
+
+  function buildPrompt(scene, outfit, pose) {
+    return [
+      IDENTITY_LOCK,
+      '',
+      `SCENE\n${scene}`,
+      '',
+      `OUTFIT\n${outfit}`,
+      '',
+      `POSE\n${pose}`,
+      '',
+      STYLE_BLOCK
+    ].join('\n');
+  }
+
+  /* ============================================================
+     UTILITY — Renders the scene/outfit/pose pill tags above the textarea.
+  ============================================================ */
+
+  function renderTags(scene, outfit, pose) {
+    document.getElementById('tagsRow').innerHTML =
+      `<span class="scene-tag">📍 ${scene}</span>` +
+      `<span class="outfit-tag">👗 ${outfit}</span>` +
+      `<span class="pose-tag">✨ ${pose}</span>`;
+  }
+
+  /* ============================================================
+     UTILITY — Shows the result card with a fade-in transition.
+  ============================================================ */
+
+  function showCard() {
+    const card = document.getElementById('promptCard');
+    card.classList.remove('visible');
+    // Small delay lets the browser register the class removal before re-adding
+    setTimeout(() => card.classList.add('visible'), 50);
+  }
+
+  /* ============================================================
+     UTILITY — Resets the copy button back to its default label/state.
+  ============================================================ */
+
+  function resetCopyBtn() {
+    const btn = document.getElementById('copyBtn');
+    btn.classList.remove('copied');
+    btn.innerHTML = COPY_BTN.default;
+  }
+
+  /* ============================================================
+     UTILITY — Briefly shows the "Copied!" toast notification.
+  ============================================================ */
+
+  function showToast() {
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), TOAST_DURATION);
+  }
+
+  /* ============================================================
+     INIT — Populates the floating background closet emojis on load.
+  ============================================================ */
+
+  function initBackground() {
+    const container = document.getElementById('bgCloset');
+
+    for (let i = 0; i < 20; i++) {
+      const el = document.createElement('span');
+      el.textContent              = randomFrom(BG_EMOJIS);
+      el.style.left               = `${Math.random() * 100}vw`;
+      el.style.animationDuration  = `${14 + Math.random() * 20}s`;
+      el.style.animationDelay     = `${Math.random() * 20}s`;
+      el.style.fontSize           = `${1 + Math.random() * 1.5}rem`;
+      container.appendChild(el);
+    }
+  }
+
+  /* ============================================================
+     ACTION — Generates a new random prompt and renders it.
+     Called by the Generate button and the New Prompt button.
+  ============================================================ */
+
+  function generate() {
+    // Pick random values from each pool
+    state.scene  = randomFrom(SCENES);
+    state.outfit = randomFrom(OUTFITS);
+    state.pose   = randomFrom(POSES);
+
+    // Build the full prompt string
+    state.prompt = buildPrompt(state.scene, state.outfit, state.pose);
+
+    // Update the DOM
+    renderTags(state.scene, state.outfit, state.pose);
+    document.getElementById('promptText').value = state.prompt;
+
+    showCard();
+    resetCopyBtn();
+  }
+
+  /* ============================================================
+     ACTION — Copies the current prompt to the clipboard.
+     Falls back to textarea select+copy if clipboard API unavailable.
+  ============================================================ */
+
+  function copyPrompt() {
+    if (!state.prompt) return;
+
+    const btn = document.getElementById('copyBtn');
+
+    // Primary method: Clipboard API
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(state.prompt)
+        .then(() => {
+          btn.classList.add('copied');
+          btn.innerHTML = COPY_BTN.success;
+          showToast();
+          setTimeout(resetCopyBtn, COPY_BTN.resetDelay);
+        })
+        .catch(() => fallbackCopy());
+    } else {
+      // Fallback for browsers without clipboard API support
+      fallbackCopy();
+    }
+  }
+
+  /* ============================================================
+     UTILITY — Fallback copy using textarea select + execCommand.
+     Used when navigator.clipboard is unavailable.
+  ============================================================ */
+
+  function fallbackCopy() {
+    const textarea = document.getElementById('promptText');
+    textarea.select();
+    textarea.setSelectionRange(0, 99999); // Mobile support
+
+    try {
+      document.execCommand('copy');
+      showToast();
+    } catch (err) {
+      alert('Could not copy — please select the text manually.');
+    }
+  }
+
+  /* ============================================================
+     ACTION — Exports the current prompt as a JSON file download.
+  ============================================================ */
+
+  function exportJSON() {
+    if (!state.prompt) {
+      alert('Generate a prompt first!');
+      return;
+    }
+
+    const payload = {
+      scene:  state.scene,
+      outfit: state.outfit,
+      pose:   state.pose,
+      prompt: state.prompt
+    };
+
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const link = document.createElement('a');
+    link.href     = URL.createObjectURL(blob);
+    link.download = 'baddie_prompt.json';
+    link.click();
+
+    // Clean up the object URL to free memory
+    URL.revokeObjectURL(link.href);
+  }
+
+  /* ============================================================
+     BOOT — Run on page load.
+  ============================================================ */
+
+  initBackground();
+
+</script>
+</body>
+</html>

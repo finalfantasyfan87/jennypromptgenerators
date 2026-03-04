@@ -1,3 +1,6 @@
+<!-- © 2026 Jennifer Haywood. All rights reserved.
+     Unauthorized reproduction or distribution of this work,
+     in whole or in part, is strictly prohibited. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -359,7 +362,7 @@ body.spicy-mode::before {
   <div style="text-align:center">
     <div class="face-pill">
       <span class="lock">🔒</span>
-      Appended to every prompt: <code>original fictional character, consistent appearance, not a real person</code>
+      Appended to every prompt: <code>preserve facial identity and body exactly as in the reference photo</code>
     </div>
   </div>
 
@@ -387,7 +390,7 @@ body.spicy-mode::before {
   <div class="prompt-display" id="promptDisplay">
     <div class="empty-state">
       <span class="big">✦</span>
-      <p>Pick a theme above to generate a prompt.<br>It will include <em>"original fictional character, consistent appearance"</em></p>
+      <p>Pick a theme above to generate a prompt.<br>It will include <em>"preserve facial identity and body exactly as in the reference photo"</em></p>
     </div>
   </div>
 
@@ -407,7 +410,7 @@ body.spicy-mode::before {
 // Appended to every prompt. Tells Gemini to keep the character consistent
 // without triggering the real-person protection filter.
 // ─────────────────────────────────────────────────────────────────────────────
-const FACE_LOCK = "original fictional character, consistent character appearance throughout, not based on any real person";
+const FACE_LOCK = "preserve facial identity and body exactly as in the reference photo";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // PROMPT PREFIX CONSTANT
