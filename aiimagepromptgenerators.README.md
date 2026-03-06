@@ -5,9 +5,8 @@
  <img width="1005" height="890" alt="Screenshot 2026-03-01 232501" src="https://github.com/user-attachments/assets/4496a98c-08b5-40c3-8432-bd8b8ddc213e" />
 
 
- https://fairycottagecorepromptgenerator.netlify.app/
-
-<img width="781" height="857" alt="Screenshot 2026-03-01 213837" src="https://github.com/user-attachments/assets/14adc0d1-4a11-4635-a60f-be9e3de610f7" />
+ https://cosplay-prompt-generator.netlify.app
+ <img width="632" height="761" alt="Screenshot 2026-03-06 at 8 27 12 AM" src="https://github.com/user-attachments/assets/d2569a55-1824-426d-aa4e-d62bd65a44f2" />
 
  
 
