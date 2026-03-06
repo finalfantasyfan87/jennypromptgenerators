@@ -1,1 +1,839 @@
+<!-- © 2026 Jennifer Haywood. All rights reserved. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>✨ Cosplay Prompt Generator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─────────────────────────────────────────
+       CSS VARIABLES — kawaii mint + pink palette
+    ───────────────────────────────────────── */
+    :root {
+      --mint:         #a8edcf;
+      --mint-light:   #d4f7ea;
+      --mint-dark:    #5ecba1;
+      --pink:         #f9b8d0;
+      --pink-light:   #fce4ee;
+      --pink-dark:    #e87fa9;
+      --white:        #ffffff;
+      --text-dark:    #3a2d45;
+      --text-mid:     #7b6a88;
+      --shadow-soft:  rgba(168, 237, 207, 0.45);
+      --shadow-pink:  rgba(249, 184, 208, 0.45);
+      --radius:       20px;
+      --font-display: 'Fredoka One', cursive;
+      --font-body:    'Nunito', sans-serif;
+    }
+
+    /* ─────────────────────────────────────────
+       RESET & BASE
+    ───────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: linear-gradient(135deg, var(--mint-light) 0%, var(--pink-light) 50%, var(--mint-light) 100%);
+      background-size: 400% 400%;
+      animation: bgShift 12s ease infinite;
+      min-height: 100vh;
+      color: var(--text-dark);
+      padding: 24px 16px 70px;
+    }
+
+    @keyframes bgShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ─────────────────────────────────────────
+       FLOATING DECORATIVE STARS
+    ───────────────────────────────────────── */
+    .star {
+      position: fixed;
+      font-size: 1.2rem;
+      opacity: 0.22;
+      pointer-events: none;
+      animation: floatStar 6s ease-in-out infinite;
+    }
+    .star:nth-child(1) { top: 8%;  left: 5%;  animation-delay: 0s;   font-size: 1.5rem; }
+    .star:nth-child(2) { top: 15%; right: 7%; animation-delay: 1.2s; }
+    .star:nth-child(3) { top: 55%; left: 3%;  animation-delay: 2.4s; font-size: 0.9rem; }
+    .star:nth-child(4) { top: 75%; right: 4%; animation-delay: 0.8s; font-size: 1.8rem; }
+    .star:nth-child(5) { top: 90%; left: 10%; animation-delay: 3s;   font-size: 1rem;   }
+    .star:nth-child(6) { top: 30%; right: 2%; animation-delay: 1.8s; }
+
+    @keyframes floatStar {
+      0%, 100% { transform: translateY(0)     rotate(0deg);  }
+      50%       { transform: translateY(-12px) rotate(15deg); }
+    }
+
+    /* ─────────────────────────────────────────
+       PAGE WRAPPER
+    ───────────────────────────────────────── */
+    .page-wrapper { max-width: 680px; margin: 0 auto; }
+
+    /* ─────────────────────────────────────────
+       HEADER
+    ───────────────────────────────────────── */
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      animation: dropIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    @keyframes dropIn {
+      from { opacity: 0; transform: translateY(-28px) scale(0.9); }
+      to   { opacity: 1; transform: translateY(0)     scale(1);   }
+    }
+
+    .header-icon { font-size: 3rem; display: block; margin-bottom: 6px; }
+
+    .header h1 {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      background: linear-gradient(135deg, var(--mint-dark), var(--pink-dark));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 1px;
+      line-height: 1.2;
+    }
+
+    .header p { color: var(--text-mid); font-size: 0.92rem; margin-top: 6px; font-weight: 600; }
+
+    /* ─────────────────────────────────────────
+       MODE TOGGLE
+    ───────────────────────────────────────── */
+    .mode-toggle {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+
+    .mode-btn {
+      flex: 1;
+      max-width: 200px;
+      padding: 12px 20px;
+      border: 2.5px solid transparent;
+      border-radius: 50px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+    }
+
+    .mode-btn.regular { background: var(--mint-light); color: var(--mint-dark); border-color: var(--mint); }
+    .mode-btn.regular.active,
+    .mode-btn.regular:hover {
+      background: linear-gradient(135deg, var(--mint), var(--mint-dark));
+      color: var(--white);
+      border-color: var(--mint-dark);
+      box-shadow: 0 4px 16px var(--shadow-soft);
+      transform: translateY(-2px);
+    }
+
+    .mode-btn.spicy { background: var(--pink-light); color: var(--pink-dark); border-color: var(--pink); }
+    .mode-btn.spicy.active,
+    .mode-btn.spicy:hover {
+      background: linear-gradient(135deg, var(--pink), var(--pink-dark));
+      color: var(--white);
+      border-color: var(--pink-dark);
+      box-shadow: 0 4px 16px var(--shadow-pink);
+      transform: translateY(-2px);
+    }
+
+    /* ─────────────────────────────────────────
+       GENERATE BUTTON — big and prominent
+    ───────────────────────────────────────── */
+    .generate-btn {
+      width: 100%;
+      padding: 20px;
+      border: none;
+      border-radius: 50px;
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    /* Shimmer sweep on hover */
+    .generate-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.18);
+      transform: translateX(-100%);
+      transition: transform 0.35s ease;
+    }
+
+    .generate-btn:hover::before { transform: translateX(0); }
+
+    .generate-btn.regular-mode {
+      background: linear-gradient(135deg, var(--mint-dark), #3db88a);
+      color: var(--white);
+      box-shadow: 0 8px 28px var(--shadow-soft);
+    }
+
+    .generate-btn.spicy-mode {
+      background: linear-gradient(135deg, var(--pink-dark), #d45e8e);
+      color: var(--white);
+      box-shadow: 0 8px 28px var(--shadow-pink);
+    }
+
+    .generate-btn:hover  { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(0,0,0,0.15); }
+    .generate-btn:active { transform: translateY(0); }
+
+    /* ─────────────────────────────────────────
+       SHARED CARD PANEL
+    ───────────────────────────────────────── */
+    .card {
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(12px);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 8px 32px var(--shadow-soft);
+    }
+
+    /* ─────────────────────────────────────────
+       ROLLED DETAILS CARD
+       Shows what was randomly picked this roll
+    ───────────────────────────────────────── */
+    .rolled-card {
+      display: none;
+      border: 2px solid var(--mint-light);
+    }
+
+    .rolled-card.visible {
+      display: block;
+      animation: fadeUp 0.4s ease both;
+    }
+
+    .rolled-card.spicy-border { border-color: var(--pink-light); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0);    }
+    }
+
+    .rolled-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--mint-dark);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Grid of pill tags showing what was rolled */
+    .rolled-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .rolled-tag {
+      display: inline-flex;
+      flex-direction: column;
+      background: var(--mint-light);
+      border-radius: 10px;
+      padding: 6px 12px;
+      font-size: 0.75rem;
+      line-height: 1.3;
+    }
+
+    .rolled-tag.spicy-tag { background: var(--pink-light); }
+
+    .rolled-tag-label {
+      font-weight: 800;
+      color: var(--text-mid);
+      text-transform: uppercase;
+      font-size: 0.64rem;
+      letter-spacing: 0.6px;
+    }
+
+    .rolled-tag-value {
+      font-weight: 700;
+      color: var(--text-dark);
+      font-size: 0.8rem;
+    }
+
+    /* ─────────────────────────────────────────
+       OUTPUT CARD
+    ───────────────────────────────────────── */
+    .output-card {
+      display: none;
+      border: 2.5px solid var(--mint);
+    }
+
+    .output-card.visible {
+      display: block;
+      animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    .output-card.spicy-border { border-color: var(--pink); }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to   { opacity: 1; transform: scale(1);    }
+    }
+
+    .output-label {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--text-mid);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mode-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 3px 12px;
+      border-radius: 50px;
+      margin-left: auto;
+    }
+
+    .mode-badge.regular { background: var(--mint-light); color: var(--mint-dark); }
+    .mode-badge.spicy   { background: var(--pink-light);  color: var(--pink-dark); }
+
+    .prompt-text {
+      background: linear-gradient(135deg, rgba(168,237,207,0.15), rgba(249,184,208,0.15));
+      border: 1.5px solid var(--mint-light);
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 0.87rem;
+      line-height: 1.75;
+      color: var(--text-dark);
+      white-space: pre-wrap;
+      word-break: break-word;
+      min-height: 100px;
+    }
+
+    /* Usage tip below the prompt */
+    .usage-tip {
+      margin-top: 12px;
+      font-size: 0.76rem;
+      color: var(--text-mid);
+      background: var(--pink-light);
+      border-left: 3px solid var(--pink-dark);
+      border-radius: 10px;
+      padding: 10px 14px;
+      line-height: 1.65;
+    }
+
+    .usage-tip strong { color: var(--pink-dark); }
+
+    /* ─────────────────────────────────────────
+       ACTION BUTTONS
+    ───────────────────────────────────────── */
+    .action-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      flex: 1;
+      min-width: 120px;
+      padding: 10px 16px;
+      border: 2.5px solid var(--mint);
+      border-radius: 50px;
+      background: var(--white);
+      font-family: var(--font-body);
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: var(--mint-dark);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .action-btn:hover {
+      background: var(--mint-light);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px var(--shadow-soft);
+    }
+
+    .action-btn.pink { border-color: var(--pink); color: var(--pink-dark); }
+    .action-btn.pink:hover { background: var(--pink-light); box-shadow: 0 4px 12px var(--shadow-pink); }
+
+    /* ─────────────────────────────────────────
+       TOAST NOTIFICATION
+    ───────────────────────────────────────── */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--text-dark);
+      color: var(--white);
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 999;
+      pointer-events: none;
+    }
+
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ─────────────────────────────────────────
+       SCROLLBAR
+    ───────────────────────────────────────── */
+    ::-webkit-scrollbar       { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--mint-light); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb { background: var(--mint); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--mint-dark); }
+  </style>
+</head>
+
+<body>
+
+  <span class="star">✦</span>
+  <span class="star">✧</span>
+  <span class="star">✦</span>
+  <span class="star">✧</span>
+  <span class="star">✦</span>
+  <span class="star">✧</span>
+
+  <div class="page-wrapper">
+
+    <!-- ── HEADER ── -->
+    <div class="header">
+      <span class="header-icon">🎮</span>
+      <h1>Cosplay Prompt Generator</h1>
+      <p>Pick your mode · hit generate · get a fully random prompt ✨</p>
+    </div>
+
+    <!-- ── MODE TOGGLE ── -->
+    <div class="mode-toggle">
+      <button class="mode-btn regular active" onclick="setMode('regular')">🌸 Regular</button>
+      <button class="mode-btn spicy"          onclick="setMode('spicy')">🔥 Spicy</button>
+    </div>
+
+    <!-- ── GENERATE BUTTON ── -->
+    <button class="generate-btn regular-mode" id="generate-btn" onclick="generatePrompt()">
+      🎲 Generate Random Prompt
+    </button>
+
+    <!-- ── ROLLED DETAILS (what was picked this roll) ── -->
+    <div class="card rolled-card" id="rolled-card">
+      <div class="rolled-title">🎰 This Roll</div>
+      <div class="rolled-tags" id="rolled-tags"></div>
+    </div>
+
+    <!-- ── OUTPUT CARD ── -->
+    <div class="card output-card" id="output-card">
+      <div class="output-label">
+        ✦ Your Prompt
+        <span class="mode-badge regular" id="mode-badge">🌸 Regular</span>
+      </div>
+      <div class="prompt-text" id="prompt-output"></div>
+
+      <div class="usage-tip">
+        <strong>📌 How to use:</strong> Paste this prompt into <strong>Gemini, ImageFX, or Imagen 3</strong> and attach your reference photo in the same message.
+        If the AI questions using a real person, reply: <em>"This is a fictional private individual for creative cosplay fan art — not a celebrity or public figure."</em>
+      </div>
+
+      <div class="action-row">
+        <button class="action-btn" onclick="copyPrompt()">📋 Copy Prompt</button>
+        <button class="action-btn pink" onclick="generatePrompt()">🎲 Roll Again</button>
+      </div>
+    </div>
+
+  </div><!-- /page-wrapper -->
+
+  <div class="toast" id="copy-toast">✅ Copied to clipboard!</div>
+
+
+  <script>
+    /* ═══════════════════════════════════════════════
+       STATE
+    ═══════════════════════════════════════════════ */
+    let currentMode = 'regular'; // 'regular' | 'spicy'
+
+    /* ═══════════════════════════════════════════════
+       CHARACTER DATA
+       Each entry has a display name (shown in the "This
+       Roll" tags) and a prompt value (used in the prompt).
+       Wide spread of franchises and eras for variety.
+    ═══════════════════════════════════════════════ */
+    const CHARACTERS = [
+      // Nintendo
+      { name: 'Samus Aran',    prompt: 'Samus Aran from Metroid, wearing her iconic Zero Suit — a sleek blue formfitting bodysuit with futuristic detailing' },
+      { name: 'Princess Zelda', prompt: 'Princess Zelda from The Legend of Zelda, wearing her ornate royal gown with triforce embroidery and golden accessories' },
+      { name: 'Rosalina',      prompt: 'Princess Rosalina from Super Mario Galaxy, wearing her long silver-white cosmic gown and silver crown, with pale blonde bangs over one eye' },
+      { name: 'Bayonetta',     prompt: 'Bayonetta from Bayonetta, wearing her iconic black hair-woven bodysuit with oversized handguns attached at the heels' },
+      { name: 'Palutena',      prompt: 'Lady Palutena from Kid Icarus Uprising, wearing her white and gold goddess robes with a large green shield and ornate staff' },
+
+      // Capcom
+      { name: 'Jill Valentine', prompt: 'Jill Valentine from Resident Evil, wearing her iconic blue strapless tube top, black miniskirt, and tactical shoulder holster' },
+      { name: 'Claire Redfield', prompt: 'Claire Redfield from Resident Evil 2, wearing her red biker jacket over a white crop top with dark jeans' },
+      { name: 'Lady',           prompt: 'Lady (Mary) from Devil May Cry 3, wearing her white tactical jacket, short shorts, and carrying her rocket launcher Kalina Ann' },
+      { name: 'Cammy',          prompt: 'Cammy White from Street Fighter, wearing her green military leotard with red beret, red gauntlets and combat boots' },
+      { name: 'Chun-Li',        prompt: 'Chun-Li from Street Fighter, wearing her blue qipao dress with white ox-horn buns, spiked golden bracelets and white tights' },
+      { name: 'Morrigan',       prompt: 'Morrigan Aensland from Darkstalkers, wearing her emerald green bat-wing bodysuit with teal hair styled in two large spherical buns' },
+
+      // Square Enix
+      { name: 'Aerith',         prompt: 'Aerith Gainsborough from Final Fantasy VII, wearing her pink dress with a red bolero jacket, long chestnut hair in a braid tied with a pink ribbon' },
+      { name: 'Tifa Lockhart',  prompt: 'Tifa Lockhart from Final Fantasy VII Remake, wearing her black tank top, black leather miniskirt, red gloves, and white crop top underneath' },
+      { name: 'Lightning',      prompt: 'Lightning from Final Fantasy XIII, wearing her rose-gold and silver guardian corps uniform with her gunblade at her side and short pink hair' },
+      { name: 'Lara Croft',     prompt: 'Lara Croft from Tomb Raider, wearing her classic teal tank top, brown shorts, twin pistol holsters on her thighs and adventurer boots' },
+      { name: '2B',             prompt: '2B from NieR: Automata, wearing her black gothic lolita dress with a tight corset bodice, white bob hair, and black blindfold visor' },
+      { name: 'Yennefer',       prompt: 'Yennefer of Vengerberg from The Witcher 3, wearing her elegant black sorceress gown with a plunging neckline and violet eyes' },
+      { name: 'Triss Merigold', prompt: 'Triss Merigold from The Witcher 3, wearing her elegant sorceress attire in deep red tones with her signature auburn curls' },
+
+      // Blizzard / Overwatch
+      { name: 'Tracer',         prompt: 'Tracer from Overwatch, wearing her brown leather bomber jacket over an orange bodysuit, with orange flight goggles pushed up on her forehead and her chronal accelerator harness' },
+      { name: 'Widowmaker',     prompt: 'Widowmaker from Overwatch, wearing her form-fitting purple and black tactical bodysuit with her sniper visor and long dark hair in a bun' },
+      { name: 'D.Va',           prompt: 'D.Va from Overwatch, wearing her pink and white MEKA pilot bodysuit with her signature gaming headset and MEKA logo' },
+      { name: 'Mercy',          prompt: 'Mercy from Overwatch, wearing her golden valkyrie battle armor with large white mechanical wings deployed and a staff of healing' },
+
+      // Action / Survival
+      { name: 'Ellie',          prompt: 'Ellie from The Last of Us Part II, wearing her flannel shirt over a dark shirt, tactical backpack, worn jeans and combat boots — post-apocalyptic survivor aesthetic' },
+      { name: 'Aloy',           prompt: 'Aloy from Horizon Zero Dawn, wearing her tribal huntress leather outfit with a mechanical recurve bow and her iconic red braided hair' },
+      { name: 'Kassandra',      prompt: 'Kassandra from Assassin\'s Creed Odyssey, wearing her legendary Spartan mercenary armor with her engraved spear and flowing dark hair' },
+
+      // Fighting
+      { name: 'Sonya Blade',    prompt: 'Sonya Blade from Mortal Kombat 11, wearing her military Special Forces tactical uniform with dog tags and short blonde hair' },
+      { name: 'Kitana',         prompt: 'Kitana from Mortal Kombat, wearing her royal blue ninja attire with gold trim, veil and her signature steel war fans' },
+      { name: 'Ivy Valentine',  prompt: 'Ivy Valentine from Soul Calibur, wearing her elaborate ivory armored corseted outfit with her coiling snake sword weapon' },
+
+      // Modern / Indie
+      { name: 'Quiet',          prompt: 'Quiet from Metal Gear Solid V, wearing her distinctive tactical sniper outfit with her signature long dark hair and sniper rifle' },
+      { name: 'Nier Protagonist', prompt: 'A2 from NieR: Automata, wearing her white short-cut android dress with long white hair, battle-worn with red trim detailing' },
+      { name: 'Enchantress',    prompt: 'The Enchantress from Hades, wearing an elegant flowing dark emerald gown with gold goddess jewelry and dark curling hair adorned with laurels' },
+    ];
+
+    /* ═══════════════════════════════════════════════
+       SETTINGS — all variations are cosplay convention
+       environments for authentic event atmosphere.
+    ═══════════════════════════════════════════════ */
+    const SETTINGS = [
+      { name: 'Convention Main Hall',   prompt: 'a massive convention center main hall packed with cosplayers, colorful banners overhead, warm event lighting and crowds of fans in the background' },
+      { name: 'Convention Hallway',     prompt: 'a wide convention center hallway filled with cosplayers walking by, soft overhead fluorescent event lighting and exhibitor booths lining the walls' },
+      { name: 'Cosplay Contest Stage',  prompt: 'a bright convention stage with dramatic spotlights, a large audience of fans and convention banners on either side — mid cosplay competition' },
+      { name: 'Outdoor Con Courtyard',  prompt: 'a sunny outdoor convention courtyard with cosplayers gathered, event tents and signage in the background, natural afternoon light' },
+      { name: 'Con Photo Area',         prompt: 'a dedicated cosplay photography area at a convention with a simple banner backdrop, professional ring light setup and other cosplayers waiting nearby' },
+      { name: 'Artist Alley',           prompt: 'a bustling convention artist alley with colorful fan art prints on display, string lights overhead and other cosplayers browsing in the background' },
+      { name: 'Gaming Room',            prompt: 'a convention gaming room filled with glowing screens, neon LED lighting strips, rows of gaming setups and other convention-goers in the background' },
+      { name: 'Con Entrance',           prompt: 'the grand entrance of a large anime and gaming convention, with huge character banners hanging from the ceiling, crowd energy and event signage visible' },
+      { name: 'Panel Room Corridor',    prompt: 'a convention panel room corridor with event schedules posted on walls, directional signage, soft overhead lighting and other attendees passing by' },
+      { name: 'Outdoor Con Steps',      prompt: 'the wide outdoor steps of a convention center with other cosplayers gathered, golden afternoon sunlight and the convention building facade behind' },
+    ];
+
+    const PHOTO_STYLES = [
+      { name: 'Editorial 8K',     prompt: 'hyper-realistic editorial photography, ultra-sharp 8K detail' },
+      { name: 'Cinematic Film',   prompt: 'cinematic 35mm film photography with anamorphic lens flare and shallow depth of field' },
+      { name: 'Pro Cosplay',      prompt: 'vibrant professional cosplay photography with expert studio-quality lighting' },
+      { name: 'Soft Fantasy',     prompt: 'soft dreamy pastel fantasy photography with a glowing ethereal atmosphere' },
+      { name: 'Dark Chiaroscuro', prompt: 'dramatic dark chiaroscuro photography with deep blacks and sculpted highlights' },
+      { name: 'Action Movie',     prompt: 'high-contrast action movie promotional still with intense cinematic color grading' },
+      { name: 'Fashion Editorial', prompt: 'high-fashion magazine editorial photography with bold dramatic styling' },
+      { name: 'Natural Light',    prompt: 'warm natural light lifestyle photography with beautiful organic bokeh' },
+    ];
+
+    const POSES = [
+      { name: 'Hero Stance',       prompt: 'confident powerful full-body hero stance, looking directly into camera' },
+      { name: 'Dynamic Action',    prompt: 'dynamic action pose mid-motion as if in combat, full body visible, hair in motion' },
+      { name: 'Elegant & Regal',   prompt: 'elegant regal poised pose, shoulders back, composed and commanding expression' },
+      { name: 'Over-the-Shoulder', prompt: 'over-the-shoulder glance, looking back at camera with a slight confident smirk' },
+      { name: 'Close-Up Portrait', prompt: 'close-up portrait facing the camera directly, intense and confident gaze, shallow depth of field' },
+      { name: 'Kneeling Warrior',  prompt: 'warrior-ready kneeling crouch with weapon drawn, focused and intense expression' },
+      { name: 'Candid Natural',    prompt: 'candid natural relaxed standing pose with a soft approachable expression' },
+      { name: 'Power Walk',        prompt: 'striding confidently toward camera, hair and costume caught in cinematic wind' },
+    ];
+
+    const LIGHTING_OPTIONS = [
+      { name: 'Soft Rim Light',      prompt: 'soft diffused wraparound rim lighting' },
+      { name: 'Dramatic Split',      prompt: 'dramatic one-sided split lighting with deep contrasting shadows' },
+      { name: 'Golden Hour',         prompt: 'warm golden hour backlight creating a glowing halo around the silhouette' },
+      { name: 'Cool Moonlight',      prompt: 'cool blue moonlight casting long soft shadows with a silver tint' },
+      { name: 'Neon Gel',            prompt: 'vibrant neon colored gel lighting in pink and teal tones' },
+      { name: 'Natural Overcast',    prompt: 'natural soft overcast daylight, even and flattering' },
+      { name: 'Upward Fill Light',   prompt: 'dramatic upward fill lighting creating a powerful heroic glow from below' },
+      { name: 'Volumetric Rays',     prompt: 'beautiful volumetric god rays of light breaking through from above' },
+    ];
+
+    const ATMOSPHERE_EXTRAS = [
+      'with soft rose petals drifting gently through the air',
+      'with beautiful soft bokeh orbs of light glowing in the background',
+      'with a subtle warm cinematic lens flare',
+      'with volumetric fog curling gently at the feet',
+      'with sparks of magical energy surrounding the figure',
+      'with delicate motes of light floating through the air',
+      'with wisps of smoke drifting elegantly through the scene',
+      'with shimmering particles catching the light',
+    ];
+
+    /* ═══════════════════════════════════════════════
+       PHOTO REALISM ENFORCER PHRASES
+       These push the AI hard toward photographic
+       realism and away from illustration/digital art.
+       Randomized each generation.
+    ═══════════════════════════════════════════════ */
+    const PHOTO_REALISM_PHRASES = [
+      'real photograph, NOT an illustration, NOT digital art, NOT anime, NOT 3D render, NOT painting — strictly a real photographic image',
+      'this must look exactly like a real photograph taken by a professional camera — no illustration, no digital painting, no anime style, no CGI, no concept art',
+      'photographic realism only — looks like a real DSLR photograph, absolutely not an illustration, not anime, not digital art, not rendered or painted',
+    ];
+
+    /* ═══════════════════════════════════════════════
+       IDENTITY ANCHOR PHRASES
+       Instructs the AI to preserve the reference subject's
+       face and body without alteration.
+    ═══════════════════════════════════════════════ */
+    const IDENTITY_ANCHOR_PHRASES = [
+      'Using the provided reference image as the exact face and body template — do not alter, change, or reimagine the person\'s facial features, skin tone, eye color, hair texture, or body proportions in any way',
+      'The person in the reference image is the subject — preserve their exact facial structure, skin tone, eye shape, natural hair, and body type with complete accuracy, treating them as a fixed unchangeable identity',
+      'Reference image is the identity source — recreate this exact person\'s face and body faithfully, keeping all their real physical features intact while placing them in the cosplay scenario described below',
+      'Maintain the exact likeness of the person in the reference image — their face, skin, eyes, hair, and body must remain completely true to the reference without any idealization, slimming, or alteration',
+    ];
+
+    /* ═══════════════════════════════════════════════
+       COSPLAY FRAMING PHRASES
+       Tells the AI this is creative fan art of a private
+       individual to avoid policy rejections.
+    ═══════════════════════════════════════════════ */
+    const COSPLAY_FRAMING_PHRASES = [
+      'Creative fictional cosplay photography — the subject is a non-famous private individual dressed as a video game character, not a real celebrity or public figure',
+      'Fictional cosplay concept art — private individual as a video game character costume, creative personal project, no real celebrities involved',
+    ];
+
+    /* ═══════════════════════════════════════════════
+       QUALITY TAGS — appended to every prompt
+    ═══════════════════════════════════════════════ */
+    const QUALITY_TAGS = 'masterpiece, award-winning photography, ultra-detailed, photorealistic, highly detailed skin texture, professional color grading, tack-sharp focus on face, 8K resolution';
+
+    /* ═══════════════════════════════════════════════
+       SPICY MODE EXTRAS
+       Injected only in spicy mode.
+    ═══════════════════════════════════════════════ */
+    const SPICY_COSTUME_DETAILS = [
+      'form-fitting and body-hugging throughout, accentuating every curve',
+      'slightly unbuttoned or undone, confident and alluring',
+      'featuring a cropped silhouette showing a hint of midriff',
+      'with a daring thigh-high slit emphasizing long legs',
+      'skin-tight material that dramatically sculpts the silhouette',
+      'with a plunging neckline and an open back detail',
+    ];
+
+    const SPICY_POSE_ADDONS = [
+      'with a sultry smoldering expression and intense direct eye contact',
+      'with lips slightly parted and eyes half-lidded, radiating bold confidence',
+      'leaning forward subtly with an inviting and daring gaze',
+      'with a teasing half-smile and a knowing confident expression',
+    ];
+
+    const SPICY_ATMOSPHERE_EXTRAS = [
+      'with warm atmospheric haze drifting through the air',
+      'sheer fabric elements catching a slow cinematic wind',
+      'dramatic wind sweeping hair and costume fabric dynamically',
+      'with warm low-angle light sculpting the silhouette from below',
+    ];
+
+    /* ═══════════════════════════════════════════════
+       HELPER: pick one random item from an array
+    ═══════════════════════════════════════════════ */
+    const pickRandom = (array) => array[Math.floor(Math.random() * array.length)];
+
+    /* ═══════════════════════════════════════════════
+       SET MODE
+       Updates button active states and button gradient.
+    ═══════════════════════════════════════════════ */
+    function setMode(mode) {
+      currentMode = mode;
+
+      document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelector(`.mode-btn.${mode}`).classList.add('active');
+
+      const generateBtn = document.getElementById('generate-btn');
+      generateBtn.className = `generate-btn ${mode}-mode`;
+      generateBtn.textContent = mode === 'spicy'
+        ? '🔥 Roll Spicy Prompt'
+        : '🎲 Generate Random Prompt';
+    }
+
+    /* ═══════════════════════════════════════════════
+       RENDER ROLLED TAGS
+       Displays a pill for each randomly chosen element
+       so the user can see what was picked this roll.
+    ═══════════════════════════════════════════════ */
+    function renderRolledTags(rolls) {
+      const container = document.getElementById('rolled-tags');
+      const isSpicy   = currentMode === 'spicy';
+
+      container.innerHTML = rolls.map(({ label, value }) => `
+        <div class="rolled-tag ${isSpicy ? 'spicy-tag' : ''}">
+          <span class="rolled-tag-label">${label}</span>
+          <span class="rolled-tag-value">${value}</span>
+        </div>
+      `).join('');
+
+      const rolledCard = document.getElementById('rolled-card');
+      rolledCard.classList.remove('visible');
+      rolledCard.classList.toggle('spicy-border', isSpicy);
+      void rolledCard.offsetWidth;
+      rolledCard.classList.add('visible');
+    }
+
+    /* ═══════════════════════════════════════════════
+       MAIN GENERATE FUNCTION
+       Randomly picks every element, builds the full
+       photo-realistic cosplay prompt, and displays it.
+    ═══════════════════════════════════════════════ */
+    function generatePrompt() {
+      // ── Randomly pick all elements ──
+      const character      = pickRandom(CHARACTERS);
+      const setting        = pickRandom(SETTINGS);
+      const photoStyle     = pickRandom(PHOTO_STYLES);
+      const pose           = pickRandom(POSES);
+      const lighting       = pickRandom(LIGHTING_OPTIONS);
+      const atmosphereExtra = currentMode === 'spicy'
+        ? pickRandom(SPICY_ATMOSPHERE_EXTRAS)
+        : pickRandom(ATMOSPHERE_EXTRAS);
+
+      // ── Randomly pick meta phrases ──
+      const identityAnchor  = pickRandom(IDENTITY_ANCHOR_PHRASES);
+      const cosplayFraming  = pickRandom(COSPLAY_FRAMING_PHRASES);
+      const photoRealism    = pickRandom(PHOTO_REALISM_PHRASES);
+
+      // ── Build prompt part by part ──
+      const promptParts = [];
+
+      // 1. Cosplay framing — prevents AI policy rejections
+      promptParts.push(`[${cosplayFraming}]`);
+
+      // 2. Identity anchor — locks face/body to reference image
+      promptParts.push(`${identityAnchor}.`);
+
+      // 3. Photo realism enforcer — pushes away from illustration/anime
+      promptParts.push(`${photoRealism}.`);
+
+      // 4. Photo style + character intro
+      promptParts.push(`${photoStyle.prompt} of a woman cosplaying as ${character.prompt},`);
+
+      // 5. Spicy costume detail (spicy mode only)
+      if (currentMode === 'spicy') {
+        promptParts.push(`${pickRandom(SPICY_COSTUME_DETAILS)},`);
+      }
+
+      // 6. Pose — with spicy addon if applicable
+      let poseDescription = pose.prompt;
+      if (currentMode === 'spicy') {
+        poseDescription += `, ${pickRandom(SPICY_POSE_ADDONS)}`;
+      }
+      promptParts.push(`${poseDescription},`);
+
+      // 7. Setting + atmosphere
+      promptParts.push(`set in ${setting.prompt}, ${atmosphereExtra},`);
+
+      // 8. Lighting
+      promptParts.push(`${lighting.prompt},`);
+
+      // 9. Hard face-preservation reminder — reinforced at the tail end
+      promptParts.push(`CRITICAL: the face must be an exact match to the reference image — same bone structure, same eyes, same skin tone, same nose, same lips, same body shape. Do not beautify, slim, idealize, or alter any features.`);
+
+      // 10. Quality tags
+      promptParts.push(QUALITY_TAGS);
+
+      const fullPrompt = promptParts.join(' ');
+
+      // ── Show "This Roll" tag breakdown ──
+      renderRolledTags([
+        { label: 'Character',  value: character.name   },
+        { label: 'Setting',    value: setting.name     },
+        { label: 'Style',      value: photoStyle.name  },
+        { label: 'Pose',       value: pose.name        },
+        { label: 'Lighting',   value: lighting.name    },
+      ]);
+
+      // ── Render the output ──
+      const outputCard   = document.getElementById('output-card');
+      const promptOutput = document.getElementById('prompt-output');
+      const modeBadge    = document.getElementById('mode-badge');
+
+      promptOutput.textContent = fullPrompt;
+
+      if (currentMode === 'spicy') {
+        modeBadge.textContent = '🔥 Spicy Mode';
+        modeBadge.className   = 'mode-badge spicy';
+        outputCard.classList.add('spicy-border');
+      } else {
+        modeBadge.textContent = '🌸 Regular Mode';
+        modeBadge.className   = 'mode-badge regular';
+        outputCard.classList.remove('spicy-border');
+      }
+
+      // Force re-animation via reflow
+      outputCard.classList.remove('visible');
+      void outputCard.offsetWidth;
+      outputCard.classList.add('visible');
+
+      outputCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    /* ═══════════════════════════════════════════════
+       COPY TO CLIPBOARD
+    ═══════════════════════════════════════════════ */
+    function copyPrompt() {
+      const promptText = document.getElementById('prompt-output').textContent;
+      if (!promptText) return;
+
+      navigator.clipboard.writeText(promptText)
+        .then(() => showToast('✅ Copied to clipboard!'))
+        .catch(() => {
+          // Fallback for older browsers
+          const tempEl = document.createElement('textarea');
+          tempEl.value = promptText;
+          document.body.appendChild(tempEl);
+          tempEl.select();
+          document.execCommand('copy');
+          document.body.removeChild(tempEl);
+          showToast('✅ Copied to clipboard!');
+        });
+    }
+
+    /* ═══════════════════════════════════════════════
+       TOAST HELPER
+    ═══════════════════════════════════════════════ */
+    function showToast(message) {
+      const toast = document.getElementById('copy-toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+  </script>
+
+</body>
+</html>
+
+
 
