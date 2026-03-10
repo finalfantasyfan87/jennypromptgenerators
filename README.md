@@ -11,13 +11,10 @@ Welcome to the AI Image Prompt Generators repository! This project provides a se
 ## Technology Stack
 - **HTML/CSS**: For crafting the user interface with simplicity and elegance.
 - **JavaScript**: Enhance functionality and provide dynamic user experiences without the need for additional frameworks.
-- **Node.js**: To power the server-side logic for prompt generation with efficiency.
 
 ## Getting Started
 1. Clone the repository: `git clone https://github.com/finalfantasyfan87/jennypromptgenerators.git`
-2. Navigate to the project directory: `cd jennypromptgenerators`
-3. Install required dependencies: `npm install`
-4. Run the application: `npm start`
+
 
 ## Contributing
 We welcome contributions from everyone! Please read our contribution guidelines to get started.
