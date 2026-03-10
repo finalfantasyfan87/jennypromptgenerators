@@ -1,16 +1,29 @@
-# random themed ai image prompts 
- I enjoy playing around in google gemini so i wrote simple html, js and css to create some random ai photo prompts. For even more randomness, might have this call an api.
+# AI Image Prompt Generators
 
- https://splendorous-vacherin-f96e53.netlify.app/
- <img width="1005" height="890" alt="Screenshot 2026-03-01 232501" src="https://github.com/user-attachments/assets/4496a98c-08b5-40c3-8432-bd8b8ddc213e" />
+Welcome to the AI Image Prompt Generators repository! This project provides a set of powerful tools designed for creators, developers, and artists looking to generate intricate and engaging image prompts using artificial intelligence.
 
+## Features
+- **User-Friendly Interface**: Easily navigate through the app and generate prompts with just a few clicks.
+- **Customizable Prompts**: Tailor your prompts to fit specific themes or styles, making it perfect for unique artistic projects.
+- **Supports Vanilla Technology**: Built on a straightforward tech stack, ensuring compatibility and ease of use.
+- **Open Source**: Join our community! Contribute, suggest, and collaborate to improve the tools together.
 
- https://cosplay-prompt-generator.netlify.app
- <img width="632" height="761" alt="Screenshot 2026-03-06 at 8 27 12 AM" src="https://github.com/user-attachments/assets/d2569a55-1824-426d-aa4e-d62bd65a44f2" />
+## Technology Stack
+- **HTML/CSS**: For crafting the user interface with simplicity and elegance.
+- **JavaScript**: Enhance functionality and provide dynamic user experiences without the need for additional frameworks.
+- **Node.js**: To power the server-side logic for prompt generation with efficiency.
 
- 
+## Getting Started
+1. Clone the repository: `git clone https://github.com/finalfantasyfan87/jennypromptgenerators.git`
+2. Navigate to the project directory: `cd jennypromptgenerators`
+3. Install required dependencies: `npm install`
+4. Run the application: `npm start`
 
- https://mymelodykuromiprompt.netlify.app/
+## Contributing
+We welcome contributions from everyone! Please read our contribution guidelines to get started.
 
-<img width="1325" height="876" alt="Screenshot 2026-03-03 010537" src="https://github.com/user-attachments/assets/4f92ae74-0f73-4b0f-82e5-33d691ee2011" />
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
 
+## Contact
+For more information, issues, or inquiries, please open an issue or reach out directly via our contact page.
