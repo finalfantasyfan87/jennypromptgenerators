@@ -11,16 +11,3 @@ Welcome to the AI Image Prompt Generators repository! This project provides a se
 ## Technology Stack
 - **HTML/CSS**: For crafting the user interface with simplicity and elegance.
 - **JavaScript**: Enhance functionality and provide dynamic user experiences without the need for additional frameworks.
-
-## Getting Started
-1. Clone the repository: `git clone https://github.com/finalfantasyfan87/jennypromptgenerators.git`
-
-
-## Contributing
-We welcome contributions from everyone! Please read our contribution guidelines to get started.
-
-## License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Contact
-For more information, issues, or inquiries, please open an issue or reach out directly via our contact page.
