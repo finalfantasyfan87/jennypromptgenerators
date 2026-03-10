@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hello Kitty Prompt Generator</title>
+
+  <!-- ============================================================
+    HELLO KITTY IMAGE PROMPT GENERATOR
+    Themed around Hello Kitty & Sanrio friends universes
+    Features: face/body consistency anchor, spicy & regular modes
+    Single-page vanilla HTML, CSS, JavaScript — no frameworks
+    © 2026 Jenny Haywood. All rights reserved.
+  ============================================================ -->
+
+  <style>
+    /* ── CSS VARIABLES — Hello Kitty colour palette ── */
+    :root {
+      --hot-pink:       #FF69B4;
+      --bubblegum-pink: #FFB6C1;
+      --deep-pink:      #FF1493;
+      --cream-white:    #FFF0F5;
+      --soft-red:       #FF6B8A;
+      --dark-accent:    #8B1A4A;
+      --muted-text:     #C75B8A;
+      --card-bg:        #FFF5F9;
+      --border-pink:    #FFACC7;
+      --font:           Georgia, Palatino, serif;
+    }
+
+    /* ── RESET & BASE ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      min-height: 100vh;
+      background: linear-gradient(135deg, #FFB6C1 0%, #FFF0F5 40%, #FFD1DC 70%, #FF69B4 100%);
+      background-attachment: fixed;
+    }
+
+    /* Polka dot background texture */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,105,180,0.15) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    /* ── HEADER ── */
+    header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .header-bow {
+      font-size: 48px;
+      display: block;
+      margin-bottom: 4px;
+      filter: drop-shadow(0 2px 8px rgba(255,20,147,0.4));
+    }
+
+    h1 {
+      font-size: 42px;
+      color: var(--deep-pink);
+      text-shadow: 2px 2px 0 rgba(255,105,180,0.3);
+      letter-spacing: 2px;
+      margin-bottom: 4px;
+    }
+
+    h2 {
+      font-size: 18px;
+      font-weight: normal;
+      color: var(--hot-pink);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .tagline {
+      font-size: 14px;
+      color: var(--muted-text);
+    }
+
+    /* ── CARDS / SECTIONS ── */
+    .card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      border: 2px solid var(--border-pink);
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(255,105,180,0.15);
+    }
+
+    /* ── MODE TOGGLE ── */
+    .mode-section { text-align: center; }
+
+    .mode-label {
+      display: block;
+      font-size: 13px;
+      color: var(--muted-text);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .mode-toggle {
+      display: inline-flex;
+      background: var(--bubblegum-pink);
+      border-radius: 50px;
+      padding: 4px;
+      gap: 4px;
+      margin-bottom: 12px;
+      border: 2px solid var(--hot-pink);
+    }
+
+    .mode-btn {
+      border: none;
+      border-radius: 50px;
+      padding: 10px 24px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      font-family: var(--font);
+      letter-spacing: 0.5px;
+      transition: all 0.25s ease;
+      background: transparent;
+      color: var(--muted-text);
+    }
+
+    .mode-btn.active {
+      background: var(--hot-pink);
+      color: white;
+      box-shadow: 0 2px 12px rgba(255,20,147,0.4);
+    }
+
+    /* Spicy mode active state — deeper pink */
+    .mode-btn.active.spicy { background: var(--deep-pink); }
+
+    .mode-description {
+      font-size: 13px;
+      color: var(--muted-text);
+      font-style: italic;
+    }
+
+    /* ── SELECTOR ── */
+    .selector-label {
+      display: block;
+      font-size: 14px;
+      color: var(--dark-accent);
+      font-weight: bold;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .dropdown {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 15px;
+      border-radius: 14px;
+      border: 2px solid var(--hot-pink);
+      background: var(--cream-white);
+      color: var(--dark-accent);
+      font-family: var(--font);
+      cursor: pointer;
+      outline: none;
+      box-shadow: 0 2px 12px rgba(255,105,180,0.2);
+    }
+
+    /* ── GENERATE BUTTON ── */
+    .generate-btn {
+      width: 100%;
+      padding: 18px;
+      font-size: 18px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      font-family: var(--font);
+      background: linear-gradient(135deg, var(--hot-pink), var(--deep-pink));
+      color: white;
+      border: 3px solid var(--deep-pink);
+      border-radius: 50px;
+      cursor: pointer;
+      margin-bottom: 24px;
+      box-shadow: 0 6px 24px rgba(255,20,147,0.35);
+      transition: transform 0.15s, box-shadow 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .generate-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(255,20,147,0.45);
+    }
+
+    .generate-btn:active { transform: translateY(0); }
+
+    /* ── PROMPT OUTPUT CARD ── */
+    .prompt-card {
+      background: var(--cream-white);
+      border-radius: 20px;
+      border: 2px solid var(--hot-pink);
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 32px rgba(255,105,180,0.2);
+      display: none; /* hidden until first generation */
+    }
+
+    .prompt-card.visible { display: block; }
+
+    .prompt-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .prompt-card-title {
+      font-weight: bold;
+      font-size: 16px;
+      color: var(--deep-pink);
+      letter-spacing: 0.5px;
+    }
+
+    .copy-btn {
+      padding: 8px 18px;
+      font-size: 13px;
+      font-weight: bold;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      color: white;
+      background: var(--hot-pink);
+      font-family: var(--font);
+      letter-spacing: 0.5px;
+      transition: background 0.3s;
+    }
+
+    .copy-btn.copied { background: #5a9e6f; }
+
+    .prompt-text {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #5a2d4a;
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid var(--border-pink);
+      margin-bottom: 16px;
+      word-break: break-word;
+    }
+
+    /* ── NEGATIVE PROMPT ── */
+    .negative-section {
+      background: #FFF0F3;
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      border: 1px dashed var(--soft-red);
+    }
+
+    .negative-label {
+      display: block;
+      font-size: 11px;
+      color: var(--soft-red);
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .negative-text {
+      font-size: 12px;
+      color: #8B4A5A;
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    /* ── TIP ── */
+    .tip-section {
+      background: rgba(255,215,0,0.12);
+      border-radius: 10px;
+      padding: 12px 14px;
+      border: 1px solid rgba(255,215,0,0.4);
+    }
+
+    .tip-text {
+      font-size: 12px;
+      color: #7a5a10;
+      line-height: 1.6;
+    }
+
+    /* ── HISTORY ── */
+    .history-section { margin-bottom: 24px; display: none; }
+    .history-section.visible { display: block; }
+
+    .history-title {
+      font-size: 16px;
+      color: var(--dark-accent);
+      font-weight: bold;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .history-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border-pink);
+      border-radius: 14px;
+      padding: 12px 16px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.2s;
+      box-shadow: 0 2px 8px rgba(255,105,180,0.1);
+    }
+
+    .history-item:hover {
+      box-shadow: 0 4px 16px rgba(255,105,180,0.25);
+      transform: translateY(-1px);
+    }
+
+    .history-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .history-friend-name {
+      font-weight: bold;
+      font-size: 13px;
+      color: var(--deep-pink);
+    }
+
+    .history-click-hint {
+      font-size: 11px;
+      color: var(--muted-text);
+      font-style: italic;
+    }
+
+    .history-preview {
+      font-size: 12px;
+      color: var(--muted-text);
+      line-height: 1.5;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted-text);
+      padding-top: 20px;
+      border-top: 1px solid var(--border-pink);
+      letter-spacing: 0.5px;
+      line-height: 2;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- ── HEADER ── -->
+    <header>
+      <span class="header-bow">🎀</span>
+      <h1>Hello Kitty</h1>
+      <h2>Image Prompt Generator</h2>
+      <p class="tagline">✨ Hello Kitty & Sanrio Friends · Face & Body Consistent ✨</p>
+    </header>
+
+    <!-- ── MODE TOGGLE ── -->
+    <div class="card mode-section">
+      <span class="mode-label">Mode:</span>
+      <div class="mode-toggle">
+        <button class="mode-btn active" id="regularModeButton" onclick="switchToRegularMode()">🌸 Regular</button>
+        <button class="mode-btn"        id="spicyModeButton"   onclick="switchToSpicyMode()">🔥 Spicy</button>
+      </div>
+      <p class="mode-description" id="modeDescriptionText">
+        🌸 Sweet, dreamy, pastel — classic kawaii image vibes
+      </p>
+    </div>
+
+    <!-- ── THEME SELECTOR ── -->
+    <div style="margin-bottom: 20px;">
+      <label class="selector-label" for="sanrioThemeDropdown">🎀 Choose a Sanrio Friend Theme:</label>
+      <select class="dropdown" id="sanrioThemeDropdown">
+        <option value="random">🎲 Random Sanrio Surprise</option>
+        <!-- Remaining options injected by populateSanrioThemeDropdown() on page load -->
+      </select>
+    </div>
+
+    <!-- ── GENERATE BUTTON ── -->
+    <button class="generate-btn" onclick="generateNewPrompt()">
+      <span>🌸</span> Generate Prompt <span>🌸</span>
+    </button>
+
+    <!-- ── PROMPT OUTPUT CARD ── -->
+    <div class="prompt-card" id="promptOutputCard">
+      <div class="prompt-card-header">
+        <span class="prompt-card-title" id="promptOutputCardTitle">🌸 Your Sweet Prompt</span>
+        <button class="copy-btn" id="copyPromptButton" onclick="copyPromptToClipboard()">📋 Copy</button>
+      </div>
+      <p class="prompt-text"    id="generatedPromptText"></p>
+      <div class="negative-section">
+        <span class="negative-label">🚫 Negative Prompt (paste into --no or negative field):</span>
+        <p class="negative-text" id="negativePromptText"></p>
+      </div>
+      <div class="tip-section">
+        <p class="tip-text">
+          💡 <strong>Tip:</strong> Upload your reference photo + paste this prompt in Midjourney
+          or Stable Diffusion. Use <strong>--iw 1.5</strong> (Midjourney) or
+          <strong>IP-Adapter</strong> (SDXL) for best face consistency.
+        </p>
+      </div>
+    </div>
+
+    <!-- ── PROMPT HISTORY ── -->
+    <div class="history-section" id="promptHistorySection">
+      <h3 class="history-title">📜 Recent Prompts</h3>
+      <div id="promptHistoryList"></div>
+    </div>
+
+    <!-- ── FOOTER ── -->
+    <footer>
+      <p>🎀 Hello Kitty Prompt Generator · 15 Sanrio friends 🎀</p>
+      <p>© 2026 Jenny Haywood. All rights reserved.</p>
+    </footer>
+
+  </div>
+
+  <script>
+    // ============================================================
+    // DATA
+    // ============================================================
+
+    // ── IDENTITY ANCHOR ──────────────────────────────────────────
+    // Fixed phrase prepended to every prompt to lock the user's face
+    // and body so AI image generators maintain visual consistency
+    const IDENTITY_ANCHOR =
+      "preserving subject's unique facial features and body type, create a 8k";
+
+    // ── HELLO KITTY AESTHETIC MODIFIERS ─────────────────────────
+    // One is randomly picked per generation to vary the kawaii atmosphere
+    const KAWAII_ATMOSPHERE_MODIFIERS = [
+      "kawaii pastel dreamland, Sanrio-inspired soft world",
+      "bubblegum pink fantasy, Hello Kitty magical realism",
+      "sweet cottagecore pink vibes, Sanrio sticker aesthetic",
+      "dreamy rose-tinted wonderland, kawaii editorial style",
+      "Hello Kitty pastel paradise, glittery pink sparkle world",
+      "soft Sanrio universe, pink plush toy fantasy aesthetic",
+      "cupcake pink dreamscape, kawaii fairy tale atmosphere",
+      "vintage Sanrio charm, Y2K pink nostalgia aesthetic",
+    ];
+
+    // ── SANRIO FRIEND THEMES ─────────────────────────────────────
+    // Each object fully describes one Sanrio character's visual world
+    const SANRIO_FRIEND_THEMES = [
+      {
+        friendName:      "Hello Kitty",
+        vibe:            "iconic sweet and cheerful best friend",
+        signatureColors: "white, red bow, pastel pink accents",
+        costume:         "white dress with red bow headband, cute apron, white gloves",
+        setting:         "pastel pink bakery kitchen filled with cakes and cookies",
+        props:           "red bow hair clip, tiny cupcake, pastel gift box with ribbon",
+      },
+      {
+        friendName:      "My Melody",
+        vibe:            "gentle dreamy woodland fairy girl",
+        signatureColors: "pink hood, white bunny ears, soft lavender",
+        costume:         "pink hooded cloak, white bunny ear hood, pink ruffle dress",
+        setting:         "enchanted forest glade with soft pink mushrooms and flowers",
+        props:           "pink hood, basket of flowers, tiny woodland animals nearby",
+      },
+      {
+        friendName:      "Cinnamoroll",
+        vibe:            "fluffy cloud-soft aerial sweetness",
+        signatureColors: "white, baby blue, soft cinnamon bun curl",
+        costume:         "white fluffy cloud dress, pale blue ribbon, soft curly hair accessory",
+        setting:         "floating on a giant cloud above a pastel blue sky with rainbows",
+        props:           "oversized cinnamon roll, cloud pillow, pale blue umbrella",
+      },
+      {
+        friendName:      "Kuromi",
+        vibe:            "edgy sweet punk with a soft heart",
+        signatureColors: "black and white with pink skull motifs, purple accents",
+        costume:         "black jester hood with pink skull, black mini dress, chunky boots",
+        setting:         "moonlit graveyard with pink roses and purple lanterns",
+        props:           "tiny skull notebook, black rose bouquet, purple star wand",
+      },
+      {
+        friendName:      "Pompompurin",
+        vibe:            "cozy golden pudding happiness",
+        signatureColors: "golden yellow, brown beret, cream white",
+        costume:         "golden yellow sundress, brown beret hat, cream ruffled socks",
+        setting:         "sunny picnic meadow with checkered blanket and pudding desserts",
+        props:           "caramel pudding cup, golden yellow picnic basket, flower crown",
+      },
+      {
+        friendName:      "Keroppi",
+        vibe:            "playful adventurous frog pond energy",
+        signatureColors: "bright green, white, red stripe",
+        costume:         "green and white striped crop top, lily pad skirt, red bow",
+        setting:         "magical lily pad pond at golden hour with fireflies",
+        props:           "oversized lily pad umbrella, tiny frog companion, dewdrop jewelry",
+      },
+      {
+        friendName:      "Little Twin Stars",
+        vibe:            "cosmic starlight celestial dream energy",
+        signatureColors: "pastel blue, pastel pink, gold stars, rainbow",
+        costume:         "ethereal star-printed pastel gown, crescent moon crown, star earrings",
+        setting:         "milky way galaxy with pastel nebula clouds and shooting stars",
+        props:           "golden star wand, crescent moon locket, trail of stardust",
+      },
+      {
+        friendName:      "Badtz-Maru",
+        vibe:            "cool sassy rebel with a smirk",
+        signatureColors: "black and white, yellow star details",
+        costume:         "black and white monochrome streetwear, star-print jacket, cool shades",
+        setting:         "rooftop at sunset with graffiti wall and city lights below",
+        props:           "yellow star sunglasses, skateboard, tiny penguin plush sidekick",
+      },
+      {
+        friendName:      "Pochacco",
+        vibe:            "sporty playful puppy energy",
+        signatureColors: "white, blue stripe, sporty red accents",
+        costume:         "white and blue athletic set, sporty cap, fresh white sneakers",
+        setting:         "colorful sports court with confetti and rainbow balloons",
+        props:           "soccer ball, blue and white cap, sporty water bottle with star charm",
+      },
+      {
+        friendName:      "Hangyodon",
+        vibe:            "whimsical underwater mermaid dreamer",
+        signatureColors: "teal, soft aqua, pearl white",
+        costume:         "iridescent mermaid-inspired dress, aqua ruffled layers, pearl accessories",
+        setting:         "glowing coral reef underwater world with bubbles and sea stars",
+        props:           "pearl crown, glowing jellyfish lantern, iridescent seashell clutch",
+      },
+      {
+        friendName:      "Tuxedosam",
+        vibe:            "dapper charming little gentleman",
+        signatureColors: "black tuxedo, white, red bow tie",
+        costume:         "chic black and white tuxedo-inspired mini dress, red bow accent",
+        setting:         "elegant ballroom with chandeliers, rose petals, and warm candlelight",
+        props:           "tiny red bow tie brooch, champagne flute with stars, white gloves",
+      },
+      {
+        friendName:      "Chococat",
+        vibe:            "curious inventor techie cuteness",
+        signatureColors: "chocolate brown, black, pastel yellow",
+        costume:         "brown and yellow kawaii lab coat, cat ear headband, round glasses",
+        setting:         "adorable pastel science lab with star-shaped beakers and sparkles",
+        props:           "tiny star telescope, chocolate treat, cute gadget wristwatch",
+      },
+      {
+        friendName:      "Usahana",
+        vibe:            "ballet dancer delicate floral grace",
+        signatureColors: "soft pink, white, rose petal details",
+        costume:         "pink tutu ballet dress, white flower crown, satin ballet flats",
+        setting:         "pink rose garden stage with soft spotlight and falling petals",
+        props:           "pink rose bouquet, satin ribbon, flower petal confetti swirling",
+      },
+      {
+        friendName:      "Aggretsuko",
+        vibe:            "sweet by day, fierce karaoke queen by night",
+        signatureColors: "red panda pink-red, office chic with hidden edge",
+        costume:         "pastel office blazer with cute bow, secret metal band tee underneath",
+        setting:         "glowing neon karaoke bar with disco lights and star microphone",
+        props:           "bedazzled microphone, pink briefcase, headphones around neck",
+      },
+      {
+        friendName:      "Gudetama",
+        vibe:            "cozy sleepy lazy brunch aesthetic",
+        signatureColors: "egg yolk yellow, soft white, pale gold",
+        costume:         "oversized yellow hoodie, white fluffy pajama pants, sleep mask pushed up",
+        setting:         "giant breakfast plate world with soft morning light and toast pillows",
+        props:           "tiny egg cup throne, fluffy blanket cocoon, coffee mug with hearts",
+      },
+    ];
+
+    // ── REGULAR MODE TEMPLATES ───────────────────────────────────
+    // Sweet, dreamy image prompts — no editorial or magazine language
+    const REGULAR_IMAGE_PROMPT_TEMPLATES = [
+      "image of a person dressed as {friendName}, wearing {costume}, surrounded by {props}, in {setting}, {vibe} energy, soft dreamy lighting",
+      "image of a person in {friendName} inspired {costume}, in {setting}, with {props}, {signatureColors} colors, {vibe} mood",
+      "image of a person wearing {costume} in {setting}, {props} visible, {friendName} theme, {signatureColors} palette, soft golden lighting",
+      "image of a person in {friendName} {costume}, standing in {setting}, holding {props}, {vibe} feeling, pastel kawaii atmosphere",
+      "image of a person dressed in {costume}, in a {setting}, surrounded by {props}, {signatureColors} colors, {vibe} energy",
+      "image of a person in {friendName} inspired outfit, {costume}, in {setting} with {props}, {vibe} mood, soft bokeh",
+    ];
+
+    // ── SPICY MODE TEMPLATES ─────────────────────────────────────
+    // Bold, empowering dark kawaii image prompts
+    const SPICY_IMAGE_PROMPT_TEMPLATES = [
+      "image of a person in dark kawaii {costume} inspired by {friendName}, in {setting} at midnight, with {props}, {signatureColors} in deep jewel tones, sensual elegance",
+      "image of a person in glamorous {friendName} inspired {costume}, in {setting} under neon lights, {props} as accessories, {vibe} with fierce edge",
+      "image of a person wearing daring {costume} inspired by {friendName}, in {setting}, holding {props}, {signatureColors} electrified, bold and confident",
+      "image of a person in sultry {friendName} inspired {costume}, in dark {setting}, {props} glowing, bold makeup, confident gaze",
+      "image of a person in provocative {costume} channeling {friendName}, in {setting}, {props} as statement pieces, {vibe} energy, fierce and empowering",
+      "image of a person in bold {friendName} inspired {costume} with edge, in {setting}, {props} detail, {signatureColors} in rich contrast, dark magical girl energy",
+    ];
+
+    // ── IMAGE QUALITY BOOSTERS ───────────────────────────────────
+    // Appended to every prompt — every entry includes 8K for maximum resolution
+    const IMAGE_QUALITY_BOOSTERS = [
+      "8K UHD, hyperrealistic, professional photography, sharp focus",
+      "8K resolution, photorealistic, cinematic color grading, volumetric lighting, masterpiece",
+      "8K ultra-detailed, RAW photo, high resolution, Hasselblad medium format",
+      "8K UHD, stunning detail, professional retouching, award-winning",
+      "8K ultra HD, perfect lighting, professional colorist, magazine cover quality",
+    ];
+
+    // ── NEGATIVE PROMPT ──────────────────────────────────────────
+    // Shown below every generated prompt for pasting into --no or negative field
+    const NEGATIVE_PROMPT_GUIDANCE =
+      "blurry, distorted face, extra limbs, bad anatomy, deformed hands, low quality, pixelated, watermark, text overlay, two faces, face swap artifacts, inconsistent identity, different person, cartoon character replacing face";
+
+    // ============================================================
+    // APP STATE
+    // ============================================================
+
+    let currentModeIsSpicy    = false;  // tracks which mode button is active
+    let savedPromptHistory    = [];     // array of { prompt, friendName, currentModeIsSpicy }
+
+    // ============================================================
+    // UTILITIES
+    // ============================================================
+
+    // Returns a random element from any array
+    const pickRandomItemFromArray = (array) =>
+      array[Math.floor(Math.random() * array.length)];
+
+    // Replaces all {placeholder} tokens in a prompt template with
+    // the actual values from the chosen Sanrio friend theme object
+    const fillPromptTemplatePlaceholders = (promptTemplate, sanrioTheme) =>
+      promptTemplate
+        .replace(/{friendName}/g,      sanrioTheme.friendName)
+        .replace(/{vibe}/g,            sanrioTheme.vibe)
+        .replace(/{signatureColors}/g, sanrioTheme.signatureColors)
+        .replace(/{costume}/g,         sanrioTheme.costume)
+        .replace(/{setting}/g,         sanrioTheme.setting)
+        .replace(/{props}/g,           sanrioTheme.props);
+
+    // Assembles the complete final prompt from all building blocks:
+    // identity anchor + filled scene template + kawaii atmosphere + quality booster
+    const assembleCompletePrompt = (sanrioTheme, isSpicyModeActive) => {
+      const kawaiiAtmosphere     = pickRandomItemFromArray(KAWAII_ATMOSPHERE_MODIFIERS);
+      const imageQualityBooster  = pickRandomItemFromArray(IMAGE_QUALITY_BOOSTERS);
+      const activeTemplatePool   = isSpicyModeActive
+        ? SPICY_IMAGE_PROMPT_TEMPLATES
+        : REGULAR_IMAGE_PROMPT_TEMPLATES;
+      const completedScenePhrase = fillPromptTemplatePlaceholders(
+        pickRandomItemFromArray(activeTemplatePool),
+        sanrioTheme
+      );
+
+      return `${IDENTITY_ANCHOR}, ${completedScenePhrase}, ${kawaiiAtmosphere}, ${imageQualityBooster}`;
+    };
+
+    // ============================================================
+    // DOM HELPERS
+    // ============================================================
+
+    // Shorthand for document.getElementById — reduces repetition
+    const findElementById = (elementId) => document.getElementById(elementId);
+
+    // ============================================================
+    // INITIALISE — runs once on page load
+    // ============================================================
+
+    // Populates the Sanrio theme dropdown with one option per character
+    const populateSanrioThemeDropdown = () => {
+      const sanrioThemeDropdown = findElementById("sanrioThemeDropdown");
+
+      SANRIO_FRIEND_THEMES.forEach((sanrioTheme, themeIndex) => {
+        const dropdownOption       = document.createElement("option");
+        dropdownOption.value       = themeIndex;
+        dropdownOption.textContent = `${sanrioTheme.friendName} — ${sanrioTheme.vibe}`;
+        sanrioThemeDropdown.appendChild(dropdownOption);
+      });
+    };
+
+    // ============================================================
+    // MODE HANDLERS
+    // ============================================================
+
+    // Activates Regular mode — updates button states and description text
+    const switchToRegularMode = () => {
+      currentModeIsSpicy = false;
+      findElementById("regularModeButton").className = "mode-btn active";
+      findElementById("spicyModeButton").className   = "mode-btn";
+      findElementById("modeDescriptionText").textContent =
+        "🌸 Sweet, dreamy, pastel — classic kawaii image vibes";
+    };
+
+    // Activates Spicy mode — updates button states and description text
+    const switchToSpicyMode = () => {
+      currentModeIsSpicy = true;
+      findElementById("regularModeButton").className = "mode-btn";
+      findElementById("spicyModeButton").className   = "mode-btn active spicy";
+      findElementById("modeDescriptionText").textContent =
+        "🔥 Dark kawaii, midnight Sanrio, fierce magical girl energy";
+    };
+
+    // ============================================================
+    // GENERATE HANDLER
+    // ============================================================
+
+    // Reads the selected theme, builds a prompt, and updates the UI
+    const generateNewPrompt = () => {
+      const sanrioThemeDropdown      = findElementById("sanrioThemeDropdown");
+      const selectedDropdownValue    = sanrioThemeDropdown.value;
+
+      // Use the chosen theme or fall back to a random one
+      const chosenSanrioTheme = selectedDropdownValue === "random"
+        ? pickRandomItemFromArray(SANRIO_FRIEND_THEMES)
+        : SANRIO_FRIEND_THEMES[Number(selectedDropdownValue)];
+
+      const newlyGeneratedPrompt = assembleCompletePrompt(chosenSanrioTheme, currentModeIsSpicy);
+
+      // Update the prompt output card
+      findElementById("promptOutputCardTitle").textContent = currentModeIsSpicy
+        ? "🔥 Your Spicy Prompt"
+        : "🌸 Your Sweet Prompt";
+      findElementById("generatedPromptText").textContent  = newlyGeneratedPrompt;
+      findElementById("negativePromptText").textContent   = NEGATIVE_PROMPT_GUIDANCE;
+      findElementById("copyPromptButton").textContent     = "📋 Copy";
+      findElementById("copyPromptButton").className       = "copy-btn";
+      findElementById("promptOutputCard").className       = "prompt-card visible";
+
+      // Prepend to history list, keeping a maximum of 5 saved entries
+      savedPromptHistory = [
+        {
+          savedPrompt:        newlyGeneratedPrompt,
+          sanrioFriendName:   chosenSanrioTheme.friendName,
+          wasSpicyModeActive: currentModeIsSpicy,
+        },
+        ...savedPromptHistory.slice(0, 4),
+      ];
+
+      renderSavedPromptHistory();
+    };
+
+    // ============================================================
+    // COPY HANDLER
+    // ============================================================
+
+    // Copies the currently displayed prompt text to the clipboard
+    const copyPromptToClipboard = async () => {
+      const currentPromptText = findElementById("generatedPromptText").textContent;
+      if (!currentPromptText) return;
+
+      try {
+        await navigator.clipboard.writeText(currentPromptText);
+      } catch {
+        // Fallback for browsers that do not support the clipboard API
+        const temporaryTextarea   = document.createElement("textarea");
+        temporaryTextarea.value   = currentPromptText;
+        document.body.appendChild(temporaryTextarea);
+        temporaryTextarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(temporaryTextarea);
+      }
+
+      // Show confirmation state, then reset the button after 2.5 seconds
+      const copyPromptButton       = findElementById("copyPromptButton");
+      copyPromptButton.textContent = "✓ Copied!";
+      copyPromptButton.className   = "copy-btn copied";
+      setTimeout(() => {
+        copyPromptButton.textContent = "📋 Copy";
+        copyPromptButton.className   = "copy-btn";
+      }, 2500);
+    };
+
+    // ============================================================
+    // HISTORY HANDLERS
+    // ============================================================
+
+    // Loads a previously generated prompt back into the output card
+    const loadPromptFromHistory = (savedPrompt, wasSpicyModeActive) => {
+      findElementById("promptOutputCardTitle").textContent = wasSpicyModeActive
+        ? "🔥 Your Spicy Prompt"
+        : "🌸 Your Sweet Prompt";
+      findElementById("generatedPromptText").textContent = savedPrompt;
+      findElementById("copyPromptButton").textContent    = "📋 Copy";
+      findElementById("copyPromptButton").className      = "copy-btn";
+      findElementById("promptOutputCard").className      = "prompt-card visible";
+    };
+
+    // Rebuilds the history list UI from the savedPromptHistory array
+    const renderSavedPromptHistory = () => {
+      const promptHistorySection  = findElementById("promptHistorySection");
+      const promptHistoryList     = findElementById("promptHistoryList");
+
+      promptHistoryList.innerHTML = ""; // clear existing history items before re-rendering
+
+      savedPromptHistory.forEach(({ savedPrompt, sanrioFriendName, wasSpicyModeActive }) => {
+        const historyListItem       = document.createElement("div");
+        historyListItem.className   = "history-item";
+        historyListItem.onclick     = () => loadPromptFromHistory(savedPrompt, wasSpicyModeActive);
+        historyListItem.innerHTML   = `
+          <div class="history-item-header">
+            <span class="history-friend-name">
+              ${wasSpicyModeActive ? "🔥" : "🌸"} ${sanrioFriendName}
+            </span>
+            <span class="history-click-hint">click to load</span>
+          </div>
+          <p class="history-preview">${savedPrompt.slice(0, 100)}…</p>
+        `;
+        promptHistoryList.appendChild(historyListItem);
+      });
+
+      // Show the history section only when there is at least one saved entry
+      promptHistorySection.className = savedPromptHistory.length > 0
+        ? "history-section visible"
+        : "history-section";
+    };
+
+    // ============================================================
+    // BOOT — populate the dropdown when the page first loads
+    // ============================================================
+    populateSanrioThemeDropdown();
+  </script>
+</body>
+</html>
