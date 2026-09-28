@@ -1,6 +1,6 @@
-# AI Image Prompt Generators
+# AI Image Prompt Generators/ AI Image Randomizers
 
-Welcome to the AI Image Prompt Generators repository! This project provides a set of powerful tools designed for creators, developers, and artists looking to generate intricate and engaging image prompts using artificial intelligence.
+Welcome to the AI Image Prompt Generators repository! This project provides a set of powerful tools designed for creators, developers, and artists looking to generate intricate and engaging image prompts using artificial intelligence. This repo also includes all my AI randomizers as well.
 
 ## Features
 - **User-Friendly Interface**: Easily navigate through the app and generate prompts with just a few clicks.
