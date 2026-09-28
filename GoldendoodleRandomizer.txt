@@ -1,0 +1,52 @@
+Create a whimsical, photorealistic editorial photoshoot image of the subject from the attached reference photo surrounded by real goldendoodle puppies.
+
+WHO SHE IS — LOCKED:
+Use the attached reference photo as the exact identity source for the subject. Preserve her face exactly as it appears in the photo — the same facial features, facial structure and proportions, eye shape, nose, lips, brows and jawline — rendered faithfully without altering, reshaping or beautifying anything. Preserve her exact skin color and skin tone, and her hair exactly as it is styled in the photo — the same hairstyle, length, color, texture, curl pattern and part, with no hats, headbands or hair accessories added. Preserve her body exactly as it appears in the reference photo — the same body shape, build, height and natural proportions, with nothing slimmed, reshaped or idealized. She must be instantly recognizable as the same person in the photo. Her expression is free to change, but it must always be cute and flattering.
+
+STEP 1 — PICK THE SET (do this silently, do not override the result):
+Take the current time in seconds, or if you cannot read the clock, invent a random 3-digit number. Divide it by 18 and take the remainder. Use the set with that number below. Do not default to your favorite, do not pick the first one, and do not change the result once computed.
+0. Puppy Tea Party — enchanted pastel garden tea party
+1. Cloud Nine Pajamas — dreamy slumber party floating among pillowy white clouds at sunrise, with a canopy bed, silk pillows, fairy-light garlands and a pastel sky
+2. Bubble Bath Bonanza — vintage clawfoot tub standing in a wildflower meadow, overflowing with foamy bubbles that drift into the air, rubber ducks and fluffy towels on a nearby stool
+3. Sunflower Picnic — picnic in a sweeping sunflower field
+4. Enchanted Fairy Forest — enchanted mossy forest glade with glowing mushrooms, hanging lanterns, ferns, fireflies and a tiny wooden bridge over a sparkling stream
+5. Candy Cupcake Bakery — whimsical pastel patisserie with striped awnings, glass display cases full of cupcakes and cookies, sprinkles everywhere and a rolling pin on a flour-dusted counter
+6. Hot Air Balloon Ride — patchwork hot air balloon drifting above rolling countryside, the wicker basket strung with bunting and fairy lights
+7. Pumpkin Patch Cozy — cozy autumn pumpkin patch with hay bales, a red wagon, crates of apples, string lights and a rustic barn
+8. Snow Day Cabin — snowy log cabin porch with twinkling lights, a sled, mugs of hot cocoa with marshmallows and softly falling snow
+9. Puppy Birthday Bash — puppy birthday party with a balloon arch, streamers, confetti, a party table with a puppy-safe cake and gift boxes
+10. Storytime Library — cozy vintage library nook with floor-to-ceiling shelves, a rolling ladder, a velvet armchair, a globe and warm reading lamps
+11. Vintage Carousel — ornate vintage carousel at a twilight fair with painted horses, mirrored panels, string lights and a cotton candy cart
+12. Seaside Boardwalk — sunny seaside boardwalk with striped beach umbrellas, an ice cream stand, sandcastles and gentle waves
+13. Cherry Blossom Stroll — cherry blossom park path with petals drifting through the air, a little arched bridge and a koi pond
+14. Sweetheart Parlor — retro ice cream parlor decked out for Valentine's with heart balloons, a pink checkered floor, a soda fountain counter and rose bouquets
+15. Starry Night Glamping — glamping bell tent under a star-filled sky with lanterns, a crackling campfire, marshmallows on sticks and plaid blankets
+16. Paris Flower Cart — Parisian cobblestone street with a flower cart, café tables, a striped awning and a vintage bicycle with a front basket
+17. Pancakes in Bed — sunlit bedroom with white fluffy bedding, a breakfast tray with a pancake stack, berries and orange juice, and fresh flowers on the nightstand
+
+THE SET:
+Build a storybook-whimsical scene around the chosen set. Invent fresh details for the location, props and background every time. Add at least one oversized whimsical prop (giant teacups, cupcakes, blooms, books — whatever fits the set) so the props are huge around her while she and the puppies stay true-to-life size.
+
+THE PUPPIES:
+Invent how many (anywhere from one to a big joyful pile), their coat colors (apricot, cream, red, chocolate, parti, merle or a mixed litter) and tiny set-themed accessories. Every puppy is a real, living goldendoodle — fine individual fur strands, natural wavy-to-curly doodle coat, warm dark eyes, black noses, floppy ears, correct anatomy with four legs each. Invent a sweet, candid interaction between her and the puppies.
+
+HER LOOK:
+Hair: keep it exactly as styled in the reference photo — same hairstyle, length, color, texture and part. Do not restyle it or add hats, headbands or hair accessories.
+Makeup: invent any soft, set-inspired makeup look.
+Nails: invent a cute set-inspired manicure.
+Outfit: invent any whimsical, flattering, set-inspired outfit and shoes.
+
+HOW SHE'S PHOTOGRAPHED:
+Invent a playful pose and a cute, flattering expression (no awkward or unflattering faces). Choose the camera between a Sony A7 IV with an 85mm f/1.4 GM lens or a Canon PowerShot G7X Mark III, and invent lighting that suits the set.
+
+WHAT NEVER LOOKS FAKE:
+Real human skin texture, real fabric, real fur with natural sheen and flyaways, true shadows and contact between her and the puppies. High-end editorial photography — never a cartoon, illustration, 3D render or airbrushed look.
+
+NEVER REPEAT:
+Treat every run as brand new. Do not reuse the same outfit colors, puppy count, pose or composition you would reach for by default. Surprise me.
+
+HARD LIMITS:
+No altered facial features, no changed skin tone, no reshaped body. No extra limbs or merged puppies. No text, logos or watermarks. Tasteful and family-friendly.
+
+FINAL REMINDER — IDENTITY LOCK:
+Use the attached reference photo as the exact identity source for the subject. Preserve her face exactly as it appears in the photo — the same facial features, facial structure and proportions, eye shape, nose, lips, brows and jawline — rendered faithfully without altering, reshaping or beautifying anything. Preserve her exact skin color and skin tone, and her hair exactly as it is styled in the photo — the same hairstyle, length, color, texture, curl pattern and part, with no hats, headbands or hair accessories added. Preserve her body exactly as it appears in the reference photo — the same body shape, build, height and natural proportions, with nothing slimmed, reshaped or idealized. She must be instantly recognizable as the same person in the photo.
