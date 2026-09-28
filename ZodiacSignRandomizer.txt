@@ -1,0 +1,107 @@
+
+**THE CONCEPT**
+
+Create a highly photorealistic, high-fashion editorial photograph of the exact same adult woman embodying one of the twelve zodiac signs — a different sign every generation, each rendered as a full dramatic persona with its own color world, mood, and staged scene, drawing on that sign's traditional astrological associations. This is the flagship of the series: maximum drama, bold sign-specific makeup, and the sign's own symbol worked visibly into her outfit every time.
+
+**WHO SHE IS — LOCKED, NEVER RANDOMIZED**
+
+Face comes from the attached reference photo and does not move. Preserve exactly: face shape, bone structure, natural facial asymmetry, eye shape and spacing and color, nose shape, lips, cupid's bow, jawline, cheekbones, skin texture, pores, fine lines. No beautifying, no reshaping, no symmetry correction, no age change, no generic-AI-face substitution. She must be immediately, unmistakably recognizable as herself in every image.
+
+Body is fixed, not taken from the reference photo: an hourglass figure with a 38DD bust, a 26-inch waist, and 46-inch curvy hips and butt — full and shapely, naturally proportioned, identical across every generation.
+
+**THE ZODIAC ENGINE — SEEDED SELECTION, DO THIS BEFORE ANYTHING ELSE**
+
+Do not choose a sign directly. Choose a number first, then map it to a sign, and never override the result.
+
+Step 1 — Get a seed. If you can access the current time, take the current minute (0–59) and add the current second (0–59) if you know it. If you cannot access the time, silently generate a random three-digit number between 100 and 999 whose three digits are all different, and add its digits together.
+
+Step 2 — Take that total, divide by 12, and keep only the remainder. Add 1. You now have a number from 1 to 12.
+
+Step 3 — Map it: 1 = Aries, 2 = Taurus, 3 = Gemini, 4 = Cancer, 5 = Leo, 6 = Virgo, 7 = Libra, 8 = Scorpio, 9 = Sagittarius, 10 = Capricorn, 11 = Aquarius, 12 = Pisces.
+
+Step 4 — Commit to that sign. Do not swap it for one that "fits the drama better." Leo and Aries are known over-picked defaults for this kind of prompt — if the procedure lands there, fine, but never pick them by instinct, and never skip the procedure.
+
+ARIES (Fire) — bold crimson and iron-red. Fierce, warrior-ready energy. Symbol: the ram's-horn glyph (♈) worked into a headpiece, belt buckle, or statement earring. Scene: a battle-lit arena or a windswept cliff at dawn.
+
+TAURUS (Earth) — deep emerald, rose gold, and blush. Sensual, luxurious, grounded. Symbol: the bull's-head glyph (♉) as a pendant or embroidered motif. Scene: an opulent overgrown garden or a marble courtyard thick with flowers.
+
+GEMINI (Air) — bright yellow and silver, split with sharp contrast. Playful duality, quicksilver energy. Symbol: the twin-lines glyph (♊) as matching cuff bracelets or an asymmetrical neckline detail. Scene: a mirrored hall or a rooftop under a sky half day, half night.
+
+CANCER (Water) — silver, pearl, and moonlit blue. Protective, moody, deeply feminine. Symbol: the crab glyph (♋) as a shell-shaped clasp or moon-and-pearl jewelry. Scene: a moonlit tide pool or a silver-lit coastal cave.
+
+LEO (Fire) — molten gold and amber. Regal, radiant, commanding the room. Symbol: the lion glyph (♌) worked into a mane-like headpiece or gold cuff. Scene: a gilded throne room or a sunlit stone amphitheater.
+
+VIRGO (Earth) — sage green, cream, and wheat gold. Precise, elegant, quietly powerful. Symbol: the maiden glyph (♍) embroidered into a structured bodice or as a delicate pendant. Scene: a sunlit wheat field or a minimalist marble atelier.
+
+LIBRA (Air) — rose gold and soft blush pink. Romantic, symmetrical, seductive balance. Symbol: the scales glyph (♎) as a two-sided pendant or hip chain. Scene: a grand mirrored ballroom mid-waltz, or a balanced stone bridge at dusk.
+
+SCORPIO (Water) — black, deep wine-red, and dark violet. Sultry, magnetic, mysterious — kept alluring and mysterious rather than occult or sinister. Symbol: the scorpion glyph (♏) as a statement choker or hip-slung chain. Scene: a shadowy velvet lounge lit by candlelight, or a dark reflective pool at night.
+
+SAGITTARIUS (Fire) — deep cobalt blue, purple, and gold. Adventurous, expansive, wandering. Symbol: the archer's-arrow glyph (♐) as an armlet or hair pin. Scene: a cliffside overlooking an endless horizon, or a star-strewn desert night.
+
+CAPRICORN (Earth) — charcoal, black, and antique gold. Ambitious, commanding, high-status. Symbol: the sea-goat glyph (♑) as a sculptural brooch or belt hardware. Scene: a mountain peak at golden hour, or a dramatic glass-and-stone penthouse.
+
+AQUARIUS (Air) — electric blue and chrome silver. Visionary, rebellious, futuristic. Symbol: the wave-lines glyph (♒) as a metallic bodice detail or geometric earrings. Scene: a neon-lit futuristic skyline or a rain-slicked glass structure.
+
+PISCES (Water) — iridescent lavender, seafoam, and opal. Dreamy, ethereal, otherworldly. Symbol: the twin-fish glyph (♓) as a flowing pendant or an embroidered train detail. Scene: an underwater-lit dreamscape or a mist-covered lakeshore at twilight.
+
+**WHAT NEVER LOOKS FAKE**
+
+Every material has to survive close inspection: individual eyelash and brow hairs, visible skin pores, real hair strands, correct hands and fingernails, real fabric behavior matched to the sign's world (velvet has depth, metallics reflect true light, sheer fabric is genuinely translucent, embroidery sits with real thread texture). Environmental effects — fire glow, water reflection, moonlight, neon — must illuminate her skin and outfit with physically accurate color and falloff. Nothing reads as CGI, plastic, or illustrated, however dramatic the scene gets.
+
+**HAIR ENGINE — ZODIAC-THEMED, RANDOMIZED PER PHOTO**
+
+Select one option from the entry matching the sign the procedure produced, and vary the exact color/finish each time:
+
+ARIES — a high wild ponytail with two twisted "horn" sections framing the crown; voluminous fire-toned waves swept back sharply; a 4a-textured curly mane teased big and untamed.
+
+TAURUS — thick braided space buns coiled to suggest curved horns; a sleek low bun wrapped with a delicate vine-like braid; a 4a-textured twist-out styled neat with a small flower tucked behind the ear.
+
+GEMINI — two-tone twin space buns, each a different shade; an asymmetrical style with one side sleek and pinned, the other loose and wavy; a 4a-textured curly puff split into two distinct textures or colors.
+
+CANCER — soft waves swept into a crescent-shaped half-up twist; a low bun studded with tiny pearls; a 4a-textured wash-and-go with a crescent-moon hair clip.
+
+LEO — a dramatic teased mane worn fully loose; a high voluminous ponytail with lion-like layered ends; a 4a-textured curly high puff worn huge and regal with a gold hair cuff at the base.
+
+VIRGO — a neat wheat-braid crown circling the head; a sleek low ponytail with a thin braid wrapped around its base; a 4a-textured twist-out pulled back precisely with a sharp center part.
+
+LIBRA — symmetrical double buns mirrored on each side; a sleek center-part style with two identical face-framing braids; a 4a-textured curly puff split evenly into two sculpted, balanced sections.
+
+SCORPIO — a sleek low ponytail styled into one long tail-like braid; a dramatic deep side-part with a wave sweeping over one eye; a 4a-textured style slicked back on one side and left wild on the other.
+
+SAGITTARIUS — a long straight high ponytail, sleek as a drawn arrow; loose waves styled as if caught mid-wind; a 4a-textured curly style pulled up high, full, and windswept.
+
+CAPRICORN — a structured double bun set high like small horns; a sleek slicked-back style ending in a sharp point; a 4a-textured twist-out styled into two neat, architectural sections.
+
+AQUARIUS — an asymmetrical sculpted style with a sharp geometric line; a sleek angular bob; a 4a-textured curly puff styled into a bold, structural silhouette.
+
+PISCES — a double fishtail braid trailing down the back; soft flowing waves that look like they're drifting underwater; a 4a-textured curly style left loose and glossy, styled to look weightless.
+
+**MAKEUP ENGINE — BOLD, MATCHED TO SIGN**
+
+ARIES — graphic red liner with a matte crimson lip. TAURUS — soft emerald smoky eye with a rose-gold glossy lip. GEMINI — split-tone eyeshadow (yellow on one lid, silver on the other) with a glossy nude lip. CANCER — pearlescent silver-blue eyeshadow with a soft frosted lip. LEO — molten gold smoky eye with a bold amber-bronze lip. VIRGO — precise sage-green liner with a soft nude-mauve lip. LIBRA — soft rose-gold shimmer with a glossy blush-pink lip. SCORPIO — sharp black smoky eye with a deep wine-red lip. SAGITTARIUS — cobalt-blue graphic liner with a deep plum lip. CAPRICORN — sculpted bronze-charcoal smoky eye with a deep nude lip. AQUARIUS — electric-blue metallic lid with a chrome-silver glossy lip. PISCES — iridescent lavender-seafoam eyeshadow with a glossy opalescent lip.
+
+**NAIL ENGINE — BY ELEMENT, RANDOMIZED PER PHOTO**
+
+FIRE (Aries, Leo, Sagittarius) — glossy red or amber chrome almond nails. EARTH (Taurus, Virgo, Capricorn) — deep emerald or antique-gold coffin nails. AIR (Gemini, Libra, Aquarius) — silver holographic or bright yellow-and-chrome split nails. WATER (Cancer, Scorpio, Pisces) — pearlescent, wine-red, or opalescent glossy nails.
+
+**OUTFIT ENGINE — INVENT ONE EACH TIME, SYMBOL REQUIRED**
+
+Design a new dramatic, fashion-forward outfit each generation in the chosen sign's palette — a structured gown, a bodysuit, a corseted look, or a sculptural two-piece, built from velvet, metallic fabric, sheer panels, or structured leather as fits the sign's mood. The sign's glyph symbol must appear somewhere visible on the outfit or jewelry — as a pendant, hip chain, headpiece, belt buckle, embroidery, or statement earring — worked in as fine jewelry or couture detailing, never as a flat graphic or logo. Vary silhouette and coverage completely each generation, even when the same sign comes up again.
+
+**HOW SHE'S PHOTOGRAPHED**
+
+Expression is dramatic and powerful, but always flattering — never awkward or unflattering. Select one, matched to the sign's mood: a fierce, commanding stare; a sultry half-lidded gaze; a regal, composed expression; a knowing smirk; an intense, magnetic look directly into the lens.
+
+Pose matches the sign's energy: a warrior-ready stance (Aries); reclining amid abundance (Taurus); a dynamic twisting pose (Gemini); a protective, curled pose in moonlight (Cancer); an arms-wide regal stance (Leo); a precise, poised stance (Virgo); a graceful balanced pose (Libra); a slow, magnetic reclining pose (Scorpio); an adventurous stride or reach toward the horizon (Sagittarius); a commanding stance atop a high vantage point (Capricorn); a sharp architectural pose (Aquarius); a flowing, dreamlike pose (Pisces).
+
+Camera and lighting matched to the sign's element: hard dramatic firelight and lens flare for Fire signs; rich golden-hour or grounded warm light for Earth signs; crisp, high-contrast light for Air signs; soft moonlit or underwater-toned light for Water signs. Shot on a Canon PowerShot G7X or Sony a7III. Vary framing — close beauty shot, waist-up, full-body environmental — independent of which sign came up.
+
+**NEVER REPEAT**
+
+Beyond the seeded sign selection, treat hair, makeup detail, nails, outfit, symbol placement, exact scene dressing, pose, expression, camera, and lighting as their own independent draws, so even a repeated sign never produces the same photo twice.
+
+**HARD LIMITS**
+
+One photograph, one woman — no collage, no duplicate figures. No devil, demon, or exorcism imagery — Scorpio's darkness stays sultry and mysterious, never occult. No physically impossible anatomy. No CGI, plastic, or waxy-looking skin, fabric, or environmental effects. Face and body stay identical to the locks above in every image; only sign, styling, scene, pose, and lighting are allowed to vary.
+
