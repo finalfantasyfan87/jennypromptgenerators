@@ -1,0 +1,59 @@
+
+
+**IDENTITY LOCK — READ FIRST**
+
+The attached photo is the only source for her face. Generate the exact same woman: same face shape, eyes, nose, lips, jawline, eyebrows, and skin tone as the attached photo — no reinterpretation, no "prettifying," no blending with a different face. Everything else in this prompt (character theme, hair style, makeup, outfit) can vary — her face never does.
+
+**SANRIO WORLD — "SHE'S THE MAIN CHARACTER" RANDOMIZER**
+
+**THE CONCEPT**
+
+Create a hyper-cute, pastel Sanrio-inspired photoshoot where she is the star, and the entire scene — set, props, giant plush mascots — is built around one specific Sanrio character's theme, staged like it all exists to adore her. Photoreal skin and fabric rendered inside a stylized, saturated Sanrio-cartoon world. Vibe: sweet, playful, kawaii, confident — she owns the shoot.
+
+**RANDOM DRAW (run first, don't skip)**
+
+Pick one Sanrio character to theme this shoot around — draw from the full roster: Hello Kitty, My Melody, Kuromi, Cinnamoroll, Pompompurin, Keroppi, Badtz-Maru, Chococat, Little Twin Stars, Pochacco, or Gudetama. Make it a fresh, independent pick with no memory of anything generated earlier in this chat, and actively resist defaulting to the same one or two characters every time — rotate through the full roster over repeated generations. Once picked, every other choice in this prompt (palette, set, hair, makeup, nails, outfit) should key off that character's actual color palette and signature motifs.
+
+**WHO SHE IS — LOCKED**
+
+Her face, bone structure, skin color/tone, and natural hair texture (e.g. curl pattern) come only from the attached reference photo — do not alter, idealize, "fix," or blend her face with any other look. The hairstyle can change with each generation; the texture of the hair never does. Expression is not locked here (see photography section). Body is fixed, not taken from the reference photo: an hourglass figure with a 44DD bust, a 22-inch whittled waist, and 44-inch curvy hips and butt — full and shapely, naturally proportioned, identical across every generation. She is normal human size and scale, with real human skin and body proportions throughout — never shrunk to any doll/chibi size and never rendered with plastic or cartoon body construction. Any oversized scale in this world belongs only to the surrounding props and mascots, never to her.
+
+**WHAT NEVER LOOKS FAKE**
+
+Real skin texture with visible pores and natural subsurface scattering, individual hair strands with natural flyaways even in sleek styles, fabric with real weave/weight/wrinkle behavior, and true-to-life shadow and reflection physics — even though the world around her is exaggerated and cartoon-glossy, she herself must read as a real photographed person dropped into that world, at normal human scale.
+
+**THE PALETTE**
+
+Derive the palette entirely from whichever character was picked — e.g. reds/whites/soft pinks for Hello Kitty, black/purple/punk-pastel for Kuromi, pink/red/frills for My Melody, sky blue/white/cloud tones for Cinnamoroll, yellow/brown/custard tones for Pompompurin, green/pond tones for Keroppi, black/white for Badtz-Maru, pastel rainbow/star tones for Little Twin Stars, blue/white sporty tones for Pochacco, or soft yellow/egg tones for Gudetama. High-gloss, high-saturation lighting like a toy commercial crossed with a fashion ad.
+
+**THE SET**
+
+Build the entire environment around the picked character's world — a giant plush version of the character and its signature props placed around her, oversized and staged like they're all turned toward her, admiring her: for example a huge plush bow or mascot head watching from behind her, signature accessories (a giant lily pad, a cloud, a beret and pudding cup, a skull-and-bones charm, a star pillow — whatever fits the pick) arranged like an adoring audience. Make it a different, fully-realized scene each time depending on the character drawn. She stands at normal human scale within it — the environment and mascot props are what's oversized, never her.
+
+**HER LOOK**
+
+*Hair* — invent a kawaii hairstyle that fits the picked character's vibe and respects her real hair texture from the reference photo — space buns, pigtails, half-up styles with themed hair clips/bows, soft waves — full creative freedom on the style; the texture never changes from her actual hair. Different from the last one you generated.
+
+*Makeup* — invent a soft, glossy kawaii makeup look keyed to the character's palette — dewy skin, soft blush, glossy tinted lip, maybe a small painted motif (a heart, a star, a bow) near the eye — full creative freedom, different from the last one you generated. Makeup sits on top of her real face — it never restructures it.
+
+*Nails* — invent a Sanrio-character-themed nail look — soft pastel base, tiny painted motifs, glossy or matte finish, charms if it fits — full creative freedom, different from the last one you generated.
+
+*Outfit* — invent a fashion-forward outfit built around the picked character's colors and motifs (not literal costume/cosplay unless that's the vibe that fits) — think streetwear, a cute skirt set, a cropped hoodie, platform shoes — full creative freedom, different silhouette/combo than the last one you generated.
+
+Character-themed accessory: something small and unmistakably tied to the picked character (ear clips, a themed bag charm, a printed motif) is always present.
+
+**HOW SHE'S PHOTOGRAPHED**
+
+Expression: cute and flattering only — warm smile, playful wink, sweet confident look; never an awkward, gap-toothed, or unflattering expression. Pose: fun and playful — peace sign, hand near her face, mid-laugh, leaning into the scene. Shot on a Canon PowerShot G7X point-and-shoot flash look or a Sony portrait-lens look, warm direct flash or soft glam key light, shallow depth of field so the mascot props stay a little dreamy behind her.
+
+**NEVER REPEAT**
+
+Do not reuse the exact same character/set/hair/makeup/nail/outfit combination as the immediately preceding image in this chat.
+
+**HARD LIMITS**
+
+No exorcism or actual demonic imagery (Kuromi's normal devil-horn-hood/skull motif is fine — that's just her official design, not demonic content). Do not shrink her to any doll/chibi size or give her plastic/cartoon body construction — she stays a real, normal-scale human being; only the mascot props and set are oversized. No nudity or explicit sexual content or poses. No extra or malformed limbs/fingers. No depiction of anyone as a minor.
+
+**FINAL REMINDER — FACE**
+
+Before finishing, double-check: her face must match the attached reference photo exactly — same face shape, eyes, nose, lips, jawline, skin tone. If anything about the face looks different from the photo, that's the one thing in this entire prompt that's not allowed to vary.
