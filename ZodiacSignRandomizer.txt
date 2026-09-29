@@ -1,15 +1,14 @@
-
-**THE CONCEPT**
+THE CONCEPT
 
 Create a highly photorealistic, high-fashion editorial photograph of the exact same adult woman embodying one of the twelve zodiac signs — a different sign every generation, each rendered as a full dramatic persona with its own color world, mood, and staged scene, drawing on that sign's traditional astrological associations. This is the flagship of the series: maximum drama, bold sign-specific makeup, and the sign's own symbol worked visibly into her outfit every time.
 
-**WHO SHE IS — LOCKED, NEVER RANDOMIZED**
+WHO SHE IS — LOCKED, NEVER RANDOMIZED
 
 Face comes from the attached reference photo and does not move. Preserve exactly: face shape, bone structure, natural facial asymmetry, eye shape and spacing and color, nose shape, lips, cupid's bow, jawline, cheekbones, skin texture, pores, fine lines. No beautifying, no reshaping, no symmetry correction, no age change, no generic-AI-face substitution. She must be immediately, unmistakably recognizable as herself in every image.
 
-Body is fixed, not taken from the reference photo: an hourglass figure with a 38DD bust, a 26-inch waist, and 46-inch curvy hips and butt — full and shapely, naturally proportioned, identical across every generation.
+CURVY BODY LOCK: She has a defined, naturally curvy hourglass figure with a full, heavy bust, a noticeably cinched waist that sits clearly narrower than her bust and hips, and wide, rounded hips that flare out from the waist. Her thighs are full, soft, and shapely, touching at the top, with curved calves. Her upper arms are soft and rounded, her shoulders are feminine and slightly sloped, and her stomach is soft rather than flat or toned. Her body has a smooth, continuous curve from bust to waist to hip, with real softness and natural weight throughout, like a real woman rather than an idealized model. These proportions stay consistent from every angle, including close-ups, seated and reclining poses, side profiles, and overhead shots, and are identical across every generation. Her waist-to-hip curve must stay clearly visible in every image, even in flowing gowns, structured armor-like pieces, or dramatic trains and capes. Never make her thin, petite, slim, lean, athletic, muscular, straight-bodied, or boyish, and never shrink her bust, hips, thighs, or arms.
 
-**THE ZODIAC ENGINE — SEEDED SELECTION, DO THIS BEFORE ANYTHING ELSE**
+THE ZODIAC ENGINE — SEEDED SELECTION, DO THIS BEFORE ANYTHING ELSE
 
 Do not choose a sign directly. Choose a number first, then map it to a sign, and never override the result.
 
@@ -45,11 +44,11 @@ AQUARIUS (Air) — electric blue and chrome silver. Visionary, rebellious, futur
 
 PISCES (Water) — iridescent lavender, seafoam, and opal. Dreamy, ethereal, otherworldly. Symbol: the twin-fish glyph (♓) as a flowing pendant or an embroidered train detail. Scene: an underwater-lit dreamscape or a mist-covered lakeshore at twilight.
 
-**WHAT NEVER LOOKS FAKE**
+WHAT NEVER LOOKS FAKE
 
 Every material has to survive close inspection: individual eyelash and brow hairs, visible skin pores, real hair strands, correct hands and fingernails, real fabric behavior matched to the sign's world (velvet has depth, metallics reflect true light, sheer fabric is genuinely translucent, embroidery sits with real thread texture). Environmental effects — fire glow, water reflection, moonlight, neon — must illuminate her skin and outfit with physically accurate color and falloff. Nothing reads as CGI, plastic, or illustrated, however dramatic the scene gets.
 
-**HAIR ENGINE — ZODIAC-THEMED, RANDOMIZED PER PHOTO**
+HAIR ENGINE — ZODIAC-THEMED, RANDOMIZED PER PHOTO
 
 Select one option from the entry matching the sign the procedure produced, and vary the exact color/finish each time:
 
@@ -77,19 +76,19 @@ AQUARIUS — an asymmetrical sculpted style with a sharp geometric line; a sleek
 
 PISCES — a double fishtail braid trailing down the back; soft flowing waves that look like they're drifting underwater; a 4a-textured curly style left loose and glossy, styled to look weightless.
 
-**MAKEUP ENGINE — BOLD, MATCHED TO SIGN**
+MAKEUP ENGINE — BOLD, MATCHED TO SIGN
 
 ARIES — graphic red liner with a matte crimson lip. TAURUS — soft emerald smoky eye with a rose-gold glossy lip. GEMINI — split-tone eyeshadow (yellow on one lid, silver on the other) with a glossy nude lip. CANCER — pearlescent silver-blue eyeshadow with a soft frosted lip. LEO — molten gold smoky eye with a bold amber-bronze lip. VIRGO — precise sage-green liner with a soft nude-mauve lip. LIBRA — soft rose-gold shimmer with a glossy blush-pink lip. SCORPIO — sharp black smoky eye with a deep wine-red lip. SAGITTARIUS — cobalt-blue graphic liner with a deep plum lip. CAPRICORN — sculpted bronze-charcoal smoky eye with a deep nude lip. AQUARIUS — electric-blue metallic lid with a chrome-silver glossy lip. PISCES — iridescent lavender-seafoam eyeshadow with a glossy opalescent lip.
 
-**NAIL ENGINE — BY ELEMENT, RANDOMIZED PER PHOTO**
+NAIL ENGINE — BY ELEMENT, RANDOMIZED PER PHOTO
 
 FIRE (Aries, Leo, Sagittarius) — glossy red or amber chrome almond nails. EARTH (Taurus, Virgo, Capricorn) — deep emerald or antique-gold coffin nails. AIR (Gemini, Libra, Aquarius) — silver holographic or bright yellow-and-chrome split nails. WATER (Cancer, Scorpio, Pisces) — pearlescent, wine-red, or opalescent glossy nails.
 
-**OUTFIT ENGINE — INVENT ONE EACH TIME, SYMBOL REQUIRED**
+OUTFIT ENGINE — INVENT ONE EACH TIME, SYMBOL REQUIRED
 
-Design a new dramatic, fashion-forward outfit each generation in the chosen sign's palette — a structured gown, a bodysuit, a corseted look, or a sculptural two-piece, built from velvet, metallic fabric, sheer panels, or structured leather as fits the sign's mood. The sign's glyph symbol must appear somewhere visible on the outfit or jewelry — as a pendant, hip chain, headpiece, belt buckle, embroidery, or statement earring — worked in as fine jewelry or couture detailing, never as a flat graphic or logo. Vary silhouette and coverage completely each generation, even when the same sign comes up again.
+Design a new dramatic, fashion-forward outfit each generation in the chosen sign's palette — a structured gown, a bodysuit, a corseted look, or a sculptural two-piece, built from velvet, metallic fabric, sheer panels, or structured leather as fits the sign's mood. The sign's glyph symbol must appear somewhere visible on the outfit or jewelry — as a pendant, hip chain, headpiece, belt buckle, embroidery, or statement earring — worked in as fine jewelry or couture detailing, never as a flat graphic or logo. Vary silhouette and coverage completely each generation, even when the same sign comes up again. Whatever the silhouette, it should follow and flatter her hourglass shape rather than hide it.
 
-**HOW SHE'S PHOTOGRAPHED**
+HOW SHE'S PHOTOGRAPHED
 
 Expression is dramatic and powerful, but always flattering — never awkward or unflattering. Select one, matched to the sign's mood: a fierce, commanding stare; a sultry half-lidded gaze; a regal, composed expression; a knowing smirk; an intense, magnetic look directly into the lens.
 
@@ -97,11 +96,10 @@ Pose matches the sign's energy: a warrior-ready stance (Aries); reclining amid a
 
 Camera and lighting matched to the sign's element: hard dramatic firelight and lens flare for Fire signs; rich golden-hour or grounded warm light for Earth signs; crisp, high-contrast light for Air signs; soft moonlit or underwater-toned light for Water signs. Shot on a Canon PowerShot G7X or Sony a7III. Vary framing — close beauty shot, waist-up, full-body environmental — independent of which sign came up.
 
-**NEVER REPEAT**
+NEVER REPEAT
 
 Beyond the seeded sign selection, treat hair, makeup detail, nails, outfit, symbol placement, exact scene dressing, pose, expression, camera, and lighting as their own independent draws, so even a repeated sign never produces the same photo twice.
 
-**HARD LIMITS**
+HARD LIMITS
 
-One photograph, one woman — no collage, no duplicate figures. No devil, demon, or exorcism imagery — Scorpio's darkness stays sultry and mysterious, never occult. No physically impossible anatomy. No CGI, plastic, or waxy-looking skin, fabric, or environmental effects. Face and body stay identical to the locks above in every image; only sign, styling, scene, pose, and lighting are allowed to vary.
-
+One photograph, one woman — no collage, no duplicate figures. No devil, demon, or exorcism imagery — Scorpio's darkness stays sultry and mysterious, never occult. No physically impossible anatomy. No CGI, plastic, or waxy-looking skin, fabric, or environmental effects. Never make her body thin, petite, or straight-bodied — the curvy body lock always applies, including in reclining and curled poses. Face and body stay identical to the locks above in every image; only sign, styling, scene, pose, and lighting are allowed to vary.
